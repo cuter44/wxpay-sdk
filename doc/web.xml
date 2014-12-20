@@ -13,8 +13,8 @@
     <servlet-class>com.github.cuter44.wxpay.servlet.GetOpenId</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AlipayNotifyGatewayServlet</servlet-name>
-    <url-pattern>/get-onenid.api</url-pattern>
+    <servlet-name>GetOpenId</servlet-name>
+    <url-pattern>/get-openid.api</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>
