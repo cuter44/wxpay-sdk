@@ -9,22 +9,12 @@
   <!-- make another brand new world! -->
 
   <servlet>
-    <servlet-name>AlipayNotifyGatewayServlet</servlet-name>
-    <servlet-class>com.github.cuter44.alipay.webinterface.AlipayNotifyGatewayServlet</servlet-class>
-    <init-param> 
-        <description>DEBUG SWITCH: If true, content of NotifyBase.getString() & .getProperties() will be dumped to container's log.</description>
-        <param-name>com.github.cuter44.alipay.notifygateway.dump</param-name> 
-        <param-value>false</param-value> 
-    </init-param>
-    <init-param> 
-        <description>DEBUG SWITCH: If true, gateway will run in DRY-RUN mode.(just send "success" to alipay server but do nothing  else)</description>
-        <param-name>com.github.cuter44.alipay.notifygateway.dryrun</param-name> 
-        <param-value>false</param-value> 
-    </init-param>
+    <servlet-name>GetOpenId</servlet-name>
+    <servlet-class>com.github.cuter44.wxpay.servlet.GetOpenId</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AlipayNotifyGatewayServlet</servlet-name>
-    <url-pattern>/gateway</url-pattern>
+    <url-pattern>/get-onenid.api</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>
