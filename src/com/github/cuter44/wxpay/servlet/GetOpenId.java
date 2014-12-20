@@ -35,10 +35,10 @@ public class GetOpenId extends HttpServlet
 {
     protected static final String KEY_APPID     = "appid";
     protected static final String KEY_SECRET    = "SECRET";
+    protected static final String KEY_OPENID    = "openid";
 
     protected static final String CODE      = "code";
     protected static final String REDIR     = "redir";
-    protected static final String OPENID    = "openid";
 
     protected Properties conf;
 
@@ -72,6 +72,8 @@ public class GetOpenId extends HttpServlet
                 .toString();
 
             resp.sendRedirect(url);
+
+            return;
         }
 
         // else
@@ -89,7 +91,35 @@ public class GetOpenId extends HttpServlet
                 .asString();
 
         JSONObject json = JSON.parseObject(strJson);
-        System.out.println(json.toString());
+
+        String openid = json.getString(KEY_OPENID);
+        if (openid == null)
+        {
+            resp.setStatus(500);
+            resp.setContentType("application/json");
+            resp.getWriter().print(json.toString());
+
+            return;
+        }
+
+        String redir = req.getParameter(REDIR);
+
+        if (redir == null)
+        {
+            resp.setContentType("text/plain; charset=utf-8");
+            resp.getWriter().print(openid);
+
+            return;
+        }
+
+        //else
+        String rebuild = URLParser.fromURL(redir)
+            .setParameter(KEY_OPENID, openid)
+            .toString();
+
+        resp.sendRedirect(rebuild);
+
+        return;
     }
 
 }
