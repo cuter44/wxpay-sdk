@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Default build.xml file for local Java Project
+  ==========================================
+  @depend ant-1.9.2+ (tested, actually more below this)
+  @author "galin"<cuter44@qq.com>
+  @version 1.0.0 build 2014/2/25
+  ==========================================
+  You can do whatever to this file as you wish.
+  This file and other attachement is provided as-if, and no warranty.
+  ==========================================
+  [USAGE]
+  Config your project-name right below, then parse it to your project-base. use 'ant -projecthelp' to view all commands.
+-->
+<project name="wxpay-sdk" basedir="." default="build-all" >
+
+  <!-- 变量 -->
+  <property name="srcdir" value="src" />
+  <property name="rtlibdir" value="lib" />
+  <property name="javadocdir" value="javadoc" />
+  <property name="destdir" value="bin" />
+  <property name="version" value="0.0.1" />
+
+  <property name="webdir" value="web" />
+  <property name="webinfdir" value="${webdir}/WEB-INF" />
+  <property name="webrtlibdir" value="${webinfdir}/lib" />
+  <property name="webdestdir" value="${webinfdir}/classes" />
+
+  <path id="classpath">
+    <!-- lib 存放开发及测试用库 -->
+    <fileset id="dt-packages" dir="${rtlibdir}">
+      <include name="*.jar" />
+    </fileset>
+    <pathelement path="${destdir}" />
+  </path>
+
+  <!-- 初始化目录树 -->
+  <target name="init" description="初始化目录树及默认配置文件, 注意会覆盖 web.xml">
+    <mkdir dir="${srcdir}" />
+    <mkdir dir="${rtlibdir}" />
+    <mkdir dir="${destdir}" />
+  </target>
+
+  <target name="init-gendeploy" description="生成指向配置文件, 用于 tomcat 的引用部署">
+    <echo file="${ant.project.name}.xml">&lt;!-- note: copy this file to your TOMCAT_HOME/conf/Catalina/localhost(or other as your actual) to deploy --&gt;
+&lt;Context docBase="${webdir.absolute}"&gt;
+&lt;/Context&gt;
+    </echo>
+  </target>
+
+  <!-- 编译 -->
+  <target name="build" description="编译">
+    <antcall target="copy-config" />
+    <javac srcdir="${srcdir}" destdir="${destdir}" failonerror="true" debug="true" includeantruntime="false" encoding="utf-8">
+      <compilerarg value="-Xlint:unchecked"/>
+      <classpath refid="classpath" />
+    </javac>
+  </target>
+
+  <target name="clear-built" description="清理">
+    <delete>
+      <fileset dir="${destdir}" includes="**/*"/>
+    </delete>
+  </target>
+
+  <target name="build-all" description="全部重新编译">
+    <antcall target="clear-built" />
+    <antcall target="build" />
+  </target>
+
+  <target name="copy-config" description="复制配置文件">
+    <copy todir="${destdir}">
+      <fileset dir="${srcdir}">
+        <include name="**/*.xml" />
+        <include name="**/*.properties" />
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="build-web" description="" >
+    <antcall target="build-all" />
+    <copy todir="${webinfdir}" file="doc/web.xml" />
+    <copy todir="${webrtlibdir}">
+      <fileset dir="${rtlibdir}" />
+    </copy>
+    <copy todir="${webdestdir}">
+      <fileset dir="${destdir}" />
+    </copy>
+  </target>
+  
+  <!-- 生成javadoc -->
+  <target name="javadoc" description="生成javadoc">
+    <javadoc sourcepath="${srcdir}" destdir="${javadocdir}" private="true" classpathref="classpath" encoding="utf-8"/>
+  </target>
+
+  <!-- jar -->
+  <target name="jar" description="jar it!">
+    <antcall target="build-all" />
+    <jar basedir="${destdir}" destfile="${ant.project.name}-${version}.jar" />
+  </target>
+
+  <!-- 调试 -->
+  <target name="debug" description="本地测试, 使用-Ddebug.main=&lt;类名&gt;指定jvm的入口类">
+  <java classname="${debug.main}" fork="true" dir="${destdir}">
+    <!-- 启用断言 -->
+    <jvmarg value="-ea" />
+    <!-- 启用调试 -->
+    <jvmarg value="-Xdebug"/> 
+    <!-- 启用远程调试 -->
+    <jvmarg value="-Xrunjdwp:transport=dt_socket,address=8288,suspend=y,server=y"/>
+    <classpath refid="classpath" />
+  </java>
+  </target>
+
+  <!-- 运行 -->
+  <target name="run" description="直接运行, 使用-Drun.main=&lt;类名&gt;指定入口类">
+    <java classname="${run.main}" fork="true" dir="${destdir}">
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+  <!-- 工具集 -->
+
+</project>
