@@ -71,11 +71,11 @@ public abstract class RequestBase
         return(this);
     }
 
-    public RequestBase setCDATAProperty(String key, String value)
-    {
-        this.conf.setProperty(key, "<![CDATA["+value+"]]>");
-        return(this);
-    }
+    //public RequestBase setCDATAProperty(String key, String value)
+    //{
+        //this.conf.setProperty(key, "<![CDATA["+value+"]]>");
+        //return(this);
+    //}
 
     /**
      * batch setProperty
@@ -108,7 +108,8 @@ public abstract class RequestBase
 
         String sign = this.signMD5(paramNames, key);
 
-        this.setCDATAProperty(KEY_SIGN, sign);
+        //this.setCDATAProperty(KEY_SIGN, sign);
+        this.setProperty(KEY_SIGN, sign);
 
         return(sign);
     }

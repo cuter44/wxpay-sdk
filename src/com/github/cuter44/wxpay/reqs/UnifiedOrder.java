@@ -89,7 +89,7 @@ public class UnifiedOrder extends RequestBase
   // PROPERTY
     public UnifiedOrder setBody(String body)
     {
-        this.setCDATAProperty(KEY_BODY, body);
+        this.setProperty(KEY_BODY, body);
 
         return(this);
     }
@@ -98,7 +98,7 @@ public class UnifiedOrder extends RequestBase
      */
     public UnifiedOrder setOutTradeNo(String outTradeNo)
     {
-        this.setCDATAProperty(KEY_OUT_TRADE_NO, outTradeNo);
+        this.setProperty(KEY_OUT_TRADE_NO, outTradeNo);
 
         return(this);
     }
