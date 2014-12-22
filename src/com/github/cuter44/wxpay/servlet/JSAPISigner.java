@@ -38,11 +38,13 @@ public class JSAPISigner extends HttpServlet
     }
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse  resp)
+    public void doPost(HttpServletRequest req, HttpServletResponse  resp)
         throws IOException, ServletException
     {
         try
         {
+            //req.setCharacterEncoding("utf-8");
+
             UnifiedOrder order = this.wxpayFactory.newUnifiedOrder()
                 .setBody            (needString(req, BODY)                      )
                 .setTotalFee        (needDouble(req, TOTAL_FEE)                 )
