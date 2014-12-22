@@ -17,6 +17,15 @@
     <url-pattern>/get-openid.api</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>JSAPISigner</servlet-name>
+    <servlet-class>com.github.cuter44.wxpay.servlet.JSAPISigner</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JSAPISigner</servlet-name>
+    <url-pattern>/jsapi-signer.api</url-pattern>
+  </servlet-mapping>
+
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
