@@ -118,7 +118,7 @@ public class GetOpenId extends HttpServlet
         //else
         String rebuild = URLParser.fromURL(redir)
             .setParameter(KEY_OPENID, openid)
-            .toString();
+            .toURL();
 
         resp.sendRedirect(rebuild);
 
