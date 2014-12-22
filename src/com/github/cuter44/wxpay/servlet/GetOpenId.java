@@ -60,7 +60,10 @@ public class GetOpenId extends HttpServlet
 
         if (code == null)
         {
-            String thisUrl = req.getRequestURL().toString();
+            String thisUrl = req.getRequestURL()
+                .append('?')
+                .append(req.getQueryString())
+                .toString();
 
             String url = new URLBuilder()
                 .appendPath("https://open.weixin.qq.com/connect/oauth2/authorize")
