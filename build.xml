@@ -81,7 +81,9 @@
     <antcall target="build-all" />
     <copy todir="${webinfdir}" file="doc/web.xml" />
     <copy todir="${webrtlibdir}">
-      <fileset dir="${rtlibdir}" />
+      <fileset dir="${rtlibdir}">
+        <exclude name="servlet-api.jar" />
+      </fileset>
     </copy>
     <copy todir="${webdestdir}">
       <fileset dir="${destdir}" />

@@ -6,6 +6,7 @@ import java.util.Properties;
 import java.io.UnsupportedEncodingException;
 
 import com.github.cuter44.wxpay.*;
+import com.github.cuter44.wxpay.constants.*;
 import com.github.cuter44.wxpay.resps.*;
 //import com.github.cuter44.wxpay.helper.*;
 
@@ -13,6 +14,14 @@ public class UnifiedOrder extends RequestBase
 {
   // KEYS
     public static final String URL_API_BASE = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+
+    protected static final String KEY_BODY              = "body";
+    protected static final String KEY_OUT_TRADE_NO      = "out_trade_no";
+    protected static final String KEY_TOTAL_FEE         = "total_fee";
+    protected static final String KEY_SPBILL_CREATE_IP  = "spbill_create_ip";
+    protected static final String KEY_TRADE_TYPE        = "trade_type";
+    protected static final String KEY_OPENID            = "openid";
+    protected static final String KEY_PRODUCT_ID        = "product_id";
 
     public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
         "appid",
@@ -59,19 +68,17 @@ public class UnifiedOrder extends RequestBase
     }
 
   // TO_URL
-    //public String toURL()
-        //throws UnsupportedEncodingException
-    //{
-        //String charset = this.getProperty(KEY_CHARSET);
-
-        //return(
-            //this.toSignedURL(KEYS_PARAM_NAME, charset)
-        //);
-    //}
+    public String toURL()
+        throws UnsupportedOperationException
+    {
+        throw(
+            new UnsupportedOperationException("This request does not execute on client side")
+        );
+    }
 
   // EXECUTE
     @Override
-    public ResponseBase execute()
+    public UnifiedOrderResponse execute()
     {
         return(
             new UnifiedOrderResponse(
@@ -80,4 +87,81 @@ public class UnifiedOrder extends RequestBase
     }
 
   // PROPERTY
+    public UnifiedOrder setBody(String body)
+    {
+        this.setCDATAProperty(KEY_BODY, body);
+
+        return(this);
+    }
+
+    /** 商户系统内部的订单号,32个字符内、可包含字母
+     */
+    public UnifiedOrder setOutTradeNo(String outTradeNo)
+    {
+        this.setCDATAProperty(KEY_OUT_TRADE_NO, outTradeNo);
+
+        return(this);
+    }
+
+    /** 订单总金额，单位为分，不能带小数点
+     */
+    public UnifiedOrder setTotalFee(int totalFeeInCNYFen)
+    {
+        this.setProperty(KEY_TOTAL_FEE, Integer.toString(totalFeeInCNYFen));
+
+        return(this);
+    }
+
+    /** wrap method
+     */
+    public UnifiedOrder setTotalFee(double totalFeeInCNYYuan)
+    {
+        this.setTotalFee(
+            Double.valueOf(totalFeeInCNYYuan*100.0).intValue()
+        );
+
+        return(this);
+    }
+
+    /** 订单生成的机器 IP
+     * NOTE: client-side ip, shoulb be detected by container. use <>request.getRemoteAddr(); to
+     */
+    public UnifiedOrder setSpbillCreateIp(String ipAddress)
+    {
+        this.setProperty(KEY_SPBILL_CREATE_IP, ipAddress);
+
+        return(this);
+    }
+
+    /** 接收微信支付成功通知
+     */
+    public UnifiedOrder setNotifyUrl(String notifyUrl)
+    {
+        this.setProperty(KEY_NOTIFY_URL, notifyUrl);
+
+        return(this);
+    }
+
+    public UnifiedOrder setTradeType(TradeType tradeType)
+    {
+        this.setProperty(KEY_TRADE_TYPE, tradeType.toString());
+
+        return(this);
+    }
+
+    /** 用户在商户 appid 下的唯一标识，trade_type 为 JSAPI 时，此参数必传
+     */
+    public UnifiedOrder setOpenid(String openid)
+    {
+        this.setProperty(KEY_OPENID, openid);
+
+        return(this);
+    }
+
+    public UnifiedOrder setProductId(Object productId)
+    {
+        this.setProperty(KEY_PRODUCT_ID, productId.toString());
+
+        return(this);
+    }
 }

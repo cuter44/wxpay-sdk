@@ -24,21 +24,31 @@ import static com.github.cuter44.wxpay.util.XMLParser.parseXML;
  */
 public abstract class RequestBase
 {
-    protected static final String KEY_SIGN = "sign";
-    protected static final String KEY_KEY = "KEY";
-    protected static final String KEY_RETURN_CODE = "return_code";
-    protected static final String KEY_RETURN_MSG = "return_msg";
-    protected static final String KEY_ERR_CODE = "err_code";
-    protected static final String KEY_ERR_CODE_DES = "err_code_des";
+    protected static final String KEY_APPID         = "appid";
+    protected static final String KEY_SIGN          = "sign";
+    protected static final String KEY_KEY           = "KEY";
+    protected static final String KEY_RETURN_CODE   = "return_code";
+    protected static final String KEY_RETURN_MSG    = "return_msg";
+    protected static final String KEY_ERR_CODE      = "err_code";
+    protected static final String KEY_ERR_CODE_DES  = "err_code_des";
+    protected static final String KEY_NOTIFY_URL    = "notify_url";
+    protected static final String KEY_NONCE_STR     = "nonce_str";
+
     protected static final String VALUE_SUCCESS = "SUCCESS";
-    protected static final String VALUE_FAIL = "FAIL";
+    protected static final String VALUE_FAIL    = "FAIL";
 
     protected static CryptoBase crypto = CryptoBase.getInstance();
+
+    protected static final int NONCE_STR_BYTES = 8;
 
   // CONSTRUCT
     public RequestBase(Properties aConf)
     {
         this.conf = aConf;
+        this.setNonceStr(
+            crypto.byteToHex(crypto.randomBytes(NONCE_STR_BYTES))
+        );
+
         return;
     }
 
@@ -128,6 +138,11 @@ public abstract class RequestBase
     }
 
   // TO_URL
+    /** Extract URL to execute request on client
+     */
+    public abstract String toURL()
+        throws UnsupportedOperationException;
+
     /** Provide query string to sign().
      * toURL() may not invoke this method.
      */
@@ -157,6 +172,10 @@ public abstract class RequestBase
                    .append("</").append(k).append('>');
         }
 
+        xml.append('<').append(KEY_SIGN).append('>')
+           .append(this.getProperty(KEY_SIGN))
+           .append("</").append(KEY_SIGN).append('>');
+
         xml.append("</xml>");
 
         return(xml.toString());
@@ -167,7 +186,8 @@ public abstract class RequestBase
     /** Execute the constructed query
      */
     public abstract ResponseBase execute()
-        throws WxpayException;
+        throws WxpayException, UnsupportedOperationException;
+;
 
     public ResponseBase execute(String urlBase, List<String> paramNames)
         throws WxpayException
@@ -208,9 +228,16 @@ public abstract class RequestBase
     }
 
   // MISC
-    public RequestBase setNotifyUrl(String notifyUrl)
+    public RequestBase setAppid(String appid)
     {
-        this.setProperty("notify_url", notifyUrl);
+        this.setProperty(KEY_APPID, appid);
+
+        return(this);
+    }
+
+    public RequestBase setNonceStr(String nonceStr)
+    {
+        this.setProperty(KEY_NONCE_STR, nonceStr);
 
         return(this);
     }

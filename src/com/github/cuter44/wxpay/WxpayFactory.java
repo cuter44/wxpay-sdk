@@ -98,6 +98,20 @@ public class WxpayFactory
     }
 
   // FACTORY
+    public UnifiedOrder newUnifiedOrder()
+    {
+        return(
+            new UnifiedOrder(
+                new Properties(this.conf)
+        ));
+    }
+    public UnifiedOrder newUnifiedOrder(Properties p)
+    {
+        return(
+            new UnifiedOrder(
+                buildConf(p, this.conf)
+        ));
+    }
 
   // MISC
     protected static Properties buildConf(Properties prop, Properties defaults)
