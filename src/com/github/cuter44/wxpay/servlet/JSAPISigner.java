@@ -20,6 +20,20 @@ import com.github.cuter44.wxpay.constants.*;
  *
  * DO NOT use this servlet in a multi-instance environment,
  * due to this servlet use a static appid and secret read from the config file.
+ *
+ * <pre>
+    Sign JSAPI pay request
+    POST /jsapi-signer.api
+
+    <strong>Params</strong>
+    body        :string , description of goods
+    total_fee   :double , fee in CNY Yuan
+    openid      :string , client's openid
+
+    <strong>Response</strong>
+    Content-Type: application/json
+
+ * </pre>
  */
 public class JSAPISigner extends HttpServlet
 {
@@ -57,11 +71,24 @@ public class JSAPISigner extends HttpServlet
 
             UnifiedOrderResponse orderResp = order.execute();
 
-            System.out.println(orderResp.getProperties());
+            //System.out.println(orderResp.getProperties());
+
+            GetBrandWCPayRequest gbwxpr = this.wxpayFactory.newGetBrandWCPayRequest(orderResp.getProperties())
+                .build()
+                .sign();
+
+            String jsonGbwxpr = gbwxpr.toJSON();
+
+            resp.setContentType("application/json; charset=utf-8");
+            resp.getWriter().print(jsonGbwxpr);
+
+            return;
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            resp.reset();
+            resp.setStatus(500);
+            ex.printStackTrace(resp.getWriter());
         }
     }
 }

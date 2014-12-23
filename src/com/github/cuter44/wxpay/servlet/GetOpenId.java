@@ -17,19 +17,36 @@ import com.github.cuter44.wxpay.*;
  * and returns client's <code>openid</code> facing the <code>appid</code>
  * Here how it goes:
  * 1. directly GET this url(which defined by your route file <code>web.xml</code>),
- *    either an ajax call or redirect is ok, see instruction below.
+ *    <del>either an ajax call or</del> redirect is ok, see instruction below.
  * 2. due to Weixin's spec, client will be redirect to open.weixin.qq.com/blabla to obtain a <code>code</code>
  * 3. we will translate the <code>code</code> into <code>openid</code> and output it
  *
  * Response content-type in step #3 is alternative choice:
  * If it is a redirect request, a <code>redir</code> param is required in step #1,
  * we will append the <code>openid</code> as param and send a 302 response.
- * If it is a ajax request, nothing but directly GET this url is needed.
- * In such case, openid will be output as text/plain.
+ * <del>If it is a ajax request, nothing but directly GET this url is needed.
+ * In such case, openid will be output as text/plain.</del>
+ * Since open.weixin.qq.com does not contains a cross-domain header, You must
  *
  * A same client will reflect in different openids while it faces different WX service accounts.
  * So DO NOT use this servlet in a multi-instance environment,
  * due to this servlet use a static appid and secret read from the config file.
+ * <pre>
+    Retrieve current client's openid
+    GET /get-openid.api
+
+    <strong>Params</strong>
+    code    :string , generated and passed by open.weixin.qq.com, need not manual handling.
+    redir   :url    , if you are doing an redirect and wish the openid returned as param k-v.
+
+    <strong>Response</strong>
+    <i>if <code>redir</code> absent</i>
+    Content-Type: text/plain; charset=utf-8
+    <i>if <code>redir</code> provided</i>
+    302 Found
+    Location: ${redir[@openid='$openid']}
+
+ * </pre>
  */
 public class GetOpenId extends HttpServlet
 {

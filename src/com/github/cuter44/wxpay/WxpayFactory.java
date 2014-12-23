@@ -113,6 +113,36 @@ public class WxpayFactory
         ));
     }
 
+    public JSAPIUnifiedOrder newJSAPIUnifiedOrder()
+    {
+        return(
+            new JSAPIUnifiedOrder(
+                new Properties(this.conf)
+        ));
+    }
+    public JSAPIUnifiedOrder newJSAPIUnifiedOrder(Properties p)
+    {
+        return(
+            new JSAPIUnifiedOrder(
+                buildConf(p, this.conf)
+        ));
+    }
+
+    public GetBrandWCPayRequest newGetBrandWCPayRequest()
+    {
+        return(
+            new GetBrandWCPayRequest(
+                new Properties(this.conf)
+        ));
+    }
+    public GetBrandWCPayRequest newGetBrandWCPayRequest(Properties p)
+    {
+        return(
+            new GetBrandWCPayRequest(
+                buildConf(p, this.conf)
+        ));
+    }
+
   // MISC
     protected static Properties buildConf(Properties prop, Properties defaults)
     {
