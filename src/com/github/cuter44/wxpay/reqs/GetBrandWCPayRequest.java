@@ -20,7 +20,8 @@ public class GetBrandWCPayRequest extends RequestBase
     public static final String KEY_PAY_SIGN         = "paySign";
     public static final String KEY_TIME_STAMP       = "timeStamp";
     public static final String KEY_SIGN_TYPE        = "signType";
-    public static final String KEY_PACKAGE          = "signType";
+    public static final String KEY_PREPAY_ID        = "prepay_id";
+    public static final String KEY_PACKAGE          = "package";
 
   // KEYS
     public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
@@ -44,6 +45,11 @@ public class GetBrandWCPayRequest extends RequestBase
         if (this.getProperty(KEY_GBWCPR_NONCE_STR) == null)
             this.setNonceStr(
                 this.getProperty(KEY_NONCE_STR)
+            );
+
+        if (this.getProperty(KEY_PACKAGE) == null)
+            this.setPackage(
+                this.getProperty(KEY_PREPAY_ID)
             );
 
         this.setTimeStamp(new Date());
@@ -157,7 +163,7 @@ public class GetBrandWCPayRequest extends RequestBase
      */
     public RequestBase setSignType(String signType)
     {
-        this.setProperty(KEY_GBWCPR_NONCE_STR, signType);
+        this.setProperty(KEY_SIGN_TYPE, signType);
 
         return(this);
     }
