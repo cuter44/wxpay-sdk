@@ -47,23 +47,14 @@ Thanks to GFW, it is such a tough thing to upload binary release to Github. Sorr
 
 ## Sample/样例
 
-// TODO
-
-### Initiative request/主动请求
-
-// TODO
-
-### Notify/接受回调
-
-// TODO
-
-## Covered API/已封装的接口
-
-// TODO
+(突然发现这个东西复杂到不知道从何写起 Q▽Q
 
 ## Detailed docs/详细文档
+
+Thank you for recognition of the early version of wxpay-sdk/utility. At the time I write down this line, only few basic API are covered.
+If these cannot fulfill your desire, you are welcomed to participate in or send me a text to keep on.
+It is what I trust that, open-source can make a charming world.
 
 For questions with weixin-pay, ask your search engineer. Or refer to http://mp.weixin.qq.com/wiki/ , mostly it helps you nothing.  
 For javadoc, run `ant javadoc`(recommended), or visit [http://cuter44.github.io/wxpay-sdk/javadoc/](http://cuter44.github.io/wxpay-sdk/javadoc/).  
 For bugs/issues, thanks for visiting [https://github.com/cuter44/wxpay-sdk/issues](https://github.com/cuter44/wxpay-sdk/issues)  
-
