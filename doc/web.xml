@@ -6,7 +6,26 @@
         id="WebApp_ID" version="2.5">
   <display-name>蓝星微信支付样例</display-name>
 
-  <!-- make another brand new world! -->
+  <!-- Merry Christmas! -->
+
+  <servlet>
+    <servlet-name>WxpayNotifyGatewayServlet</servlet-name>
+    <servlet-class>com.github.cuter44.wxpay.servlet.WxpayNotifyGatewayServlet</servlet-class>
+    <init-param> 
+        <description>DEBUG SWITCH: If true, content of Notify.getString() &amp; .getProperties() will be dumped to container's log/stdout.</description>
+        <param-name>com.github.cuter44.wxpay.notifygateway.dump</param-name> 
+        <param-value>true</param-value> 
+    </init-param>
+    <init-param> 
+        <description>DEBUG SWITCH: If true, gateway will run in DRY-RUN mode.(just send "success" to wxpay server but do nothing else)</description>
+        <param-name>com.github.cuter44.wxpay.notifygateway.dryrun</param-name> 
+        <param-value>true</param-value> 
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WxpayNotifyGatewayServlet</servlet-name>
+    <url-pattern>/notify.api</url-pattern>
+  </servlet-mapping>
 
   <servlet>
     <servlet-name>GetOpenId</servlet-name>

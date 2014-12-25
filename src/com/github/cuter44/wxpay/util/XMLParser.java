@@ -86,6 +86,25 @@ public class XMLParser
         }
     }
 
+    public static Properties parseXML(InputStream xmlStream)
+    {
+        if (xmlStream==null)
+            throw(new IllegalArgumentException("argument xmlStream must not be null."));
+
+        try
+        {
+            SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
+            PropertyCollector pc = new PropertyCollector();
+
+            parser.parse(xmlStream, pc);
+            return(pc.returnProperties());
+        }
+        catch (Exception ex)
+        {
+            throw(new RuntimeException(ex.getMessage(), ex));
+        }
+    }
+
     public static void main(String[] args)
     {
         System.out.println("Hello World!");

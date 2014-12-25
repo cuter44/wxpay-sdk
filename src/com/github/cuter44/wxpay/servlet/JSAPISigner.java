@@ -57,7 +57,7 @@ public class JSAPISigner extends HttpServlet
     {
         try
         {
-            //req.setCharacterEncoding("utf-8");
+            req.setCharacterEncoding("utf-8");
 
             UnifiedOrder order = this.wxpayFactory.newUnifiedOrder()
                 .setBody            (needString(req, BODY)                      )

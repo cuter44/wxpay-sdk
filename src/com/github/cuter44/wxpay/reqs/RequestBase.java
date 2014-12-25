@@ -20,22 +20,23 @@ import static com.github.cuter44.wxpay.util.XMLParser.parseXML;
 
 /**
  * @author galin<cuter44@foxmail.com>
- * @date 2014/6/18
+ * @date 2014/12/25
  */
 public abstract class RequestBase
 {
     protected static final String KEY_APPID         = "appid";
     protected static final String KEY_SIGN          = "sign";
     protected static final String KEY_KEY           = "KEY";
-    protected static final String KEY_RETURN_CODE   = "return_code";
-    protected static final String KEY_RETURN_MSG    = "return_msg";
-    protected static final String KEY_ERR_CODE      = "err_code";
-    protected static final String KEY_ERR_CODE_DES  = "err_code_des";
     protected static final String KEY_NOTIFY_URL    = "notify_url";
     protected static final String KEY_NONCE_STR     = "nonce_str";
 
-    protected static final String VALUE_SUCCESS = "SUCCESS";
-    protected static final String VALUE_FAIL    = "FAIL";
+    //protected static final String KEY_RETURN_CODE   = "return_code";
+    //protected static final String KEY_RETURN_MSG    = "return_msg";
+    //protected static final String KEY_ERR_CODE      = "err_code";
+    //protected static final String KEY_ERR_CODE_DES  = "err_code_des";
+
+    //protected static final String VALUE_SUCCESS = "SUCCESS";
+    //protected static final String VALUE_FAIL    = "FAIL";
 
     protected static CryptoBase crypto = CryptoBase.getInstance();
 
@@ -92,6 +93,7 @@ public abstract class RequestBase
 
   // SIGN
     /** sign
+     * SUB-CLASS MUST IMPLEMENT THIS METHOD TO BE CALLBACKED.
      * @exception UnsupportedOperationException if <code>sign_type</code> is other than <code>MD5</code>
      * @exception IllegalStateException if <code>Key</code> or something else (related to algorithm) not found
      */
@@ -187,11 +189,14 @@ public abstract class RequestBase
     /** Execute the constructed query
      */
     public abstract ResponseBase execute()
-        throws WxpayException, UnsupportedOperationException;
-;
+        throws WxpayException, WxpayProtocolException, UnsupportedOperationException;
 
+    /**
+     * @exception WxpayException never occur, since 0.1.0 WxpayException is parsed by ResponseBase.getErrorCode()
+     * @exception WxpayProtocolException never occur, since 0.1.0 WxpayProtocolException is parsed by ResponseBase.getErrorCode()
+     */
     public ResponseBase execute(String urlBase, List<String> paramNames)
-        throws WxpayException
+        throws WxpayException, WxpayProtocolException
     {
         try
         {
@@ -208,17 +213,17 @@ public abstract class RequestBase
 
             prop.putAll(parseXML(content));
 
-            if (VALUE_FAIL.equals(prop.getProperty(KEY_RETURN_CODE)))
-                throw(
-                    new WxpayProtocolException(
-                        prop.getProperty(KEY_RETURN_MSG)
-                ));
+            //if (VALUE_FAIL.equals(prop.getProperty(KEY_RETURN_CODE)))
+                //throw(
+                    //new WxpayProtocolException(
+                        //prop.getProperty(KEY_RETURN_MSG)
+                //));
 
-            if (VALUE_FAIL.equals(prop.getProperty(KEY_ERR_CODE)))
-                throw(
-                    new WxpayException(
-                        prop.getProperty(KEY_ERR_CODE)
-                ));
+            //if (VALUE_FAIL.equals(prop.getProperty(KEY_ERR_CODE)))
+                //throw(
+                    //new WxpayException(
+                        //prop.getProperty(KEY_ERR_CODE)
+                //));
 
             return(new ResponseBase(content, prop));
         }
