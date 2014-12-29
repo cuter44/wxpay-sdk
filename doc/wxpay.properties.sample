@@ -1,0 +1,14 @@
+# These 4 parameters are described in page#1 in offical doc.
+# Remain their keys and change and fill with your own one.
+# You can also pass these parameters using the SAME keys programtically.
+appid=wx67f201a851066c5c
+SECRET=9efe892ad890a5aa61e3xxxxxxxxxxxx
+mch_id=10027922
+KEY=gdkxzxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+notify_url=http://weixin.uutime.cn/wxpay/notify.api
+
+# You can also fill other required but annoying parameter here.
+# Parameters passed by config file WILL BE OVERRIDED by it passed inline.
+
+# After all, don't forget to change filename to wxpay.properties ^_^
