@@ -13,6 +13,8 @@ import com.github.cuter44.nyafx.text.*;
 import com.github.cuter44.wxpay.*;
 
 /**
+ * @deprecate Use SnsapiBase instead.
+ * @see SnsapiBase
  * This servlet parses params from <code>/wxpay.properties</code>
  * and returns client's <code>openid</code> facing the <code>appid</code>
  * Here how it goes:

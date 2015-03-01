@@ -27,6 +27,7 @@ public abstract class RequestBase
     protected static final String KEY_APPID         = "appid";
     protected static final String KEY_SIGN          = "sign";
     protected static final String KEY_KEY           = "KEY";
+    protected static final String KEY_SECRET        = "SECRET";
     protected static final String KEY_NOTIFY_URL    = "notify_url";
     protected static final String KEY_NONCE_STR     = "nonce_str";
 

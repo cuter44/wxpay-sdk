@@ -45,6 +45,24 @@
     <url-pattern>/jsapi-signer.api</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>SnsapiBase</servlet-name>
+    <servlet-class>com.github.cuter44.wxpay.servlet.SnsapiBase</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SnsapiBase</servlet-name>
+    <url-pattern>/snsapi-base.api</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>SnsapiUserinfo</servlet-name>
+    <servlet-class>com.github.cuter44.wxpay.servlet.SnsapiUserinfo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SnsapiUserinfo</servlet-name>
+    <url-pattern>/snsapi-userinfo.api</url-pattern>
+  </servlet-mapping>
+
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>

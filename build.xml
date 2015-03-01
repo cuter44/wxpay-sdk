@@ -19,7 +19,7 @@
   <property name="rtlibdir" value="lib" />
   <property name="javadocdir" value="javadoc" />
   <property name="destdir" value="bin" />
-  <property name="version" value="0.1.0" />
+  <property name="version" value="0.2.0" />
   <property name="wxpay-api-version" value="3.3.7" />
 
   <property name="webdir" value="web" />
@@ -93,7 +93,7 @@
   
   <!-- 生成javadoc -->
   <target name="javadoc" description="生成javadoc">
-    <javadoc sourcepath="${srcdir}" destdir="${javadocdir}" private="true" classpathref="classpath" encoding="utf-8"/>
+    <javadoc sourcepath="${srcdir}" destdir="${javadocdir}/${version}" private="true" classpathref="classpath" encoding="utf-8"/>
   </target>
 
   <!-- jar -->
