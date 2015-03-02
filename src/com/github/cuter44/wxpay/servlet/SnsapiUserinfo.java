@@ -22,14 +22,14 @@ import com.github.cuter44.wxpay.resps.*;
  *
  * <b>直至微信6.0为止都无法使用 Ajax 调用此方法</b>, 该尿性是由微信客户端造成的.
  *
- * <pre>
+ * <pre style="font-size:12px">
+
+    GET /snsapi-userinfo.api
     取得 openid, 头像等
 
-    GET /get-openid.api
-
     <strong>参数</strong>
-    <i>code    :string , 从 open.weixin.qq.com 跳转时跳入, 无需客户端处理.</i>
-    redir   :url    , 可选, 允许带参数, 在 QueryString 中附加 openid=:openid 重定向. <b>请勿用作授权.</b>
+    <i>code    :string , 从 open.weixin.qq.com 跳转时带入, 无需客户端处理.</i>
+    redir   :url    , 可选, 允许带参数, 在 QueryString 中附加 openid=:openid 重定向. <b>请勿用作用户身份验证.</b>
 
     <strong>响应</strong>
     <i>当未附带 <code>redir</code> 参数时:</i>

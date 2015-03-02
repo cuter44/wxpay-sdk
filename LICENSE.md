@@ -16,3 +16,4 @@ Also names below are memorized and honoured:
 
 _陌芨_ , a bothersome girl, now leaving for her happiness in faith.  
 _negi_ , front-end engineer, contributor for this project, the js part.  
+_zongr_ , sponser of this project, by providing an advance public account.
