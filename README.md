@@ -1,4 +1,7 @@
-# 微信支付服务器端SDK for Java / wx-pay seller-side sdk for Java  
+# 微信支付服务器端SDK for Java / wx-pay sdk for JavaEE  
+# 以及 微信公众平台SDK for Java / wx-mp sdk for JavaEE  
+
+> yet another wheel for wx (╯‵д′)╯︵┻━┻
 
 ## Release
 
@@ -6,7 +9,7 @@
 
 ## License & Acknokledgement/授权 & 鸣谢
 
-see LICENSE.md
+see [LICENSE.md](LICENSE.md)
 
 ## Disclaimer/免责声明
 
@@ -14,7 +17,7 @@ Though I made effort to not stealing your money or any secret about your wxpay a
 
 作者不对使用代码所带来的直接或间接损失负责. 由于源代码是公开的, 检查和确保代码的安全性是属于使用者的职责. 请时刻清醒地意识这一点.  
 
-## Tutorial/教程
+## Tutorial/使用说明
 
 Frist of all, ensure you have `jdk` and `apache-ant`.  
 `Oracle-HotSpot 1.7` and `apache-ant-1.9.2` are applied in development environment, all goes well.  
@@ -23,16 +26,16 @@ Besides, other runtime libraries are required, which are included in `lib` direc
 
 1. Generate jar file
 
-run `ant jar`
-then there will be the `wxpay-sdk-x.y.z.jar` in project root, where xyz is version code.
+   run `ant jar`
+   then there will be the `wxpay-sdk-x.y.z.jar` in project root, where xyz is version code.
 
 2. Config
 
-add these to your classpath:
-* the jar-file mentioned above  
-* jar-files in `lib/`, which are depended  
-* in the right above step, 'fastjson-1.1.35.jar' and `nyafx-servlet-2.3.0.jar` can be skip if you don't use provided servlet  
-* `wxpay.properties`, whose schema are provided in `doc/wxpay.properties.sample`  
+   add these to your classpath:
+   * the jar-file mentioned above  
+   * jar-files in `lib/`, which are depended  
+   * in the right above step, 'fastjson-1.1.35.jar' and `nyafx-servlet-2.3.0.jar` can be skip if you don't use provided servlet  
+   * `wxpay.properties`, whose schema are provided in `doc/wxpay.properties.sample`  
 
 Thanks to GFW, it is such a tough thing to upload binary release to Github. Sorry for that.  
 
@@ -42,10 +45,6 @@ Thanks to GFW, it is such a tough thing to upload binary release to Github. Sorr
 1. 编译: 执行 `ant jar`, 然后你就有个jar了....  
 2. 配置: 将那个jar以及lib里的jar加到你的classpath, 然后还需要一个配置文件, 怎么写参见 `doc/wxpay.properties.sample`  
 3. 如果不使用SDK提供的servlet, 那么在上一步中的 `fastjson-1.1.35.jar` `nyafx-servlet-2.3.0.jar` 不是依赖项.
-
-## Turotial/使用说明
-
-(突然发现这个东西复杂到不知道从何写起 Q▽Q
 
 ### Configurate/配置  
 
@@ -86,7 +85,7 @@ SDK 中提供了一个工厂方法用于快速地创建请求. 这个工厂方�
 
 样例如下:
 
-```Java
+````Java
 /* file: src/com/github/cuter44/wxpay/servlet/JSAPISigner.java  (part)
  * 这是一个 servlet, 接受前端传入的商品名称,价格和客户端openid(如果服务器知道这个参数的话则不必要从前端获取)
  * 然后依次进行第一步和第二步的前半部分. 也就是说这个接口返回最后JS调起支付所需要的 JSON 对象.
@@ -129,9 +128,9 @@ SDK 中提供了一个工厂方法用于快速地创建请求. 这个工厂方�
             resp.setStatus(500);
             ex.printStackTrace(resp.getWriter());
         }
-```
+````
 
-```javascript
+````javascript
 /* file: web/demo-pay.jsp
  * 包含调起支付的 JS 样例
  */
@@ -147,7 +146,7 @@ SDK 中提供了一个工厂方法用于快速地创建请求. 这个工厂方�
             // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg 将在用户支付成功后返回 ok，但幵丌保证它绝对可靠。
           }
         );
-```
+````
 
 ### Native
 
@@ -162,7 +161,7 @@ SDK 中提供了一个工厂方法用于快速地创建请求. 这个工厂方�
 `src/com/github/cuter44/wxpay/servlet/WxpayNotifyGatewayServlet.java` `src/com/github/cuter44/wxpay/WxpayNotifyPublisher.java` 提供了一套简单的事件回调方法.
 要使用这个机制, 请参考 `doc/web.xml` 进行配置. 然后实现并注册监听器:  
 
-```
+````
             WxpayNotifyPublisher.getDefaultInstance().addListener(
                 new WxpayNotifyListener(){
                     @Override
@@ -177,13 +176,31 @@ SDK 中提供了一个工厂方法用于快速地创建请求. 这个工厂方�
                     }
                 }
             );
-```
+````
+
+## Media Publicity / 公众平台
+
+因为微信 API 和文档糅杂的缘故, 这个 SDK 从 Mar 2015 开始支持 MP 的接口, 目前支持的接口如下:
+
+ * 网页授权获取用户基本信息 
+   [spec↗](http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html)
+   [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.2.0/com/github/cuter44/wxpay/servlet/SnsapiUserinfo.html)
+   & [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.2.0/com/github/cuter44/wxpay/servlet/SnsapiBase.html)
+ * 获取access token 
+   [spec↗](http://mp.weixin.qq.com/wiki/11/0e4b294685f817b95cbed85ba5e82b8f.html)
+   [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.2.1/com/github/cuter44/wxpay/reqs/TokenClientCredential.html)
+ * 微信JSSDK支持
+   [spec↗](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html)
+   [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.2.1/com/github/cuter44/wxpay/servlet/JSSDKConfig.html)
+   
+
 
 ## Detailed docs/详细文档
 
 Thank you for recognition of the early version of wxpay-sdk/utility. At the time I write down this line, only few basic API are covered.
-If these cannot fulfill your desire, you are welcomed to participate in or send me a text to keep on.
+If these cannot fulfill your desire, you are welcomed to participate in or send me a text to keep on. Usage demo are also welcomed.
 
 For questions with weixin-pay, ask your search engineer. Or refer to [http://mp.weixin.qq.com/wiki/](http://mp.weixin.qq.com/wiki/) , mostly it helps you nothing.  
-For javadoc, run `ant javadoc`(recommended), or visit [http://cuter44.github.io/wxpay-sdk/javadoc/](http://cuter44.github.io/wxpay-sdk/javadoc/).  
-For bugs/issues, thanks for visiting [https://github.com/cuter44/wxpay-sdk/issues](https://github.com/cuter44/wxpay-sdk/issues)  
+For javadoc, run `ant javadoc`(recommended), or visit [http://cuter44.github.io/wxpay-sdk/javadoc/](http://cuter44.github.io/wxpay-sdk/javadoc/0.2.0/) (recent version may be available, you can just take a try).  
+For bugs/issues, thanks for submitting on [https://github.com/cuter44/wxpay-sdk/issues](https://github.com/cuter44/wxpay-sdk/issues)  
+Gitter powered: [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cuter44/wxpay-sdk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)

@@ -10,44 +10,33 @@ import com.github.cuter44.wxpay.*;
 import com.github.cuter44.wxpay.constants.*;
 import com.github.cuter44.wxpay.resps.*;
 
-public class SnsUserinfo
+public class JSSDKGetticket
 {
   // KEYS
-    public static final String URL_API_BASE = "https://api.weixin.qq.com/sns/userinfo";
+    public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
 
   // CONF
     protected String accessToken;
-    protected String openid;
 
   // CONSTRUCT
-    public SnsUserinfo(String accessToken, String openid)
+    public JSSDKGetticket(String accessToken)
     {
         this.accessToken = accessToken;
-        this.openid = openid;
-
-        return;
-    }
-
-    public SnsUserinfo(SnsOAuthAccessTokenResponse resp)
-    {
-        this.accessToken = resp.getAccessToken();
-        this.openid = resp.getOpenid();
 
         return;
     }
 
   // EXECUTE
-    public SnsUserinfoResponse execute()
+    public JSSDKGetticketResponse execute()
         throws IOException
     {
         String url = new URLBuilder()
             .appendPath(URL_API_BASE)
             .appendParam("access_token" , this.accessToken)
-            .appendParam("openid"       , this.openid)
-            .appendParam("lang"         , "zh_CN")
+            .appendParam("type"         , "jsapi")
             .toString();
 
-        String strResp = new String(
+        String respJson = new String(
             Request.Get(url)
                 .execute()
                 .returnContent()
@@ -55,7 +44,7 @@ public class SnsUserinfo
             "utf-8"
         );
 
-        return(new SnsUserinfoResponse(strResp));
+        return(new JSSDKGetticketResponse(respJson));
     }
 
 }

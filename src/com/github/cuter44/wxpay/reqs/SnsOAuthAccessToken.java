@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import com.github.cuter44.nyafx.text.*;
 import org.apache.http.client.fluent.*;
+import com.alibaba.fastjson.*;
 
 import com.github.cuter44.wxpay.*;
 import com.github.cuter44.wxpay.constants.*;
@@ -50,12 +51,12 @@ public class SnsOAuthAccessToken
             .appendParam("grant_type"   , "authorization_code")
             .toString();
 
-        String strJson = Request.Get(url)
+        String strResp = Request.Get(url)
             .execute()
             .returnContent()
             .asString();
 
-        return(new SnsOAuthAccessTokenResponse(strJson));
+        return(new SnsOAuthAccessTokenResponse(strResp));
     }
 
 }

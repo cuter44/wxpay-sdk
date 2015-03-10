@@ -19,7 +19,7 @@
   <property name="rtlibdir" value="lib" />
   <property name="javadocdir" value="javadoc" />
   <property name="destdir" value="bin" />
-  <property name="version" value="0.2.0" />
+  <property name="version" value="0.3.0" />
   <property name="wxpay-api-version" value="3.3.7" />
 
   <property name="webdir" value="web" />
@@ -99,7 +99,7 @@
   <!-- jar -->
   <target name="jar" description="jar it!">
     <antcall target="build-all" />
-    <jar basedir="${destdir}" destfile="${ant.project.name}-${version}.jar" />
+    <jar basedir="${destdir}" excludes="wxpay*.properties" destfile="${ant.project.name}-${version}.jar" />
   </target>
 
   <!-- 调试 -->

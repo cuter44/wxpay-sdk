@@ -8,28 +8,22 @@ import java.net.MalformedURLException;
 
 import com.alibaba.fastjson.*;
 
-public class SnsUserinfoResponse
+public class SnsUserinfoResponse extends WxmpResponseBase
 {
+  // CONSTANTS
     public static final String KEY_OPENID       = "openid";
     public static final String KEY_NICKNAME     = "nickname";
     public static final String KEY_HEADIMGURL   = "headimgurl";
 
-    public JSONObject json;
-
+  // CONSTRUCT
     public SnsUserinfoResponse(String jsonString)
     {
-        this.json = JSON.parseObject(jsonString);
+        super(jsonString);
 
         return;
     }
 
-    public String getProperty(String key)
-    {
-        return(
-            this.json.getString(key)
-        );
-    }
-
+  // ACCESSOR
     public String getOpenid()
     {
         return(

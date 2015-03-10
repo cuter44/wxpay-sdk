@@ -63,6 +63,15 @@
     <url-pattern>/snsapi-userinfo.api</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>JSSDKConfig</servlet-name>
+    <servlet-class>com.github.cuter44.wxpay.servlet.JSSDKConfig</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JSSDKConfig</servlet-name>
+    <url-pattern>/jssdk-config.api</url-pattern>
+  </servlet-mapping>
+
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>

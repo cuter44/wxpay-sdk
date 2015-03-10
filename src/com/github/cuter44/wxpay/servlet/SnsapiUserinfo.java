@@ -16,7 +16,7 @@ import com.github.cuter44.wxpay.resps.*;
 
 /** 网页授权(snsapi_userinfo)的基础实现, 为网页前端取得当前用户的 openid 及其他信息.
  *
- * 关于该 servlet 的工作流程请参见 {@link http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html }
+ * 关于该 servlet 的工作流程请参见 {@link http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html 网页授权获取用户基本信息↗}
  *
  * 需要在微信客户端上执行
  *
@@ -49,10 +49,11 @@ public class SnsapiUserinfo extends HttpServlet
 {
     protected static final String KEY_APPID     = "appid";
     protected static final String KEY_SECRET    = "SECRET";
-    protected static final String KEY_OPENID    = "openid";
 
     protected static final String CODE      = "code";
     protected static final String REDIR     = "redir";
+
+    protected static final String OPENID    = "openid";
 
     protected String appid;
     protected String secret;
@@ -94,7 +95,7 @@ public class SnsapiUserinfo extends HttpServlet
     {
         JSONObject json = snsUserinfoResp.json;
 
-        String openid = json.getString(KEY_OPENID);
+        String openid = json.getString(OPENID);
         if (openid == null)
         {
             resp.setStatus(500);
@@ -116,7 +117,7 @@ public class SnsapiUserinfo extends HttpServlet
 
         // else
         String rebuild = URLParser.fromURL(redir)
-            .setParameter(KEY_OPENID, openid)
+            .setParameter(OPENID, openid)
             .toURL();
         resp.sendRedirect(rebuild);
 
