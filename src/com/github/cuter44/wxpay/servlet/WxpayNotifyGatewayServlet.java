@@ -15,10 +15,22 @@ import com.github.cuter44.wxpay.WxpayNotifyListener;
 
 public class WxpayNotifyGatewayServlet extends HttpServlet
 {
-    protected WxpayNotifyPublisher gateway = WxpayNotifyPublisher.getDefaultInstance();
+    protected WxpayNotifyPublisher gateway;
 
-    // FOR TEST ONLY
-    // QUOTE ME ON PRODUCE ENVIRONMENT
+    /** 接收到通知时的回调方法
+     * 默认实现是调度 WxpayNotifyPublisher.getInstance(). 进行处理
+     * 覆盖此方法可以实现自己的通知处理逻辑.
+     */
+    public boolean handle(Notify n)
+    {
+        return(
+            this.gateway.publish(n)
+        );
+    }
+
+    /** 默认初始化方法, 读取并配置调试开关
+     * 覆盖此方法可以删除对 web.xml 配置的访问, 以及删除对 WxpayNotifyPublisher 的访问(报告 NullPointerException)
+     */
     @Override
     public void init(ServletConfig config)
     {
@@ -57,6 +69,8 @@ public class WxpayNotifyGatewayServlet extends HttpServlet
                 }
             );
         }
+
+        this.gateway = WxpayNotifyPublisher.getDefaultInstance();
     }
 
     @Override
@@ -73,9 +87,7 @@ public class WxpayNotifyGatewayServlet extends HttpServlet
         Properties parsedProp = parseXML(reqBody);
         Notify n = new Notify(null, parsedProp);
 
-        System.out.println(parsedProp);
-
-        if (gateway.publish(n))
+        if (this.handle(n))
             out.print("<xml><return_code>SUCCESS</return_code></xml>");
         // else
         out.print("<xml><return_code>FAIL</return_code><return_msg>NO_HANDLER_REPORTED</return_msg></xml>");

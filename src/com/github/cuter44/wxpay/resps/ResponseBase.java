@@ -26,7 +26,7 @@ public class ResponseBase
     public static final String KEY_ERR_CODE     = "err_code";
     public static final String KEY_ERR_CODE_DES = "err_code_des";
 
-    public static final String VALUE_SUCCESS    = "VALUE_SUCCESS";
+    public static final String VALUE_SUCCESS    = "SUCCESS";
     public static final String VALUE_FAIL       = "FAIL";
 
     protected static CryptoBase crypto = CryptoBase.getInstance();

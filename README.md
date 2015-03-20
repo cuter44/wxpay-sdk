@@ -184,14 +184,14 @@ SDK 中提供了一个工厂方法用于快速地创建请求. 这个工厂方�
 
  * 网页授权获取用户基本信息 
    [spec↗](http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html)
-   [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.2.0/com/github/cuter44/wxpay/servlet/SnsapiUserinfo.html)
-   & [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.2.0/com/github/cuter44/wxpay/servlet/SnsapiBase.html)
+   [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.3.0/com/github/cuter44/wxpay/servlet/SnsapiUserinfo.html)
+   & [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.3.0/com/github/cuter44/wxpay/servlet/SnsapiBase.html)
  * 获取access token 
    [spec↗](http://mp.weixin.qq.com/wiki/11/0e4b294685f817b95cbed85ba5e82b8f.html)
-   [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.2.1/com/github/cuter44/wxpay/reqs/TokenClientCredential.html)
+   [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.3.0/com/github/cuter44/wxpay/reqs/TokenClientCredential.html)
  * 微信JSSDK支持
    [spec↗](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html)
-   [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.2.1/com/github/cuter44/wxpay/servlet/JSSDKConfig.html)
+   [doc↗](http://cuter44.github.io/wxpay-sdk/javadoc/0.3.0/com/github/cuter44/wxpay/servlet/JSSDKConfig.html)
    
 
 

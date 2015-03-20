@@ -16,7 +16,7 @@ import com.github.cuter44.wxpay.resps.*;
 
 /** 网页授权(snsapi_base)的基础实现, 为网页前端取得当前用户的 openid.
  *
- * 关于该 servlet 的工作流程请参见 {@link http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html 网页授权获取用户基本信息↗}
+ * 关于该 servlet 的工作流程请参见 {<a href="http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html">网页授权获取用户基本信息↗</a>
  *
  * 需要在微信客户端上执行
  *

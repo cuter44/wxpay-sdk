@@ -16,6 +16,8 @@ public class Notify extends ResponseBase
 {
   // CONSTANTS
     //protected Boolean validity = null;
+    public static final String KEY_OPENID       = "openid";
+    public static final String KEY_OUT_TRADE_NO = "out_trade_no";
 
     public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
         "appid",
@@ -33,13 +35,11 @@ public class Notify extends ResponseBase
         "out_trade_no",
         "result_code",
         "return_code",
-        "return_code",
-        "return_msg",
         "return_msg",
         "time_end",
         "total_fee",
         "transaction_id",
-        "trde_type"
+        "trade_type"
     );
 
 
@@ -78,5 +78,20 @@ public class Notify extends ResponseBase
     }
 
   // PROPERTY
+    public String getOpenid()
+    {
+        return(
+            this.getProperty(KEY_OPENID)
+        );
+    }
+
+    public String getOutTradeNo()
+    {
+        return(
+            this.getProperty(KEY_OUT_TRADE_NO)
+        );
+    }
+
+
 
 }

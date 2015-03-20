@@ -18,7 +18,7 @@ import com.github.cuter44.wxpay.resps.*;
 
 /** JS-SDK config 签名 API
  *
- * 为 JS-SDK config 提供签名支持, 工作模式参见 {@link http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html#.E6.AD.A5.E9.AA.A4.E4.B8.89.EF.BC.9A.E9.80.9A.E8.BF.87config.E6.8E.A5.E5.8F.A3.E6.B3.A8.E5.85.A5.E6.9D.83.E9.99.90.E9.AA.8C.E8.AF.81.E9.85.8D.E7.BD.AE 微信JSSDK说明文档↗}
+ * 为 JS-SDK config 提供签名支持, 工作模式参见 <a href="http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html#.E6.AD.A5.E9.AA.A4.E4.B8.89.EF.BC.9A.E9.80.9A.E8.BF.87config.E6.8E.A5.E5.8F.A3.E6.B3.A8.E5.85.A5.E6.9D.83.E9.99.90.E9.AA.8C.E8.AF.81.E9.85.8D.E7.BD.AE">微信JSSDK说明文档↗</a>
  *
  * <pre style="font-size:12px">
 
