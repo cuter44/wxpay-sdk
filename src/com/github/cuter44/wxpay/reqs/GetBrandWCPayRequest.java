@@ -13,7 +13,7 @@ import com.github.cuter44.wxpay.constants.*;
 import com.github.cuter44.wxpay.resps.*;
 //import com.github.cuter44.wxpay.helper.*;
 
-public class GetBrandWCPayRequest extends RequestBase
+public class GetBrandWCPayRequest extends WxpayRequestBase
 {
     public static final String KEY_GBWCPR_APP_ID    = "appId";
     public static final String KEY_GBWCPR_NONCE_STR = "nonceStr";
@@ -139,7 +139,7 @@ public class GetBrandWCPayRequest extends RequestBase
      * Overrided method for key changing
      */
     @Override
-    public RequestBase setNonceStr(String nonceStr)
+    public WxpayRequestBase setNonceStr(String nonceStr)
     {
         this.setProperty(KEY_GBWCPR_NONCE_STR, nonceStr);
 
@@ -148,7 +148,7 @@ public class GetBrandWCPayRequest extends RequestBase
 
     /** 商户生成，从 1970 年 1 月 1 日 00：00：00 至今的秒数
      */
-    public RequestBase setTimeStamp(Date timeStamp)
+    public WxpayRequestBase setTimeStamp(Date timeStamp)
     {
         this.setProperty(
             KEY_TIME_STAMP,
@@ -161,7 +161,7 @@ public class GetBrandWCPayRequest extends RequestBase
     /** 必须是"MD5" o(*≧▽≦)ツ
      * Overrided method for key changing
      */
-    public RequestBase setSignType(String signType)
+    public WxpayRequestBase setSignType(String signType)
     {
         this.setProperty(KEY_SIGN_TYPE, signType);
 
@@ -171,7 +171,7 @@ public class GetBrandWCPayRequest extends RequestBase
     /** 统一支付接口返回的 prepay_id 参数值
      * @param paxkage prepay_id, part after the equal
      */
-    public RequestBase setPackage(String paxkage)
+    public WxpayRequestBase setPackage(String paxkage)
     {
         this.setProperty(KEY_PACKAGE, "prepay_id="+paxkage);
 

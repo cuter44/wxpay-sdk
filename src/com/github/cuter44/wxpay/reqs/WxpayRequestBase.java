@@ -22,7 +22,7 @@ import static com.github.cuter44.wxpay.util.XMLParser.parseXML;
  * @author galin<cuter44@foxmail.com>
  * @date 2014/12/25
  */
-public abstract class RequestBase
+public abstract class WxpayRequestBase
 {
     protected static final String KEY_APPID         = "appid";
     protected static final String KEY_SIGN          = "sign";
@@ -44,7 +44,7 @@ public abstract class RequestBase
     protected static final int NONCE_STR_BYTES = 8;
 
   // CONSTRUCT
-    public RequestBase(Properties aConf)
+    public WxpayRequestBase(Properties aConf)
     {
         this.conf = aConf;
         this.setNonceStr(
@@ -67,13 +67,13 @@ public abstract class RequestBase
     /**
      * chain supported
      */
-    public RequestBase setProperty(String key, String value)
+    public WxpayRequestBase setProperty(String key, String value)
     {
         this.conf.setProperty(key, value);
         return(this);
     }
 
-    //public RequestBase setCDATAProperty(String key, String value)
+    //public WxpayRequestBase setCDATAProperty(String key, String value)
     //{
         //this.conf.setProperty(key, "<![CDATA["+value+"]]>");
         //return(this);
@@ -83,14 +83,14 @@ public abstract class RequestBase
      * batch setProperty
      * @param aConf a Map contains key-value pairs, where key must be String, and values must implement toString() at least.
      */
-    public RequestBase setProperties(Map aConf)
+    public WxpayRequestBase setProperties(Map aConf)
     {
         this.conf.putAll(aConf);
         return(this);
     }
 
   // BUILD
-   public abstract RequestBase build();
+   public abstract WxpayRequestBase build();
 
   // SIGN
     /** sign
@@ -98,7 +98,7 @@ public abstract class RequestBase
      * @exception UnsupportedOperationException if <code>sign_type</code> is other than <code>MD5</code>
      * @exception IllegalStateException if <code>Key</code> or something else (related to algorithm) not found
      */
-    public abstract RequestBase sign()
+    public abstract WxpayRequestBase sign()
         throws UnsupportedEncodingException, UnsupportedOperationException, IllegalStateException;
 
     /**
@@ -235,14 +235,14 @@ public abstract class RequestBase
     }
 
   // MISC
-    public RequestBase setAppid(String appid)
+    public WxpayRequestBase setAppid(String appid)
     {
         this.setProperty(KEY_APPID, appid);
 
         return(this);
     }
 
-    public RequestBase setNonceStr(String nonceStr)
+    public WxpayRequestBase setNonceStr(String nonceStr)
     {
         this.setProperty(KEY_NONCE_STR, nonceStr);
 

@@ -1,8 +1,8 @@
-package com.github.cuter44.wxpay.resps;
+package com.github.cuter44.wxmp.resps;
 
 import com.alibaba.fastjson.*;
 
-import com.github.cuter44.wxpay.WxmpException;
+import com.github.cuter44.wxmp.WxmpException;
 
 public class WxmpResponseBase
 {
@@ -15,19 +15,12 @@ public class WxmpResponseBase
     public WxmpResponseBase(String jsonString)
         throws WxmpException
     {
-        try
-        {
-            this.json = JSON.parseObject(jsonString);
-        }
-        catch (Exception ex)
-        {
-            throw(new IllegalArgumentException("Malformed json input:"+jsonString));
-        }
+        this.json = JSON.parseObject(jsonString);
 
-        Integer errcode = this.getErrcode();
+        Integer errcode = this.json.getInteger(ERRCODE);
 
         if ((errcode != null) && !(errcode.equals(0)))
-            throw(new WxmpException(errcode, this.getErrmsg()));
+            throw(new WxmpException(errcode, this.json.getString(ERRMSG)));
 
         return;
     }
@@ -49,21 +42,4 @@ public class WxmpResponseBase
             this.json.getString(key)
         );
     }
-
-    /** @return errcode if error occured, otherwise null.
-     */
-    public Integer getErrcode()
-    {
-        return(
-            this.json.getInteger(ERRCODE)
-        );
-    }
-
-    public String getErrmsg()
-    {
-        return(
-            this.json.getString(ERRMSG)
-        );
-    }
-
 }

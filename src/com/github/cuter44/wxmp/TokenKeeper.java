@@ -1,9 +1,9 @@
-package com.github.cuter44.wxpay;
+package com.github.cuter44.wxmp;
 
 import java.io.IOException;
 
-import com.github.cuter44.wxpay.reqs.*;
-import com.github.cuter44.wxpay.resps.*;
+import com.github.cuter44.wxmp.reqs.*;
+import com.github.cuter44.wxmp.resps.*;
 import com.alibaba.fastjson.*;
 
 /** Token keeper

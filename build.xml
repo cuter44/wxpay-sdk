@@ -74,6 +74,7 @@
       <fileset dir="${srcdir}">
         <include name="**/*.xml" />
         <include name="**/*.properties" />
+        <include name="**/*.crt" />
       </fileset>
     </copy>
   </target>

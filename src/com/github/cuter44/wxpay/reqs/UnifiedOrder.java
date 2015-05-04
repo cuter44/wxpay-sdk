@@ -10,7 +10,7 @@ import com.github.cuter44.wxpay.constants.*;
 import com.github.cuter44.wxpay.resps.*;
 //import com.github.cuter44.wxpay.helper.*;
 
-public class UnifiedOrder extends RequestBase
+public class UnifiedOrder extends WxpayRequestBase
 {
   // KEYS
     public static final String URL_API_BASE = "https://api.mch.weixin.qq.com/pay/unifiedorder";
