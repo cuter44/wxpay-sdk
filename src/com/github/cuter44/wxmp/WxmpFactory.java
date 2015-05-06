@@ -6,6 +6,9 @@ import java.util.Properties;
 import java.util.MissingResourceException;
 
 //import com.github.cuter44.wxpay.reqs.*;
+import com.github.cuter44.wxmp.util.CertificateLoader;
+import com.github.cuter44.wxmp.reqs.*;
+import com.github.cuter44.wxmp.util.*;
 
 /** 微信MP工厂
  * <br />
@@ -42,18 +45,33 @@ public class WxmpFactory
      */
     public WxmpFactory initTokenKeeper(String appid, String secret)
     {
-        this.tokenKeeper = new TokenKeeper(appid, secret);
+        this.tokenKeeper = TokenKeeper.getInstance(appid, secret);
 
         return(this);
     }
 
-    /** 读取配置中的 appid 和 secret 并完成初始化
+    /** Initialize TokenKeeper according to <code>conf</code>.
+     * Invoke once only.
+     * Auto invoked by <code>new WxmpFactory(Properties conf)</code> and <code>new WxmpFactory(String resource)</code>.
      */
     public WxmpFactory initTokenKeeper()
     {
         this.initTokenKeeper(
             this.conf.getProperty(KEY_APPID),
             this.conf.getProperty(KEY_SECRET)
+        );
+
+        return(this);
+    }
+
+    /** Initialize WxmpRequestBase (loading certificates) according to <code>conf</code>.
+     * Invoke once only.
+     * Auto invoked by <code>new WxmpFactory(Properties conf)</code> and <code>new WxmpFactory(String resource)</code>.
+     */
+    public WxmpFactory initRequestBase()
+    {
+        WxmpRequestBase.configDefaultHC(
+            new CertificateLoader().config(this.conf).asSSLContext()
         );
 
         return(this);
@@ -76,6 +94,7 @@ public class WxmpFactory
         this.conf = aConf;
 
         this.initTokenKeeper();
+        this.initRequestBase();
 
         return;
     }
@@ -96,6 +115,7 @@ public class WxmpFactory
             ));
 
             this.initTokenKeeper();
+            this.initRequestBase();
 
             return;
         }
@@ -137,6 +157,21 @@ public class WxmpFactory
     }
 
   // FACTORY
+    public TokenClientCredential newTokenClientCredential()
+    {
+        return(
+            new TokenClientCredential(
+                new Properties(this.conf)
+        ));
+    }
+    public TokenClientCredential newTokenClientCredential(Properties p)
+    {
+        return(
+            new TokenClientCredential(
+                buildConf(p, this.conf)
+        ));
+    }
+
     //public UnifiedOrder newUnifiedOrder()
     //{
         //return(

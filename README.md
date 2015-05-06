@@ -1,7 +1,18 @@
+> (Reserved publicity area for [SCAU-SIDC](https://github.com/scau-sidc), project's sponsor & technical support & practical wx-develop service )
+> 这个广告位留给 SCAU-SIDC](https://github.com/scau-sidc), 该项目的资助方/官方支持/资深微信开发服务提供商
+
 # 微信支付服务器端SDK for Java / wx-pay sdk for JavaEE  
 # 以及 微信公众平台SDK for Java / wx-mp sdk for JavaEE  
+# 以及 微信消息响应SDK for Java / wx-msg sdk for JavaEE(TODO)  
 
 > yet another wheel for wx (╯‵д′)╯︵┻━┻
+
+## News
+
+We are on a refactor now, please be patient and refers to [issue#5](https://github.com/cuter44/wxpay-sdk/issues/5)  
+Sorry to keep you waiting, it is a bit tough-job to make you ease :P
+
+这个项目正在重构以便于您更方便地使用. 请参阅 [issue#5](https://github.com/cuter44/wxpay-sdk/issues/5) 以了解重构进度.
 
 ## Release
 
@@ -18,6 +29,13 @@ Though I made effort to not stealing your money or any secret about your wxpay a
 作者不对使用代码所带来的直接或间接损失负责. 由于源代码是公开的, 检查和确保代码的安全性是属于使用者的职责. 请时刻清醒地意识这一点.  
 
 ## Tutorial/使用说明
+
+Detailed tutorial & guidelines are pending on our [wiki](https://github.con/cuter44/wxpay-sdk/wiki).
+Content below is partly outdated.  
+
+我们正在计划提供更完善的 [wiki](https://github.con/cuter44/wxpay-sdk/wiki). 以下内容部分已经不适用了.
+
+====
 
 Frist of all, ensure you have `jdk` and `apache-ant`.  
 `Oracle-HotSpot 1.7` and `apache-ant-1.9.2` are applied in development environment, all goes well.  
