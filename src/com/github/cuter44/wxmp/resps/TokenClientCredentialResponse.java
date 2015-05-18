@@ -8,6 +8,14 @@ import java.net.MalformedURLException;
 
 import com.alibaba.fastjson.*;
 
+/** 获取access token
+ * <br />
+ * <pre style="font-size:12px">
+    返回说明
+    access_token    获取到的凭证
+    expires_in      凭证有效时间，单位：秒
+ * </pre>
+ */
 public class TokenClientCredentialResponse extends WxmpResponseBase
 {
   // CONSTANTS
@@ -17,11 +25,13 @@ public class TokenClientCredentialResponse extends WxmpResponseBase
   // CONSTRUCT
     /** @return Creating time of this object.
      */
-    public final long tmCreate = System.currentTimeMillis();
+    public final long tmCreate;
 
     public TokenClientCredentialResponse(String jsonString)
     {
         super(jsonString);
+
+        this.tmCreate = System.currentTimeMillis();
 
         return;
     }
