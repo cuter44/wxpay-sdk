@@ -1,10 +1,10 @@
 package com.github.cuter44.wxpay.resps;
 
-public class UnifiedOrderResponse extends ResponseBase
+public class UnifiedOrderResponse extends WxpayResponseBase
 {
-    public UnifiedOrderResponse(ResponseBase resp)
+    public UnifiedOrderResponse(String respXml)
     {
-        super(resp.respString, resp.respProp);
+        super(respXml);
 
         return;
     }

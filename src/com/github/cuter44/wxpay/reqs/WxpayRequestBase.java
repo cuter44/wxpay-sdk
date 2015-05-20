@@ -6,17 +6,21 @@ import java.util.Map;
 import java.net.URL;
 import java.io.UnsupportedEncodingException;
 import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 import java.net.URISyntaxException;
+import javax.net.ssl.SSLContext;
 
 import com.github.cuter44.nyafx.crypto.*;
 import com.github.cuter44.nyafx.text.*;
-import org.apache.http.client.fluent.*;
-import org.apache.http.entity.ContentType;
+import org.apache.http.*;
+import org.apache.http.entity.*;
+import org.apache.http.impl.client.*;
+//import org.apache.http.client.*;
+import org.apache.http.client.methods.*;
 
 import com.github.cuter44.wxpay.WxpayException;
 import com.github.cuter44.wxpay.WxpayProtocolException;
-import com.github.cuter44.wxpay.resps.ResponseBase;
-import static com.github.cuter44.wxpay.util.XMLParser.parseXML;
+import com.github.cuter44.wxpay.resps.WxpayResponseBase;
 
 /**
  * @author galin<cuter44@foxmail.com>
@@ -31,17 +35,53 @@ public abstract class WxpayRequestBase
     protected static final String KEY_NOTIFY_URL    = "notify_url";
     protected static final String KEY_NONCE_STR     = "nonce_str";
 
-    protected static final String KEY_RETURN_CODE   = "return_code";
-    protected static final String KEY_RETURN_MSG    = "return_msg";
-    protected static final String KEY_ERR_CODE      = "err_code";
-    protected static final String KEY_ERR_CODE_DES  = "err_code_des";
-
-    protected static final String VALUE_SUCCESS = "SUCCESS";
-    protected static final String VALUE_FAIL    = "FAIL";
-
     protected static CryptoBase crypto = CryptoBase.getInstance();
 
+    /** Length of generated nonceStr, default to 8, in bytes
+     */
     protected static final int NONCE_STR_BYTES = 8;
+
+  // SSL
+    /** Default http client to use to send request to weixin server.
+     * Provide class-scope http client, which is used when <code>httpClient</code> is null, major for single-account use.
+     * You can tweak this with your own. This will takes effect on follow-up request whose <code>httpClient</code> is unset.
+     */
+    public static CloseableHttpClient defaultHttpClient;
+
+    /** Http client to use to send request to weixin server.
+     * Provide object-scope http client, major for multi-account use.
+     * You can directly set this field. This will takes effect on time when <code>.execute()</code> is called.
+     * It is supposed that
+     */
+    public CloseableHttpClient httpClient;
+
+    protected static CloseableHttpClient buildHttpClient(SSLContext ctx)
+    {
+        HttpClientBuilder hcb = HttpClientBuilder.create()
+            .disableAuthCaching()
+            .disableCookieManagement();
+
+        return(hcb.build());
+    }
+
+    /** Config defualt http client
+     * The existing <code>defaultHttpClient</code> will be dropped, without closing.
+     */
+    public static void configDefaultHC(SSLContext ctx)
+    {
+        defaultHttpClient = buildHttpClient(ctx);
+    }
+
+    /** Config http client
+     * The existing <code>httpClient</code> will be dropped, without closing.
+     * @return this
+     */
+    public WxpayRequestBase configHC(SSLContext ctx)
+    {
+        this.httpClient = buildHttpClient(ctx);
+
+        return(this);
+    }
 
   // CONSTRUCT
     public WxpayRequestBase(Properties aConf)
@@ -125,7 +165,7 @@ public abstract class WxpayRequestBase
         throws UnsupportedEncodingException
     {
         if (key == null)
-            throw(new IllegalArgumentException("No KEY, no sign. Please check your configuration."));
+            throw(new IllegalArgumentException("KEY required to sign, but not found."));
 
         StringBuilder sb = new StringBuilder()
             .append(this.toQueryString(paramNames))
@@ -189,49 +229,43 @@ public abstract class WxpayRequestBase
   // EXECUTE
     /** Execute the constructed query
      */
-    public abstract ResponseBase execute()
-        throws WxpayException, WxpayProtocolException, UnsupportedOperationException;
+    public abstract WxpayResponseBase execute()
+        throws WxpayException, WxpayProtocolException, IOException;
 
-    /**
-     * @exception WxpayException if <code>err_code</code> is FAIL
-     * @exception WxpayProtocolException if <code>err_code</code> is FAIL
-     */
-    public ResponseBase execute(String urlBase, List<String> paramNames)
-        throws WxpayException, WxpayProtocolException
+    protected static String toString(HttpResponse resp)
+        throws IOException
     {
-        try
-        {
-            Properties prop = new Properties();
+        HttpEntity he = resp.getEntity();
 
-            String content = Request.Post(urlBase)
-                .bodyString(
-                    this.toXml(paramNames),
-                    ContentType.create("text/xml", "utf-8")
-                )
-                .execute()
-                .returnContent()
-                .asString();
+        Long l = he.getContentLength();
+        ByteArrayOutputStream buffer = (l > 0) ? new ByteArrayOutputStream(l.intValue()) : new ByteArrayOutputStream();
+        resp.getEntity().writeTo(buffer);
 
-            prop.putAll(parseXML(content));
+        String content = buffer.toString("utf-8");
 
-            if (VALUE_FAIL.equals(prop.getProperty(KEY_RETURN_CODE)))
-                throw(
-                    new WxpayProtocolException(
-                        prop.getProperty(KEY_RETURN_MSG)
-                ));
+        return(content);
+    }
 
-            if (VALUE_FAIL.equals(prop.getProperty(KEY_ERR_CODE)))
-                throw(
-                    new WxpayException(
-                        prop.getProperty(KEY_ERR_CODE)
-                ));
+    public String executePostXML(String fullURL, String bodyXML)
+        throws IOException
+    {
+        CloseableHttpClient hc = (this.httpClient != null) ? this.httpClient : defaultHttpClient;
 
-            return(new ResponseBase(content, prop));
-        }
-        catch (IOException ex)
-        {
-            throw(new WxpayException(ex));
-        }
+        HttpPost req = new HttpPost(fullURL);
+        req.setEntity(
+            new StringEntity(
+                bodyXML,
+                ContentType.create("text/xml", "utf-8")
+            )
+        );
+
+        CloseableHttpResponse resp = hc.execute(req);
+
+        String content = toString(resp);
+
+        resp.close();
+
+        return(content);
     }
 
   // MISC

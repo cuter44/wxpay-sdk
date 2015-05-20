@@ -12,7 +12,7 @@ import com.github.cuter44.nyafx.text.*;
 
 import com.github.cuter44.wxpay.constants.*;
 
-public class Notify extends ResponseBase
+public class Notify extends WxpayResponseBase
 {
   // CONSTANTS
     //protected Boolean validity = null;
@@ -44,7 +44,7 @@ public class Notify extends ResponseBase
 
 
   // CONSTRUCT
-    public Notify(ResponseBase resp)
+    public Notify(WxpayResponseBase resp)
     {
         this(resp.respString, resp.respProp);
 

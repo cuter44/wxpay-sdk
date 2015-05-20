@@ -10,15 +10,18 @@ import com.github.cuter44.nyafx.text.*;
 
 import com.github.cuter44.wxpay.WxpayException;
 import com.github.cuter44.wxpay.WxpayProtocolException;
+import com.github.cuter44.wxpay.util.*;
 
 /** General response passed by req.execute() or alipay callback/redirect gateways
  * Actually reqs/gateways passed excatly response type, i.e. sub-class of this.
  * I'm recommending you to see the sub-class javadoc... to help you write elegant code.
+ * Notice that downloadbill's response does not inherit this class. That's ass hole.
  */
-public class ResponseBase
+public class WxpayResponseBase
 {
   // CONSTANTS
-    public static final String KEY_KEY          = "key_key";
+    public static final String KEY_KEY              = "key_key";
+    public static final String KEY_SKIP_VERIFY_SIGN = "SKIP_VERIFY_SIGN";
 
     public static final String KEY_RETURN_CODE  = "return_code";
     public static final String KEY_RETURN_MSG   = "return_msg";
@@ -61,26 +64,49 @@ public class ResponseBase
 
 
   // CONSTRUCT
-    public ResponseBase()
+    public WxpayResponseBase()
     {
         return;
     }
 
-    public ResponseBase(String aRespString)
+    /** This construstor automatically parse input as xml, and output properties. Meanwhile, detect the fails.
+     * Notice that Properties does not support hierachy, so it go down if tag names are non-unique.
+     * It is raw in present. If it really happens, a new response type and parser should be defined to cope with that.
+     */
+    public WxpayResponseBase(String xml)
+        throws WxpayProtocolException, WxpayException
     {
-        this(aRespString, null);
+        this.respString = xml;
+        this.respProp = XMLParser.parseXML(xml);
+
+        if (!this.isReturnCodeSuccess())
+            throw(
+                new WxpayProtocolException(
+                    this.respProp.getProperty(KEY_RETURN_MSG)
+            ));
+
+        if (!this.isResultCodeSuccess())
+            throw(
+                new WxpayException(
+                    this.respProp.getProperty(KEY_ERR_CODE)
+            ));
 
         return;
     }
 
-    public ResponseBase(Properties aRespProp)
+
+    /** @deprecated due to it doesn't parse and detect fails.
+     */
+    public WxpayResponseBase(Properties aRespProp)
     {
         this(null, aRespProp);
 
         return;
     }
 
-    public ResponseBase(String aRespString, Properties aRespProp)
+    /** @deprecated due to it doesn't parse and detect fails.
+     */
+    public WxpayResponseBase(String aRespString, Properties aRespProp)
     {
         this.respString = aRespString;
         this.respProp = aRespProp;
@@ -156,7 +182,7 @@ public class ResponseBase
         throws UnsupportedEncodingException
     {
         if (key == null)
-            throw(new IllegalArgumentException("No KEY, no sign. Please check your configuration."));
+            throw(new IllegalArgumentException("KEY required to sign, but not found."));
 
         StringBuilder sb = new StringBuilder()
             .append(this.toQueryString(paramNames))
@@ -218,7 +244,7 @@ public class ResponseBase
         if (this.validity != null)
             return(this.validity);
 
-        Boolean skipSign    = Boolean.valueOf(conf.getProperty("SKIP_VERIFY_NOTIFY_SIGN"));
+        Boolean skipSign    = Boolean.valueOf(conf.getProperty("SKIP_VERIFY_SIGN"));
 
         // else
         this.validity = true;

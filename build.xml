@@ -19,7 +19,7 @@
   <property name="rtlibdir" value="lib" />
   <property name="javadocdir" value="javadoc" />
   <property name="destdir" value="bin" />
-  <property name="version" value="0.3.3" />
+  <property name="version" value="0.4.0" />
   <property name="wxpay-api-version" value="3.3.7" />
 
   <property name="webdir" value="web" />
@@ -54,6 +54,7 @@
     <antcall target="copy-config" />
     <javac srcdir="${srcdir}" destdir="${destdir}" failonerror="true" debug="true" includeantruntime="false" encoding="utf-8">
       <compilerarg value="-Xlint:unchecked"/>
+      <compilerarg value="-Xlint:deprecation"/>
       <classpath refid="classpath" />
     </javac>
   </target>

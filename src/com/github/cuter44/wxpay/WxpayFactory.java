@@ -6,6 +6,7 @@ import java.util.Properties;
 import java.util.MissingResourceException;
 
 import com.github.cuter44.wxpay.reqs.*;
+import com.github.cuter44.wxmp.util.*;
 
 /** 微信支付工厂
  * <br />
@@ -15,8 +16,9 @@ public class WxpayFactory
 {
   // CONSTANT
     private static final String RESOURCE_WXPAY_PROPERTIES = "/wxpay.properties";
-    //protected static final String KEY_APPID         = "appid";
-    //protected static final String KEY_SECRET        = "SECRET";
+
+    protected static final String KEY_APPID         = "appid";
+    protected static final String KEY_SECRET        = "SECRET";
 
   // CONFIG
     protected Properties conf;
@@ -24,6 +26,54 @@ public class WxpayFactory
     public Properties getConf()
     {
         return(this.conf);
+    }
+
+  // KEEPER
+    protected TokenKeeper tokenKeeper;
+
+    public TokenKeeper getTokenKeeper()
+    {
+        return(this.tokenKeeper);
+    }
+
+    /** 如果需要从工厂生成 pay请求, 且构造方法中未传入 appid 和 secret,
+     * 则需要以此方法手动初始化 TokenKeeper. 带参的构造方法会尝试在配置完成后调用这个方法, 如果传参
+     * 包含 appid 和 secret 则无需再手动配置.
+     * TokenKeeper 为所有请求及默认实现的 servlet 保持 access token 和 jsapi ticket 的缓存及刷新服务.
+     * 必需在 servlet 初始化前完成对这个方法的调用, 并且在 WxpayFactory 生命周期中只调用一次.
+     */
+    public WxpayFactory initTokenKeeper(String appid, String secret)
+    {
+        this.tokenKeeper = TokenKeeper.getInstance(appid, secret);
+
+        return(this);
+    }
+
+    /** Initialize TokenKeeper according to <code>conf</code>.
+     * Invoke once only.
+     * Auto invoked by <code>new WxpayFactory(Properties conf)</code> and <code>new WxpayFactory(String resource)</code>.
+     */
+    public WxpayFactory initTokenKeeper()
+    {
+        this.initTokenKeeper(
+            this.conf.getProperty(KEY_APPID),
+            this.conf.getProperty(KEY_SECRET)
+        );
+
+        return(this);
+    }
+
+    /** Initialize WxmpRequestBase (loading certificates) according to <code>conf</code>.
+     * Invoke once only.
+     * Auto invoked by <code>new WxpayFactory(Properties conf)</code> and <code>new WxpayFactory(String resource)</code>.
+     */
+    public WxpayFactory initRequestBase()
+    {
+        WxpayRequestBase.configDefaultHC(
+            new CertificateLoader().config(this.conf).asSSLContext()
+        );
+
+        return(this);
     }
 
   // CONSTRUCT
@@ -41,6 +91,9 @@ public class WxpayFactory
     public WxpayFactory(Properties aConf)
     {
         this.conf = aConf;
+
+        this.initTokenKeeper();
+        this.initRequestBase();
 
         return;
     }
@@ -60,6 +113,8 @@ public class WxpayFactory
                     "utf-8"
             ));
 
+            this.initTokenKeeper();
+            this.initRequestBase();
 
             return;
         }

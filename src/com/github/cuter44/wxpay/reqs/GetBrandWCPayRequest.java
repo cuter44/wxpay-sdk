@@ -107,8 +107,7 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
 
   // EXECUTE
     @Override
-    public ResponseBase execute()
-
+    public WxpayResponseBase execute()
     {
         throw(
             new UnsupportedOperationException("This request does not execute on server side")

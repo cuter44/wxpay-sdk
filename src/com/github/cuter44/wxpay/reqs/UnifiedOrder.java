@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 
 import com.github.cuter44.wxpay.*;
 import com.github.cuter44.wxpay.constants.*;
@@ -79,11 +80,14 @@ public class UnifiedOrder extends WxpayRequestBase
   // EXECUTE
     @Override
     public UnifiedOrderResponse execute()
+        throws IOException
     {
-        return(
-            new UnifiedOrderResponse(
-                this.execute(URL_API_BASE, KEYS_PARAM_NAME)
-        ));
+        String url = URL_API_BASE;
+        String body = this.toXml(KEYS_PARAM_NAME);
+
+        String respXml = this.executePostXML(url, body);
+
+        return(new UnifiedOrderResponse(respXml));
     }
 
   // PROPERTY
