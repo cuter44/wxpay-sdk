@@ -94,7 +94,7 @@ public class OrderQueryResponse extends WxpayResponseBase {
     public int getCouponFee(){
         String sCouponFee = this.getProperty(KEY_COUPON_FEE);
 
-        if (this.getProperty(sCouponFee!=null))
+        if (sCouponFee!=null)
             return(
                 Integer.valueOf(sCouponFee)
             );

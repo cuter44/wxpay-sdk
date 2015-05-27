@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by Mklaus on 15/4/23.
  */
-public class RefundResponse extends ResponseBase {
+public class RefundResponse extends WxpayResponseBase {
 
     public static final String KEY_REFUND_ID            = "refund_id";
     public static final String KEY_REFUND_FEE           = "refund_fee";
@@ -32,8 +32,9 @@ public class RefundResponse extends ResponseBase {
     );
 
     //CONSTRUCT
-    public RefundResponse(ResponseBase resp){
-        super(resp.respString,resp.respProp);
+    public RefundResponse(String respXml)
+    {
+        super(respXml);
 
         return;
     }
@@ -77,9 +78,9 @@ public class RefundResponse extends ResponseBase {
     /** @return coupon_refund_fee in CNY fen
      */
     public int getCouponRefundFee(){
-        String sCouponRefundFee = this.getProperty(KEY_COUPON_FEE);
+        String sCouponRefundFee = this.getProperty(KEY_COUPON_REFUND_FEE);
 
-        if (this.getProperty(sCouponRefundFee!=null))
+        if (sCouponRefundFee!=null)
             return(
                 Integer.valueOf(sCouponRefundFee)
             );
