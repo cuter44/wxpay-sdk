@@ -28,15 +28,6 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>GetOpenId</servlet-name>
-    <servlet-class>com.github.cuter44.wxpay.servlet.GetOpenId</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GetOpenId</servlet-name>
-    <url-pattern>/get-openid.api</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
     <servlet-name>JSAPISigner</servlet-name>
     <servlet-class>com.github.cuter44.wxpay.servlet.JSAPISigner</servlet-class>
   </servlet>
@@ -47,7 +38,7 @@
 
   <servlet>
     <servlet-name>SnsapiBase</servlet-name>
-    <servlet-class>com.github.cuter44.wxpay.servlet.SnsapiBase</servlet-class>
+    <servlet-class>com.github.cuter44.wxmp.servlet.SnsapiBase</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SnsapiBase</servlet-name>
@@ -56,7 +47,7 @@
 
   <servlet>
     <servlet-name>SnsapiUserinfo</servlet-name>
-    <servlet-class>com.github.cuter44.wxpay.servlet.SnsapiUserinfo</servlet-class>
+    <servlet-class>com.github.cuter44.wxmp.servlet.SnsapiUserinfo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SnsapiUserinfo</servlet-name>
@@ -65,7 +56,7 @@
 
   <servlet>
     <servlet-name>JSSDKConfig</servlet-name>
-    <servlet-class>com.github.cuter44.wxpay.servlet.JSSDKConfig</servlet-class>
+    <servlet-class>com.github.cuter44.wxmp.servlet.JSSDKConfig</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>JSSDKConfig</servlet-name>
