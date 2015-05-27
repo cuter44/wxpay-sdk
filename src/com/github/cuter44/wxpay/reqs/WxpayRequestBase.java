@@ -59,7 +59,8 @@ public abstract class WxpayRequestBase
     {
         HttpClientBuilder hcb = HttpClientBuilder.create()
             .disableAuthCaching()
-            .disableCookieManagement();
+            .disableCookieManagement()
+            .setSslcontext(ctx);
 
         return(hcb.build());
     }

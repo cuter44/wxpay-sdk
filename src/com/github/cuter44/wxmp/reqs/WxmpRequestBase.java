@@ -48,7 +48,8 @@ public abstract class WxmpRequestBase
     {
         HttpClientBuilder hcb = HttpClientBuilder.create()
             .disableAuthCaching()
-            .disableCookieManagement();
+            .disableCookieManagement()
+            .setSslcontext(ctx);
 
         return(hcb.build());
     }
