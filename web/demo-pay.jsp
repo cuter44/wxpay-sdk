@@ -34,7 +34,7 @@
         if (!getParamValue("openid"))
         {
           var thisUrl = location.href;
-          location.href="http://weixin.uutime.cn/wxpay/get-openid.api?redir="+encodeURIComponent(thisUrl);
+          location.href="snsapi-base.api?redir="+encodeURIComponent(thisUrl);
         }
         else
         {
@@ -47,7 +47,7 @@
         var ajax = new XMLHttpRequest();
         ajax.open(
           "POST",
-          "http://weixin.uutime.cn/wxpay/jsapi-signer.api",
+          "jsapi-signer.api",
           false
         );
         ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
