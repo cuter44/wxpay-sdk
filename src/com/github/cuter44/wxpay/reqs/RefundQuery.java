@@ -28,11 +28,11 @@ public class RefundQuery extends WxpayRequestBase {
         "device_info",
         "mch_id",
         "nonce_str",
-        "out_trade_no",
         "out_refund_no",
+        "out_trade_no",
         "refund_id",
-        "transaction_id",
-        "sign"
+        "sign",
+        "transaction_id"
     );
 
   // CONSTRUCT
