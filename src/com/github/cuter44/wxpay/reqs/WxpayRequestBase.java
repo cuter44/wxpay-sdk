@@ -59,7 +59,8 @@ public abstract class WxpayRequestBase
     {
         HttpClientBuilder hcb = HttpClientBuilder.create()
             .disableAuthCaching()
-            .disableCookieManagement();
+            .disableCookieManagement()
+            .setSslcontext(ctx);
 
         return(hcb.build());
     }
@@ -181,24 +182,26 @@ public abstract class WxpayRequestBase
         return(sign);
     }
 
-  // TO_URL
-    /** Extract URL to execute request on client
-     */
-    public abstract String toURL()
-        throws UnsupportedOperationException;
-
     /** Provide query string to sign().
-     * toURL() may not invoke this method.
+     * This method do not parse sign, thus toURL() must not invoke this method.
      */
     protected String toQueryString(List<String> paramNames)
     {
         URLBuilder ub = new URLBuilder();
 
         for (String key:paramNames)
-            ub.appendParam(key, this.getProperty(key));
+            if (!KEY_SIGN.equals(key))
+                ub.appendParam(key, this.getProperty(key));
 
         return(ub.toString());
     }
+
+
+  // TO_URL
+    /** Extract URL to execute request on client
+     */
+    public abstract String toURL()
+        throws UnsupportedOperationException;
 
   // TO_XML
     protected String toXml(List<String> paramNames)

@@ -21,6 +21,7 @@ public class WxpayResponseBase
 {
   // CONSTANTS
     public static final String KEY_KEY              = "key_key";
+    public static final String KEY_SIGN             = "key_sign";
     public static final String KEY_SKIP_VERIFY_SIGN = "SKIP_VERIFY_SIGN";
 
     public static final String KEY_RETURN_CODE  = "return_code";
@@ -206,7 +207,8 @@ public class WxpayResponseBase
         URLBuilder ub = new URLBuilder();
 
         for (String key:paramNames)
-            ub.appendParam(key, this.getProperty(key));
+            if (!KEY_SIGN.equals(key))
+                ub.appendParam(key, this.getProperty(key));
 
         return(ub.toString());
     }
@@ -226,12 +228,13 @@ public class WxpayResponseBase
     }
 
     /** 子类应该实现这个方法以验证签名
-     * SUB-CLASS MUST IMPLEMENT THIS METHOD TO BE CALLBACKED.
+     * SUB-CLASS MUST IMPLEMENT THIS METHOD TO BE CALLBACKED. Default behavior do no verification, i.e. always return true.
      */
     protected boolean verifySign(Properties conf)
         throws UnsupportedEncodingException, UnsupportedOperationException
     {
-        throw(new UnsupportedOperationException("Don't know which params should be signed."));
+        // DEFAULT IMPLEMENT
+        return(true);
     }
 
     /**

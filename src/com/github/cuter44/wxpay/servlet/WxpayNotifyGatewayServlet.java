@@ -34,6 +34,8 @@ public class WxpayNotifyGatewayServlet extends HttpServlet
     @Override
     public void init(ServletConfig config)
     {
+        this.gateway = WxpayNotifyPublisher.getDefaultInstance();
+
         if (Boolean.valueOf(config.getInitParameter("com.github.cuter44.wxpay.notifygateway.dump")))
         {
             this.gateway.addListener(
@@ -69,8 +71,6 @@ public class WxpayNotifyGatewayServlet extends HttpServlet
                 }
             );
         }
-
-        this.gateway = WxpayNotifyPublisher.getDefaultInstance();
     }
 
     @Override

@@ -48,7 +48,7 @@ public enum WxpayErrorCode
     public static WxpayErrorCode forName(String name)
     {
         return(
-            Enum.valueOf(WxpayErrorCode.class, name)
+            WxpayErrorCode.valueOf(name)
         );
     }
 

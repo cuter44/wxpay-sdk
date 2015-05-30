@@ -44,6 +44,8 @@ public class Notify extends WxpayResponseBase
 
 
   // CONSTRUCT
+    /** @deprecated use Notify(String notifyXml) instead.
+     */
     public Notify(WxpayResponseBase resp)
     {
         this(resp.respString, resp.respProp);
@@ -51,9 +53,18 @@ public class Notify extends WxpayResponseBase
         return;
     }
 
+    /** @deprecated use Notify(String notifyXml) instead.
+     */
     public Notify(String respString, Properties respProp)
     {
         super(respString, respProp);
+
+        return;
+    }
+
+    public Notify(String notifyXml)
+    {
+        super(notifyXml);
 
         return;
     }

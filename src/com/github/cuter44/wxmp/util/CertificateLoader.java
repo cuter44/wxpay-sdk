@@ -8,6 +8,7 @@ import java.security.KeyStore;
 import java.security.cert.*;
 import javax.net.ssl.*;
 import java.io.*;
+import java.util.MissingResourceException;
 
 /** Transient tool-object to load certificate and generate ssl-context
  * Code adapted from nyafx/crypto.
@@ -100,8 +101,10 @@ public class CertificateLoader
                 while (buffer.available() > 0)
                 {
                     Certificate cert = crtFactory.generateCertificate(buffer);
-                    System.out.println(cert);
                     this.trusts.setCertificateEntry("cert-"+System.currentTimeMillis(), cert);
+
+                    System.out.println("Trusts:");
+                    System.out.println(cert);
                 }
 
                 buffer.close();
@@ -126,13 +129,26 @@ public class CertificateLoader
             InputStream stream = this.getClass()
                 .getResourceAsStream(resourcePath);
 
+            if (stream == null)
+                throw(new MissingResourceException("Load identification failed.", CertificateLoader.class.getName(), resourcePath));
+
             this.identification = KeyStore.getInstance("PKCS12");
             this.identification.load(stream, passphrase.toCharArray());
 
             this.passphrase = passphrase;
+
+            //System.out.println("Identification:");
+            //Enumeration<String> aliases = this.identification.aliases();
+            //while (aliases.hasMoreElements())
+            //{
+                //String alias = aliases.nextElement();
+                //System.out.println(alias);
+                //System.out.println(this.identification.getCertificate(alias));
+            //}
         }
         catch (Exception ex)
         {
+            //ex.printStackTrace();
             throw(new RuntimeException(ex));
         }
 
