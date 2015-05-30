@@ -42,7 +42,7 @@ public class Refund extends WxpayRequestBase {
         "transaction_id"
     );
 
-    //CONSTRUCT
+  // CONSTRUCT
     public Refund(Properties prop){
         super(prop);
 
@@ -52,14 +52,14 @@ public class Refund extends WxpayRequestBase {
         return;
     }
 
-    //BUILD
+  // BUILD
     @Override
     public Refund build()
     {
         return (this);
     }
 
-    //SIGN
+  // SIGN
     @Override
     public Refund sign() throws UnsupportedEncodingException
     {
@@ -67,7 +67,7 @@ public class Refund extends WxpayRequestBase {
         return (this);
     }
 
-    // TO_URL
+  // TO_URL
     public String toURL()
         throws UnsupportedOperationException
     {
@@ -76,7 +76,7 @@ public class Refund extends WxpayRequestBase {
         );
     }
 
-    // EXECUTE
+  // EXECUTE
     @Override
     public RefundResponse execute()
         throws WxpayException, WxpayProtocolException, IOException
@@ -89,6 +89,7 @@ public class Refund extends WxpayRequestBase {
         return(new RefundResponse(respXml));
     }
 
+  // PROPERTY
     /** 商户系统内部的订单号,32个字符内、可包含字母
      */
     public Refund setOutTradeNo(String outTradeNo)

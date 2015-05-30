@@ -9,35 +9,35 @@ package com.github.cuter44.wxpay.constants;
  */
 public enum TradeState
 {
-    /** =0, NOTPAY—未支付
+    /** code=0, NOTPAY—未支付
      */
     NOTPAY(0),
-    /** NOPAY--未支付(输入密码或确认支付超时)
+    /** code=1, NOPAY--未支付(输入密码或确认支付超时)
      */
     NOPAY(1),
 
-    /** =2, USERPAYING--用户支付中
+    /** code=2, USERPAYING--用户支付中
      */
     USERPAYING(2),
 
-    /** =16, SUCCESS—支付成功
+    /** code=16, SUCCESS—支付成功
      */
     SUCCESS(16),
 
-    /** =32, REFUND—转入退款
+    /** code=32, REFUND—转入退款
      */
     REFUND(32),
 
-    /** =64, REVOKED—已撤销
+    /** code=64, REVOKED—已撤销
      * This is an unclear state.
      */
     REVOKED(64),
 
-    /** =-1, PAYERROR--支付失败(其他原因，如银行返回失败)
+    /** code=-1, PAYERROR--支付失败(其他原因，如银行返回失败)
      */
     PAYERROR(-1),
 
-    /** =-128, CLOSED—已关闭
+    /** code=-128, CLOSED—已关闭
      */
     CLOSED(-128);
 

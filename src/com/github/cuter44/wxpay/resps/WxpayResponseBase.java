@@ -21,6 +21,7 @@ public class WxpayResponseBase
 {
   // CONSTANTS
     public static final String KEY_KEY              = "key_key";
+    public static final String KEY_SIGN             = "key_sign";
     public static final String KEY_SKIP_VERIFY_SIGN = "SKIP_VERIFY_SIGN";
 
     public static final String KEY_RETURN_CODE  = "return_code";
@@ -206,7 +207,8 @@ public class WxpayResponseBase
         URLBuilder ub = new URLBuilder();
 
         for (String key:paramNames)
-            ub.appendParam(key, this.getProperty(key));
+            if (!KEY_SIGN.equals(key))
+                ub.appendParam(key, this.getProperty(key));
 
         return(ub.toString());
     }
