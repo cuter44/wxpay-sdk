@@ -53,9 +53,17 @@ public class Refund extends WxpayRequestBase {
 
     /** Fully refund a queried order.
      * <br />
+     * <code>out_trade_no</code> is read from <code>${order.out_trade_no}</code> if not provided in <code>prop<code>.
+     * <br />
+     * <code>out_refund_no</code> is set to <code>${order.out_trade_no}-refund</code> if not provided in <code>prop<code>.
      * Be cautious not to violate unique/length restrictions.
+     * <br />
      * <code>transaction_id</code> is read from <code>${order.transaction_id}</code> if not provided in <code>prop<code>.
+     * <br />
+     * <code>total_fee</code> is read from <code>${order.total_fee}</code> if not provided in <code>prop</code>.
+     * <br />
      * <code>refund_fee</code> is read from <code>${order.total_fee}</code> if not provided in <code>prop</code>.
+     * <br />
      * Besides those, all other params provided by <code>order</code> are ignored.
      */
     public Refund(Properties prop, OrderQueryResponse order)
@@ -64,11 +72,17 @@ public class Refund extends WxpayRequestBase {
 
         Properties p2 = order.getProperties();
 
+        if (this.getProperty(KEY_OUT_TRADE_NO) == null)
+            this.setProperty(KEY_OUT_TRADE_NO, p2.getProperty(KEY_OUT_TRADE_NO));
+
         if (this.getProperty(KEY_OUT_REFUND_NO) == null)
             this.setProperty(KEY_OUT_REFUND_NO, p2.getProperty(KEY_OUT_TRADE_NO)+"-refund");
 
         if (this.getProperty(KEY_TRANSACTION_ID) == null)
             this.setProperty(KEY_TRANSACTION_ID, p2.getProperty(KEY_TRANSACTION_ID));
+
+        if (this.getProperty(KEY_TOTAL_FEE) == null)
+            this.setProperty(KEY_TOTAL_FEE, p2.getProperty(KEY_TOTAL_FEE));
 
         if (this.getProperty(KEY_REFUND_FEE) == null)
             this.setProperty(KEY_REFUND_FEE, p2.getProperty(KEY_TOTAL_FEE));
