@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import com.github.cuter44.wxpay.resps.RefundResponse;
+import com.github.cuter44.wxpay.resps.OrderQueryResponse;
 import com.github.cuter44.wxpay.WxpayException;
 import com.github.cuter44.wxpay.WxpayProtocolException;
 /**
@@ -24,8 +25,6 @@ public class Refund extends WxpayRequestBase {
     protected static final String KEY_TOTAL_FEE         = "total_fee";
     protected static final String KEY_REFUND_FEE        = "refund_fee";
     protected static final String KEY_OP_USER_ID        = "op_user_id";
-
-    private String cert_path;
 
     public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
         "appid",
@@ -47,7 +46,32 @@ public class Refund extends WxpayRequestBase {
         super(prop);
 
         if (this.getProperty(KEY_OP_USER_ID) == null)
-            this.setProperty(KEY_OP_USER_ID,this.getProperty(KEY_MCH_ID));
+            this.setProperty(KEY_OP_USER_ID, this.getProperty(KEY_MCH_ID));
+
+        return;
+    }
+
+    /** Fully refund a queried order.
+     * <br />
+     * Be cautious not to violate unique/length restrictions.
+     * <code>transaction_id</code> is read from <code>${order.transaction_id}</code> if not provided in <code>prop<code>.
+     * <code>refund_fee</code> is read from <code>${order.total_fee}</code> if not provided in <code>prop</code>.
+     * Besides those, all other params provided by <code>order</code> are ignored.
+     */
+    public Refund(Properties prop, OrderQueryResponse order)
+    {
+        this(prop);
+
+        Properties p2 = order.getProperties();
+
+        if (this.getProperty(KEY_OUT_REFUND_NO) == null)
+            this.setProperty(KEY_OUT_REFUND_NO, p2.getProperty(KEY_OUT_TRADE_NO)+"-refund");
+
+        if (this.getProperty(KEY_TRANSACTION_ID) == null)
+            this.setProperty(KEY_TRANSACTION_ID, p2.getProperty(KEY_TRANSACTION_ID));
+
+        if (this.getProperty(KEY_REFUND_FEE) == null)
+            this.setProperty(KEY_REFUND_FEE, p2.getProperty(KEY_TOTAL_FEE));
 
         return;
     }
@@ -161,7 +185,7 @@ public class Refund extends WxpayRequestBase {
      */
     public Refund setOpUserId(String opUserId)
     {
-        this.setProperty(KEY_OP_USER_ID,opUserId);
+        this.setProperty(KEY_OP_USER_ID, opUserId);
 
         return (this);
     }

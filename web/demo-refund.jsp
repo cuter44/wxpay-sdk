@@ -40,18 +40,26 @@
       {
         WxpayFactory factory = WxpayFactory.getDefaultInstance();
 
-        Refund wxreq = new Refund(factory.getConf());
-        wxreq.setOutTradeNo(outTradeNo);
 
-        RefundResponse wxresp = wxreq.build().sign().execute();
-        Properties prop = wxresp.getProperties();
-        System.out.println(prop);
+        OrderQuery wxreq1 = new OrderQuery(factory.getConf());
+        wxreq1.setOutTradeNo(outTradeNo);
 
-        for (Object k:prop.keySet())
+        OrderQueryResponse wxresp1 = wxreq1.build().sign().execute();
+        Properties prop1 = wxresp1.getProperties();
+        System.out.println(prop1);
+
+
+        Refund wxreq2 = new Refund(factory.getConf(), wxresp1);
+
+        RefundResponse wxresp2 = wxreq2.build().sign().execute();
+        Properties prop2 = wxresp2.getProperties();
+        System.out.println(prop2);
+
+        for (Object k:prop2.keySet())
         {
     %>
       <dt><%=k%>
-      <dd><%=prop.get(k)%>
+      <dd><%=prop2.get(k)%>
     <%
         }
       }
