@@ -93,7 +93,7 @@ public class SnsapiUserinfo extends HttpServlet
     public void response(SnsUserinfoResponse snsUserinfoResp, HttpServletRequest req, HttpServletResponse resp)
         throws IOException
     {
-        JSONObject json = snsUserinfoResp.json;
+        JSONObject json = snsUserinfoResp.getJson();
 
         String openid = json.getString(OPENID);
         if (openid == null)

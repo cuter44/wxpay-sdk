@@ -97,7 +97,9 @@ public class SnsOAuthAccessToken extends WxmpRequestBase
     @Override
     public String toURL()
     {
-        throw(new UnsupportedOperationException());
+        throw(
+            new UnsupportedOperationException("This request does not execute on client side.")
+        );
     }
 
   // EXECUTE

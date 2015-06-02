@@ -73,7 +73,7 @@ public class UnifiedOrder extends WxpayRequestBase
         throws UnsupportedOperationException
     {
         throw(
-            new UnsupportedOperationException("This request does not execute on client side")
+            new UnsupportedOperationException("This request does not execute on client side.")
         );
     }
 
