@@ -43,7 +43,7 @@ public class MessageCustomSendText extends MessageCustomSend
     {
         super(prop);
 
-        this.setProperty(KEY_MSG_TYPE, "text");
+        this.setProperty(KEY_MSGTYPE, "text");
 
         return;
     }
