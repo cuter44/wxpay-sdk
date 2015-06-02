@@ -91,7 +91,7 @@ public class SnsapiBase extends HttpServlet
     public void response(SnsOAuthAccessTokenResponse snsapiBaseResp, HttpServletRequest req, HttpServletResponse resp)
         throws IOException
     {
-        JSONObject json = snsapiBaseResp.json;
+        JSONObject json = snsapiBaseResp.getJson();
 
         String openid = json.getString(OPENID);
         if (openid == null)

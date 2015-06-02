@@ -10,7 +10,7 @@ public class WxmpResponseBase
     public static final String ERRCODE  = "errcode";
     public static final String ERRMSG   = "errmsg";
 
-    public JSONObject json;
+    protected JSONObject json;
 
     public WxmpResponseBase(String jsonString)
         throws WxmpException
@@ -23,6 +23,11 @@ public class WxmpResponseBase
             throw(new WxmpException(errcode, this.json.getString(ERRMSG)));
 
         return;
+    }
+
+    public JSONObject getJson()
+    {
+        return(this.json);
     }
 
     /** synonym of this.json.getString(key)

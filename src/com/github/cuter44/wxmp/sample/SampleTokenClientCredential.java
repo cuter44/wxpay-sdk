@@ -17,7 +17,7 @@ public class SampleTokenClientCredential
 
             TokenClientCredentialResponse resp = req.build().execute();
 
-            System.out.println(resp.json);
+            System.out.println(resp.getJson());
         }
         catch (Exception ex)
         {

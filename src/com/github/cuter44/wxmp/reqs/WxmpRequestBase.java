@@ -17,6 +17,8 @@ import org.apache.http.entity.*;
 import org.apache.http.impl.client.*;
 //import org.apache.http.client.*;
 import org.apache.http.client.methods.*;
+import org.apache.http.client.config.RequestConfig;
+import com.alibaba.fastjson.*;
 
 import com.github.cuter44.wxmp.WxmpException;
 import com.github.cuter44.wxmp.resps.WxmpResponseBase;
@@ -172,6 +174,45 @@ public abstract class WxmpRequestBase
         return(content);
     }
 
+    public String executePostJSON(String fullURL, String bodyJSON)
+        throws IOException
+    {
+        CloseableHttpClient hc = (this.httpClient != null) ? this.httpClient : defaultHttpClient;
+
+        HttpPost req = new HttpPost(fullURL);
+
+        // DEBUGING set proxy if need to capture the traffic
+        // remember to load your proxy certificate
+        //RequestConfig rc = RequestConfig.custom()
+            //.setProxy(
+                //new HttpHost("localhost", 8888)
+            //)
+            //.build();
+        //req.setConfig(rc);
+
+        req.setEntity(
+            new StringEntity(
+                bodyJSON,
+                ContentType.create("application/json", "utf-8")
+            )
+        );
+
+        CloseableHttpResponse resp = hc.execute(req);
+
+        String content = toString(resp);
+
+        resp.close();
+
+        return(content);
+    }
+
+    public String executePostJSON(String fullURL, JSONObject bodyJSON)
+        throws IOException
+    {
+        return(
+            this.executePostJSON(fullURL, bodyJSON.toString())
+        );
+    }
 
   // MISC
 }
