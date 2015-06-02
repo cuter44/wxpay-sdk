@@ -74,13 +74,15 @@ public abstract class MessageCustomSend extends WxmpRequestBase
 
         for (String k:schema.keySet())
         {
-            Object v = this.getProperty(k);
+            Object t = schema.get(k);
+            Object v;
 
-            if (v instanceof JSONObject)
-                json.put(k, this.iterativeBuildBody((JSONObject)v));
+            if (t instanceof JSONObject)
+                v = this.iterativeBuildBody((JSONObject)t);
+            else
+                v = this.getProperty(k);
 
-            // else
-                json.put(k, v);
+            json.put(k, v);
         }
 
         return(json);
