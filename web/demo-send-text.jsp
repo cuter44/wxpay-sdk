@@ -18,7 +18,7 @@
     <p />
     <form id="form" enctype="application/x-www-form-urlencoded">
     <table>
-      <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><button onclick="javascript:getOpenId()">acquire(需要服务号)</button></td></tr>
+      <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><input type="button" onclick="javascript:getOpenId()" value ="acquire(需要服务号)" /></td></tr>
       <tr><td>文本</td><td><input id="body" name="content" value="喵喵喵~"/></td></tr>
       <tr><td></td><td><input type="submit"></td></tr>
     </table>
@@ -58,7 +58,8 @@
         }
       }
 
-      function getOpenId(){
+      function getOpenId()
+      {
         if (!getParamValue("openid"))
         {
           var thisUrl = location.href;
@@ -68,6 +69,8 @@
         {
           document.getElementById("openid").value = getParamValue("openid");  
         }
+
+        return(false);
       }
 
           

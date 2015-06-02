@@ -103,8 +103,8 @@ public class CertificateLoader
                     Certificate cert = crtFactory.generateCertificate(buffer);
                     this.trusts.setCertificateEntry("cert-"+System.currentTimeMillis(), cert);
 
-                    System.out.println("Trusts:");
-                    System.out.println(cert);
+                    //System.out.println("Trusts:");
+                    //System.out.println(cert);
                 }
 
                 buffer.close();
