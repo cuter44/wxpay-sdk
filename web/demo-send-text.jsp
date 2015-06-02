@@ -13,13 +13,19 @@
   </head>
 
   <body>
-    <h1>微信支付样例</h1>
-    ↓ 付款之后会显示喵喵喵 o("≧ω≦)o
+    <h1>微信发送文本样例</h1>
+    如果乱码那一定是你的服务器没配置为解析 UTF-8.
+    <br />
+    目标客户端需要在过去24小时内曾与公众号发生交互. (以及前导条件, 此客户端关注公众号)
+    <br />
+    获取 openid↘ 仅支持服务号, 且需要配置 snsapi-base, 配置方法参见<a href="http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html">网页授权获取用户基本信息↗</a> -&gt; 关于网页授权回调域名的说明.
+    <br />
+    非服务号参见<del>这篇wiki</del><span style="background-color:black;">还没写</span>
     <p />
-    <form id="form" enctype="application/x-www-form-urlencoded">
+    <form id="form" enctype="application/x-www-form-urlencoded" method="post">
     <table>
       <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><input type="button" onclick="javascript:getOpenId()" value ="acquire(需要服务号)(重要的按钮点两次)" /></td></tr>
-      <tr><td>文本</td><td><input id="body" name="content" value="喵喵喵~"/></td></tr>
+      <tr><td>文本</td><td><input id="body" name="content" value="喵喵喵 ฅ(・ω・ )ฅ"/></td></tr>
       <tr><td></td><td><input type="submit"></td></tr>
     </table>
     </form>

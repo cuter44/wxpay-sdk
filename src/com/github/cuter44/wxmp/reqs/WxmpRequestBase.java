@@ -17,6 +17,7 @@ import org.apache.http.entity.*;
 import org.apache.http.impl.client.*;
 //import org.apache.http.client.*;
 import org.apache.http.client.methods.*;
+import org.apache.http.client.config.RequestConfig;
 import com.alibaba.fastjson.*;
 
 import com.github.cuter44.wxmp.WxmpException;
@@ -179,6 +180,16 @@ public abstract class WxmpRequestBase
         CloseableHttpClient hc = (this.httpClient != null) ? this.httpClient : defaultHttpClient;
 
         HttpPost req = new HttpPost(fullURL);
+
+        // DEBUGING set proxy if need to capture the traffic
+        // remember to load your proxy certificate
+        //RequestConfig rc = RequestConfig.custom()
+            //.setProxy(
+                //new HttpHost("localhost", 8888)
+            //)
+            //.build();
+        //req.setConfig(rc);
+
         req.setEntity(
             new StringEntity(
                 bodyJSON,

@@ -58,16 +58,27 @@ public class CertificateLoader
     {
         try
         {
-            KeyManagerFactory kmFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            kmFactory.init(this.identification, this.passphrase.toCharArray());
+            TrustManager[] tm = null;
+            KeyManager[] km = null;
 
-            TrustManagerFactory tmFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            tmFactory.init(this.trusts);
+            if (this.trusts != null)
+            {
+                TrustManagerFactory tmFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                tmFactory.init(this.trusts);
+                tm = tmFactory.getTrustManagers();
+            }
+
+            if (this.identification != null)
+            {
+                KeyManagerFactory kmFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+                kmFactory.init(this.identification, this.passphrase.toCharArray());
+                km = kmFactory.getKeyManagers();
+            }
 
             SSLContext sslCtx = SSLContext.getInstance(ALGORITHM);
             sslCtx.init(
-                kmFactory.getKeyManagers(),
-                tmFactory.getTrustManagers(),
+                km,
+                tm,
                 null
             );
 
@@ -164,7 +175,7 @@ public class CertificateLoader
             );
 
         String confLoadIdentification = conf.getProperty(KEY_LOAD_IDENTIFICATION);
-        if (confLoadTrusts != null)
+        if (confLoadIdentification != null)
         {
             String mchId = conf.getProperty(KEY_MCH_ID);
             this.loadIdentification(confLoadIdentification, mchId);
