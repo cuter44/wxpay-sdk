@@ -18,7 +18,7 @@
     <p />
     <form id="form" enctype="application/x-www-form-urlencoded">
     <table>
-      <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><input type="button" onclick="javascript:getOpenId()" value ="acquire(需要服务号)" /></td></tr>
+      <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><input type="button" onclick="javascript:getOpenId()" value ="acquire(需要服务号)(重要的按钮点两次)" /></td></tr>
       <tr><td>文本</td><td><input id="body" name="content" value="喵喵喵~"/></td></tr>
       <tr><td></td><td><input type="submit"></td></tr>
     </table>
@@ -27,15 +27,15 @@
     <p />
 
     <% 
-      String openid = request.getParameter("openid");
+      String touser = request.getParameter("touser");
       String content = request.getParameter("content");
-      if ((openid != null) && (content != null))
+      if ((touser != null) && (content != null))
       {
         WxmpFactory factory = WxmpFactory.getDefaultInstance();
 
         MessageCustomSendText wxreq1 = new MessageCustomSendText(factory.getConf());
         wxreq1.setAccessToken(factory.getTokenKeeper().getAccessToken());
-        wxreq1.setTouser(openid);
+        wxreq1.setTouser(touser);
         wxreq1.setContent(content);
 
         MessageCustomSendResponse wxresp1 = wxreq1.build().execute();

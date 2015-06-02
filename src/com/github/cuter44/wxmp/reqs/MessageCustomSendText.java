@@ -36,7 +36,7 @@ public class MessageCustomSendText extends MessageCustomSend
   // KEYS
     public static final String KEY_CONTENT = "content";
 
-    public static final JSONObject BODY_SCHEMA = (JSONObject)JSON.toJSON("{'touser':'','msgtype':'','text':{'content':''}}");
+    public static final JSONObject BODY_SCHEMA = JSON.parseObject("{'touser':'','msgtype':'','text':{'content':''}}");
 
   // CONSTRUCT
     public MessageCustomSendText(Properties prop)
