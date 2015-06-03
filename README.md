@@ -33,7 +33,7 @@ Though I made effort to not stealing your money or any secret about your wxpay a
 Detailed tutorial & guidelines are pending on our [wiki](https://github.con/cuter44/wxpay-sdk/wiki).
 Content below is partly outdated.  
 
-我们正在计划提供更完善的 [wiki](https://github.con/cuter44/wxpay-sdk/wiki). 以下内容部分已经不适用了.
+我们正在计划提供更完善的 [wiki](https://github.com/cuter44/wxpay-sdk/wiki). 以下内容部分已经不适用了.
 
 ====
 
