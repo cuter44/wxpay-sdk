@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 
 import com.alibaba.fastjson.*;
 
-/** 客服接口-发消息(需scope为 snsapi_userinfo)
+/** 客服接口-发消息
  * <br />
  * (No specification provided in official wiki)
  */

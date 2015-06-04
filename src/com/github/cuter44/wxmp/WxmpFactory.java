@@ -157,6 +157,24 @@ public class WxmpFactory
     }
 
   // FACTORY
+    /** Instantiate and fill default conf.
+     * @param clazz Subclass of WxmpRequestBase, must implement constructor `clazz(Properties)`.
+     */
+    public WxmpRequestBase instantiate(Class<? extends WxmpRequestBase> clazz)
+    {
+        try
+        {
+            return(
+                clazz.getConstructor(Properties.class).newInstance(new Properties(this.conf))
+            );
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            throw(new RuntimeException(ex.getMessage(), ex));
+        }
+    }
+
     public TokenClientCredential newTokenClientCredential()
     {
         return(
@@ -164,28 +182,13 @@ public class WxmpFactory
                 new Properties(this.conf)
         ));
     }
-    public TokenClientCredential newTokenClientCredential(Properties p)
+    public TokenClientCredential newTokenClientCredential(Properties conf)
     {
         return(
             new TokenClientCredential(
-                buildConf(p, this.conf)
+                buildConf(conf, this.conf)
         ));
     }
-
-    //public UnifiedOrder newUnifiedOrder()
-    //{
-        //return(
-            //new UnifiedOrder(
-                //new Properties(this.conf)
-        //));
-    //}
-    //public UnifiedOrder newUnifiedOrder(Properties p)
-    //{
-        //return(
-            //new UnifiedOrder(
-                //buildConf(p, this.conf)
-        //));
-    //}
 
   // MISC
     protected static Properties buildConf(Properties prop, Properties defaults)
