@@ -112,7 +112,7 @@ public class RefundQueryResponse extends WxpayResponseBase {
         }
 
         return (
-            this.verifySign(this.keysParamName, conf)
+            super.verifySign(this.keysParamName, conf)
         );
     }
 
@@ -120,7 +120,7 @@ public class RefundQueryResponse extends WxpayResponseBase {
     public int getRefundCount()
     {
         return Integer.valueOf(
-            this.getProperty(KEY_REFUND_COUNT)
+            super.getProperty(KEY_REFUND_COUNT)
         );
     }
 
@@ -128,7 +128,7 @@ public class RefundQueryResponse extends WxpayResponseBase {
     public String getRefundId(int i)
     {
         return(
-            this.getProperty(KEY_REFUND_ID_+i)
+            super.getProperty(KEY_REFUND_ID_+i)
         );
     }
 
@@ -147,7 +147,7 @@ public class RefundQueryResponse extends WxpayResponseBase {
     public String getOutRefundNo(int i)
     {
         return(
-            this.getProperty(KEY_OUT_REFUND_NO_+i)
+            super.getProperty(KEY_OUT_REFUND_NO_+i)
         );
     }
 
@@ -169,7 +169,7 @@ public class RefundQueryResponse extends WxpayResponseBase {
     {
         return(
             Integer.valueOf(
-                this.getProperty(KEY_REFUND_FEE_+i)
+                super.getProperty(KEY_REFUND_FEE_+i)
             )
         );
     }
@@ -188,7 +188,7 @@ public class RefundQueryResponse extends WxpayResponseBase {
 
     public Integer getCouponRefundFee(int i)
     {
-        String v = this.getProperty(KEY_COUPON_REFUND_FEE_+i);
+        String v = super.getProperty(KEY_COUPON_REFUND_FEE_+i);
         return(
             (v!=null) ? Integer.valueOf(v) : 0
         );
@@ -210,7 +210,7 @@ public class RefundQueryResponse extends WxpayResponseBase {
     {
         return(
             RefundStatus.valueOf(
-                this.getProperty(KEY_REFUND_STATUS_+i)
+                super.getProperty(KEY_REFUND_STATUS_+i)
             )
         );
     }

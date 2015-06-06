@@ -36,8 +36,8 @@ public class SnsUserinfo extends WxmpRequestBase
     {
         super(prop);
 
-        if (this.getProperty(KEY_LANG) == null)
-            this.setProperty(KEY_LANG, "zh_CN");
+        if (super.getProperty(KEY_LANG) == null)
+            super.setProperty(KEY_LANG, "zh_CN");
 
         return;
     }
@@ -57,7 +57,7 @@ public class SnsUserinfo extends WxmpRequestBase
     {
         super(new Properties());
 
-        this.setProperty(KEY_ACCESS_TOKEN   , resp.getAccessToken() )
+        super.setProperty(KEY_ACCESS_TOKEN  , resp.getAccessToken() )
             .setProperty(KEY_OPENID         , resp.getOpenid()      )
             .setProperty(KEY_LANG           , "zh_CN"               );
 
@@ -85,9 +85,9 @@ public class SnsUserinfo extends WxmpRequestBase
     public SnsUserinfoResponse execute()
         throws IOException
     {
-        String url = URL_API_BASE+"?"+this.toQueryString(KEYS_PARAM);
+        String url = URL_API_BASE+"?"+super.toQueryString(KEYS_PARAM);
 
-        String respJson = this.executeGet(url);
+        String respJson = super.executeGet(url);
 
         return(new SnsUserinfoResponse(respJson));
     }

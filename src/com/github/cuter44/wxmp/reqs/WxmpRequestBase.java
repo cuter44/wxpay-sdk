@@ -135,6 +135,25 @@ public abstract class WxmpRequestBase
         return(ub.toString());
     }
 
+    protected JSONObject buildJSONBody(JSONObject schema)
+    {
+        JSONObject json = new JSONObject();
+
+        for (String k:schema.keySet())
+        {
+            Object t = schema.get(k);
+            Object v;
+
+            if (t instanceof JSONObject)
+                v = this.buildJSONBody((JSONObject)t);
+            else
+                v = this.getProperty(k);
+
+            json.put(k, v);
+        }
+
+        return(json);
+    }
 
   // EXECUTE
     /** Execute the constructed query
@@ -142,32 +161,16 @@ public abstract class WxmpRequestBase
     public abstract WxmpResponseBase execute()
         throws IOException, WxmpException, UnsupportedOperationException;
 
-    protected static String toString(HttpResponse resp)
-        throws IOException
-    {
-        HttpEntity he = resp.getEntity();
-
-        Long l = he.getContentLength();
-        ByteArrayOutputStream buffer = (l > 0) ? new ByteArrayOutputStream(l.intValue()) : new ByteArrayOutputStream();
-        resp.getEntity().writeTo(buffer);
-
-        String content = buffer.toString("utf-8");
-
-        return(content);
-    }
-
     /**
      */
     public String executeGet(String fullURL)
         throws IOException
     {
-        CloseableHttpClient hc = (this.httpClient != null) ? this.httpClient : defaultHttpClient;
-
         HttpGet req = new HttpGet(fullURL);
 
-        CloseableHttpResponse resp = hc.execute(req);
+        CloseableHttpResponse resp = this.getHttpClient().execute(req);
 
-        String content = toString(resp);
+        String content = getResponseBody(resp);
 
         resp.close();
 
@@ -177,8 +180,6 @@ public abstract class WxmpRequestBase
     public String executePostJSON(String fullURL, String bodyJSON)
         throws IOException
     {
-        CloseableHttpClient hc = (this.httpClient != null) ? this.httpClient : defaultHttpClient;
-
         HttpPost req = new HttpPost(fullURL);
 
         // DEBUGING set proxy if need to capture the traffic
@@ -197,9 +198,9 @@ public abstract class WxmpRequestBase
             )
         );
 
-        CloseableHttpResponse resp = hc.execute(req);
+        CloseableHttpResponse resp = this.getHttpClient().execute(req);
 
-        String content = toString(resp);
+        String content = getResponseBody(resp);
 
         resp.close();
 
@@ -212,6 +213,29 @@ public abstract class WxmpRequestBase
         return(
             this.executePostJSON(fullURL, bodyJSON.toString())
         );
+    }
+
+    /** @return a http client, ought to be used to process the request.
+     */
+    protected CloseableHttpClient getHttpClient()
+    {
+        return(
+            (this.httpClient != null) ? this.httpClient : defaultHttpClient
+        );
+    }
+
+    protected static String getResponseBody(HttpResponse resp)
+        throws IOException
+    {
+        HttpEntity he = resp.getEntity();
+
+        Long l = he.getContentLength();
+        ByteArrayOutputStream buffer = (l > 0) ? new ByteArrayOutputStream(l.intValue()) : new ByteArrayOutputStream();
+        resp.getEntity().writeTo(buffer);
+
+        String content = buffer.toString("utf-8");
+
+        return(content);
     }
 
   // MISC

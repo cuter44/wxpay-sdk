@@ -41,12 +41,12 @@ public class SnsOAuthAccessToken extends WxmpRequestBase
     {
         super(prop);
 
-        this.setProperty("grant_type", "authorization_code");
+        super.setProperty("grant_type", "authorization_code");
 
-        if (this.getProperty(KEY_SECRET) == null)
-            this.setProperty(
+        if (super.getProperty(KEY_SECRET) == null)
+            super.setProperty(
                 KEY_SECRET,
-                this.getProperty("SECRET")
+                super.getProperty("SECRET")
             );
 
         return;
@@ -56,7 +56,7 @@ public class SnsOAuthAccessToken extends WxmpRequestBase
     {
         super(new Properties());
 
-        this.setProperty(KEY_APPID      , appid                 )
+        super.setProperty(KEY_APPID     , appid                 )
             .setProperty(KEY_SECRET     , secret                )
             .setProperty(KEY_CODE       , code                  )
             .setProperty("grant_type"   , "authorization_code"  );
@@ -66,21 +66,21 @@ public class SnsOAuthAccessToken extends WxmpRequestBase
 
     public SnsOAuthAccessToken setAppid(String appid)
     {
-        this.setProperty(KEY_APPID, appid);
+        super.setProperty(KEY_APPID, appid);
 
         return(this);
     }
 
     public SnsOAuthAccessToken setSecret(String secret)
     {
-        this.setProperty(KEY_SECRET, secret);
+        super.setProperty(KEY_SECRET, secret);
 
         return(this);
     }
 
     public SnsOAuthAccessToken setCode(String code)
     {
-        this.setProperty(KEY_CODE, code);
+        super.setProperty(KEY_CODE, code);
 
         return(this);
     }
@@ -107,9 +107,9 @@ public class SnsOAuthAccessToken extends WxmpRequestBase
     public SnsOAuthAccessTokenResponse execute()
         throws IOException
     {
-        String url = URL_API_BASE+"?"+this.toQueryString(KEYS_PARAM);
+        String url = URL_API_BASE+"?"+super.toQueryString(KEYS_PARAM);
 
-        String respJson = this.executeGet(url);
+        String respJson = super.executeGet(url);
 
         return(new SnsOAuthAccessTokenResponse(respJson));
     }

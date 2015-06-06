@@ -64,7 +64,7 @@ public class UnifiedOrder extends WxpayRequestBase
     public UnifiedOrder sign()
         throws UnsupportedEncodingException
     {
-        this.sign(KEYS_PARAM_NAME);
+        super.sign(KEYS_PARAM_NAME);
         return(this);
     }
 
@@ -83,9 +83,9 @@ public class UnifiedOrder extends WxpayRequestBase
         throws IOException
     {
         String url = URL_API_BASE;
-        String body = this.toXml(KEYS_PARAM_NAME);
+        String body = super.buildXMLBody(KEYS_PARAM_NAME);
 
-        String respXml = this.executePostXML(url, body);
+        String respXml = super.executePostXML(url, body);
 
         return(new UnifiedOrderResponse(respXml));
     }
@@ -93,7 +93,7 @@ public class UnifiedOrder extends WxpayRequestBase
   // PROPERTY
     public UnifiedOrder setBody(String body)
     {
-        this.setProperty(KEY_BODY, body);
+        super.setProperty(KEY_BODY, body);
 
         return(this);
     }
@@ -102,7 +102,7 @@ public class UnifiedOrder extends WxpayRequestBase
      */
     public UnifiedOrder setOutTradeNo(String outTradeNo)
     {
-        this.setProperty(KEY_OUT_TRADE_NO, outTradeNo);
+        super.setProperty(KEY_OUT_TRADE_NO, outTradeNo);
 
         return(this);
     }
@@ -111,7 +111,7 @@ public class UnifiedOrder extends WxpayRequestBase
      */
     public UnifiedOrder setTotalFee(int totalFeeInCNYFen)
     {
-        this.setProperty(KEY_TOTAL_FEE, Integer.toString(totalFeeInCNYFen));
+        super.setProperty(KEY_TOTAL_FEE, Integer.toString(totalFeeInCNYFen));
 
         return(this);
     }
@@ -132,7 +132,7 @@ public class UnifiedOrder extends WxpayRequestBase
      */
     public UnifiedOrder setSpbillCreateIp(String ipAddress)
     {
-        this.setProperty(KEY_SPBILL_CREATE_IP, ipAddress);
+        super.setProperty(KEY_SPBILL_CREATE_IP, ipAddress);
 
         return(this);
     }
@@ -141,14 +141,14 @@ public class UnifiedOrder extends WxpayRequestBase
      */
     public UnifiedOrder setNotifyUrl(String notifyUrl)
     {
-        this.setProperty(KEY_NOTIFY_URL, notifyUrl);
+        super.setProperty(KEY_NOTIFY_URL, notifyUrl);
 
         return(this);
     }
 
     public UnifiedOrder setTradeType(TradeType tradeType)
     {
-        this.setProperty(KEY_TRADE_TYPE, tradeType.toString());
+        super.setProperty(KEY_TRADE_TYPE, tradeType.toString());
 
         return(this);
     }
@@ -157,14 +157,14 @@ public class UnifiedOrder extends WxpayRequestBase
      */
     public UnifiedOrder setOpenid(String openid)
     {
-        this.setProperty(KEY_OPENID, openid);
+        super.setProperty(KEY_OPENID, openid);
 
         return(this);
     }
 
     public UnifiedOrder setProductId(Object productId)
     {
-        this.setProperty(KEY_PRODUCT_ID, productId.toString());
+        super.setProperty(KEY_PRODUCT_ID, productId.toString());
 
         return(this);
     }

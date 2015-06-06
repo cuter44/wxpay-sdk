@@ -75,16 +75,7 @@ public class Notify extends WxpayResponseBase
         throws UnsupportedEncodingException
     {
         return(
-            this.verifySign(KEYS_PARAM_NAME, conf)
-        );
-    }
-
-
-  // GET
-    public String getProperty(String key)
-    {
-        return(
-            this.respProp.getProperty(key)
+            super.verifySign(KEYS_PARAM_NAME, conf)
         );
     }
 
@@ -92,17 +83,14 @@ public class Notify extends WxpayResponseBase
     public String getOpenid()
     {
         return(
-            this.getProperty(KEY_OPENID)
+            super.getProperty(KEY_OPENID)
         );
     }
 
     public String getOutTradeNo()
     {
         return(
-            this.getProperty(KEY_OUT_TRADE_NO)
+            super.getProperty(KEY_OUT_TRADE_NO)
         );
     }
-
-
-
 }

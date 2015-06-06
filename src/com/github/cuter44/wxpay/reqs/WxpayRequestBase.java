@@ -204,7 +204,7 @@ public abstract class WxpayRequestBase
         throws UnsupportedOperationException;
 
   // TO_XML
-    protected String toXml(List<String> paramNames)
+    protected String buildXMLBody(List<String> paramNames)
     {
         StringBuilder xml = new StringBuilder();
 
@@ -235,7 +235,7 @@ public abstract class WxpayRequestBase
     public abstract WxpayResponseBase execute()
         throws WxpayException, WxpayProtocolException, IOException;
 
-    protected static String toString(HttpResponse resp)
+    protected static String getResponseBody(HttpResponse resp)
         throws IOException
     {
         HttpEntity he = resp.getEntity();
@@ -264,7 +264,7 @@ public abstract class WxpayRequestBase
 
         CloseableHttpResponse resp = hc.execute(req);
 
-        String content = toString(resp);
+        String content = getResponseBody(resp);
 
         resp.close();
 

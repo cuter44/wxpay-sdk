@@ -42,21 +42,21 @@ public class SnsUserinfoResponse extends WxmpResponseBase
     public String getOpenid()
     {
         return(
-            this.getProperty(KEY_OPENID)
+            super.getProperty(KEY_OPENID)
         );
     }
 
     public String getNickname()
     {
         return(
-            this.getProperty(KEY_NICKNAME)
+            super.getProperty(KEY_NICKNAME)
         );
     }
 
     public String getHeadimgurl()
     {
         return(
-            this.getProperty(KEY_HEADIMGURL)
+            super.getProperty(KEY_HEADIMGURL)
         );
     }
 

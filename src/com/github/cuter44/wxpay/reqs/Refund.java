@@ -45,8 +45,8 @@ public class Refund extends WxpayRequestBase {
     public Refund(Properties prop){
         super(prop);
 
-        if (this.getProperty(KEY_OP_USER_ID) == null)
-            this.setProperty(KEY_OP_USER_ID, this.getProperty(KEY_MCH_ID));
+        if (super.getProperty(KEY_OP_USER_ID) == null)
+            super.setProperty(KEY_OP_USER_ID, this.getProperty(KEY_MCH_ID));
 
         return;
     }
@@ -70,22 +70,22 @@ public class Refund extends WxpayRequestBase {
     {
         this(prop);
 
-        Properties p2 = order.getProperties();
+        //Properties p2 = order.getProperties();
 
-        if (this.getProperty(KEY_OUT_TRADE_NO) == null)
-            this.setProperty(KEY_OUT_TRADE_NO, p2.getProperty(KEY_OUT_TRADE_NO));
+        if (super.getProperty(KEY_OUT_TRADE_NO) == null)
+            super.setProperty(KEY_OUT_TRADE_NO, order.getProperty(KEY_OUT_TRADE_NO));
 
-        if (this.getProperty(KEY_OUT_REFUND_NO) == null)
-            this.setProperty(KEY_OUT_REFUND_NO, p2.getProperty(KEY_OUT_TRADE_NO)+"-refund");
+        if (super.getProperty(KEY_OUT_REFUND_NO) == null)
+            super.setProperty(KEY_OUT_REFUND_NO, order.getProperty(KEY_OUT_TRADE_NO)+"-refund");
 
-        if (this.getProperty(KEY_TRANSACTION_ID) == null)
-            this.setProperty(KEY_TRANSACTION_ID, p2.getProperty(KEY_TRANSACTION_ID));
+        if (super.getProperty(KEY_TRANSACTION_ID) == null)
+            super.setProperty(KEY_TRANSACTION_ID, order.getProperty(KEY_TRANSACTION_ID));
 
-        if (this.getProperty(KEY_TOTAL_FEE) == null)
-            this.setProperty(KEY_TOTAL_FEE, p2.getProperty(KEY_TOTAL_FEE));
+        if (super.getProperty(KEY_TOTAL_FEE) == null)
+            super.setProperty(KEY_TOTAL_FEE, order.getProperty(KEY_TOTAL_FEE));
 
-        if (this.getProperty(KEY_REFUND_FEE) == null)
-            this.setProperty(KEY_REFUND_FEE, p2.getProperty(KEY_TOTAL_FEE));
+        if (super.getProperty(KEY_REFUND_FEE) == null)
+            super.setProperty(KEY_REFUND_FEE, order.getProperty(KEY_TOTAL_FEE));
 
         return;
     }
@@ -101,7 +101,7 @@ public class Refund extends WxpayRequestBase {
     @Override
     public Refund sign() throws UnsupportedEncodingException
     {
-        this.sign(KEYS_PARAM_NAME);
+        super.sign(KEYS_PARAM_NAME);
         return (this);
     }
 
@@ -120,9 +120,9 @@ public class Refund extends WxpayRequestBase {
         throws WxpayException, WxpayProtocolException, IOException
     {
         String url = URL_API_BASE;
-        String body = this.toXml(KEYS_PARAM_NAME);
+        String body = super.buildXMLBody(KEYS_PARAM_NAME);
 
-        String respXml = this.executePostXML(url, body);
+        String respXml = super.executePostXML(url, body);
 
         return(new RefundResponse(respXml));
     }
@@ -132,7 +132,7 @@ public class Refund extends WxpayRequestBase {
      */
     public Refund setOutTradeNo(String outTradeNo)
     {
-        this.setProperty(KEY_OUT_TRADE_NO, outTradeNo);
+        super.setProperty(KEY_OUT_TRADE_NO, outTradeNo);
 
         return(this);
     }
@@ -141,7 +141,7 @@ public class Refund extends WxpayRequestBase {
      */
     public Refund setTransactionId(String transactionId)
     {
-        this.setProperty(KEY_TRANSACTION_ID,transactionId);
+        super.setProperty(KEY_TRANSACTION_ID,transactionId);
 
         return (this);
     }
@@ -150,7 +150,7 @@ public class Refund extends WxpayRequestBase {
      */
     public Refund setOutRefundNo(String outRefundNo)
     {
-        this.setProperty(KEY_OUT_REFUND_NO,outRefundNo);
+        super.setProperty(KEY_OUT_REFUND_NO,outRefundNo);
 
         return (this);
     }
@@ -159,7 +159,7 @@ public class Refund extends WxpayRequestBase {
      */
     public Refund setTotalFee(int totalFeeInCNYFen)
     {
-        this.setProperty(KEY_TOTAL_FEE, Integer.toString(totalFeeInCNYFen));
+        super.setProperty(KEY_TOTAL_FEE, Integer.toString(totalFeeInCNYFen));
 
         return(this);
     }
@@ -179,7 +179,7 @@ public class Refund extends WxpayRequestBase {
      */
     public Refund setRefundFee(int refundFeeInCNYFen)
     {
-        this.setProperty(KEY_REFUND_FEE,Integer.toString(refundFeeInCNYFen));
+        super.setProperty(KEY_REFUND_FEE,Integer.toString(refundFeeInCNYFen));
 
         return (this);
     }
@@ -199,7 +199,7 @@ public class Refund extends WxpayRequestBase {
      */
     public Refund setOpUserId(String opUserId)
     {
-        this.setProperty(KEY_OP_USER_ID, opUserId);
+        super.setProperty(KEY_OP_USER_ID, opUserId);
 
         return (this);
     }
