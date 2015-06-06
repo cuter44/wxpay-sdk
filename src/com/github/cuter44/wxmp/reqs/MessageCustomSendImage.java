@@ -41,7 +41,7 @@ public class MessageCustomSendImage extends MessageCustomSend
     {
         super(prop);
 
-        this.setProperty(KEY_MSGTYPE, "image");
+        super.setProperty(KEY_MSGTYPE, "image");
 
         return;
     }
@@ -50,7 +50,7 @@ public class MessageCustomSendImage extends MessageCustomSend
     @Override
     public MessageCustomSendImage build()
     {
-        super.buildBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
 
         return(this);
     }
@@ -61,10 +61,10 @@ public class MessageCustomSendImage extends MessageCustomSend
     public MessageCustomSendResponse execute()
         throws IOException
     {
-        String url = URL_API_BASE+"?"+this.toQueryString(KEYS_PARAM);
+        String url = URL_API_BASE+"?"+super.toQueryString(KEYS_PARAM);
         String body = this.jsonBody.toString();
 
-        String respJson = this.executePostJSON(url, body);
+        String respJson = super.executePostJSON(url, body);
 
         return(new MessageCustomSendResponse(respJson));
     }
@@ -72,7 +72,7 @@ public class MessageCustomSendImage extends MessageCustomSend
   // MISC
     public MessageCustomSendImage setMediaId(String mediaId)
     {
-        this.setProperty(KEY_MEDIA_ID, mediaId);
+        super.setProperty(KEY_MEDIA_ID, mediaId);
 
         return(this);
     }

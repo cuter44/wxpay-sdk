@@ -61,33 +61,6 @@ public abstract class MessageCustomSend extends WxmpRequestBase
         );
     }
 
-    protected void buildBody(JSONObject schema)
-    {
-        this.jsonBody = this.iterativeBuildBody(schema);
-
-        return;
-    }
-
-    private JSONObject iterativeBuildBody(JSONObject schema)
-    {
-        JSONObject json = new JSONObject();
-
-        for (String k:schema.keySet())
-        {
-            Object t = schema.get(k);
-            Object v;
-
-            if (t instanceof JSONObject)
-                v = this.iterativeBuildBody((JSONObject)t);
-            else
-                v = this.getProperty(k);
-
-            json.put(k, v);
-        }
-
-        return(json);
-    }
-
   // TO_URL
     @Override
     public String toURL()
@@ -113,14 +86,14 @@ public abstract class MessageCustomSend extends WxmpRequestBase
   // MISC
     public MessageCustomSend setTouser(String openid)
     {
-        this.setProperty(KEY_TOUSER, openid);
+        super.setProperty(KEY_TOUSER, openid);
 
         return(this);
     }
 
     public MessageCustomSend setAccessToken(String accessToken)
     {
-        this.setProperty(KEY_ACCESS_TOKEN, accessToken);
+        super.setProperty(KEY_ACCESS_TOKEN, accessToken);
 
         return(this);
     }

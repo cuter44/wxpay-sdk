@@ -11,7 +11,7 @@ public class JSAPIUnifiedOrder extends UnifiedOrder
     {
         super(prop);
 
-        this.setTradeType(TradeType.JSAPI);
+        super.setTradeType(TradeType.JSAPI);
 
         return;
     }

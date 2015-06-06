@@ -43,7 +43,7 @@ public class MessageCustomSendText extends MessageCustomSend
     {
         super(prop);
 
-        this.setProperty(KEY_MSGTYPE, "text");
+        super.setProperty(KEY_MSGTYPE, "text");
 
         return;
     }
@@ -52,7 +52,7 @@ public class MessageCustomSendText extends MessageCustomSend
     @Override
     public MessageCustomSendText build()
     {
-        super.buildBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
 
         return(this);
     }
@@ -62,10 +62,10 @@ public class MessageCustomSendText extends MessageCustomSend
     public MessageCustomSendResponse execute()
         throws IOException
     {
-        String url = URL_API_BASE+"?"+this.toQueryString(KEYS_PARAM);
+        String url = URL_API_BASE+"?"+super.toQueryString(KEYS_PARAM);
         String body = this.jsonBody.toString();
 
-        String respJson = this.executePostJSON(url, body);
+        String respJson = super.executePostJSON(url, body);
 
         return(new MessageCustomSendResponse(respJson));
     }
@@ -73,7 +73,7 @@ public class MessageCustomSendText extends MessageCustomSend
   // MISC
     public MessageCustomSendText setContent(String content)
     {
-        this.setProperty(KEY_CONTENT, content);
+        super.setProperty(KEY_CONTENT, content);
 
         return(this);
     }

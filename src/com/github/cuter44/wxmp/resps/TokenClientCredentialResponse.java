@@ -40,7 +40,7 @@ public class TokenClientCredentialResponse extends WxmpResponseBase
     public String getAccessToken()
     {
         return(
-            this.getProperty(KEY_ACCESS_TOKEN)
+            super.getProperty(KEY_ACCESS_TOKEN)
         );
     }
 

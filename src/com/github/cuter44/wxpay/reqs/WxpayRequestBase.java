@@ -204,7 +204,7 @@ public abstract class WxpayRequestBase
         throws UnsupportedOperationException;
 
   // TO_XML
-    protected String toXml(List<String> paramNames)
+    protected String buildXMLBody(List<String> paramNames)
     {
         StringBuilder xml = new StringBuilder();
 

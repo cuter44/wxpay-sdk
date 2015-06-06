@@ -30,7 +30,7 @@ public class JSSDKGetticketResponse extends WxmpResponseBase
     public String getTicket()
     {
         return(
-            this.getProperty(KEY_TICKET)
+            super.getProperty(KEY_TICKET)
         );
     }
 

@@ -23,7 +23,7 @@ public class MediaUploadImage extends MediaUpload
     {
         super(prop);
 
-        this.setType("image");
+        super.setType("image");
 
         return;
     }

@@ -32,14 +32,14 @@ public class SnsOAuthAccessTokenResponse extends WxmpResponseBase
     public String getOpenid()
     {
         return(
-            this.getProperty(KEY_OPENID)
+            super.getProperty(KEY_OPENID)
         );
     }
 
     public String getAccessToken()
     {
         return(
-            this.getProperty(KEY_ACCESS_TOKEN)
+            super.getProperty(KEY_ACCESS_TOKEN)
         );
     }
 }

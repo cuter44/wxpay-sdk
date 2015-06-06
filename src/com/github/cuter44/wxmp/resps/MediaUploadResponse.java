@@ -39,14 +39,14 @@ public class MediaUploadResponse extends WxmpResponseBase
     public String getType()
     {
         return(
-            this.getProperty(KEY_TYPE)
+            super.getProperty(KEY_TYPE)
         );
     }
 
     public String getMediaId()
     {
         return(
-            this.getProperty(KEY_MEDIA_ID)
+            super.getProperty(KEY_MEDIA_ID)
         );
     }
 
@@ -54,7 +54,7 @@ public class MediaUploadResponse extends WxmpResponseBase
     {
         return(
             new Date(
-                Long.valueOf(this.getProperty(KEY_CREATED_AT))*1000L
+                Long.valueOf(super.getProperty(KEY_CREATED_AT))*1000L
             )
         );
     }

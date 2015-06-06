@@ -78,7 +78,7 @@ public abstract class MediaUpload extends WxmpRequestBase
     public MediaUploadResponse execute()
         throws IOException
     {
-        String url = URL_API_BASE+"?"+this.toQueryString(KEYS_PARAM);
+        String url = URL_API_BASE+"?"+super.toQueryString(KEYS_PARAM);
 
         String respJson = this.executeMediaUpload(url);
 
@@ -104,13 +104,13 @@ public abstract class MediaUpload extends WxmpRequestBase
                 .addBinaryBody(
                     "media",
                     this.bodyStream,
-                    ContentType.create(this.getProperty(KEY_CONTENT_TYPE)),
-                    this.getProperty(KEY_FILENAME)
+                    ContentType.create(super.getProperty(KEY_CONTENT_TYPE)),
+                    super.getProperty(KEY_FILENAME)
                 )
                 .build()
         );
 
-        CloseableHttpResponse resp = this.getHttpClient().execute(req);
+        CloseableHttpResponse resp = super.getHttpClient().execute(req);
 
         String content = getResponseBody(resp);
 
@@ -122,7 +122,7 @@ public abstract class MediaUpload extends WxmpRequestBase
   // MISC
     public MediaUpload setAccessToken(String accessToken)
     {
-        this.setProperty(KEY_ACCESS_TOKEN, accessToken);
+        super.setProperty(KEY_ACCESS_TOKEN, accessToken);
 
         return(this);
     }
@@ -132,7 +132,7 @@ public abstract class MediaUpload extends WxmpRequestBase
      */
     public MediaUpload setType(String type)
     {
-        this.setProperty(KEY_TYPE, type);
+        super.setProperty(KEY_TYPE, type);
 
         return(this);
     }
@@ -143,14 +143,14 @@ public abstract class MediaUpload extends WxmpRequestBase
      */
     public MediaUpload setFilename(String filename)
     {
-        this.setProperty(KEY_FILENAME, filename);
+        super.setProperty(KEY_FILENAME, filename);
 
         return(this);
     }
 
     public MediaUpload setContentType(String contentType)
     {
-        this.setProperty(KEY_CONTENT_TYPE, contentType);
+        super.setProperty(KEY_CONTENT_TYPE, contentType);
 
         return(this);
     }

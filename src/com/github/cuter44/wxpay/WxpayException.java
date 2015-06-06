@@ -15,7 +15,7 @@ public class WxpayException extends RuntimeException
 
     public WxpayException(Throwable cause)
     {
-        this.initCause(cause);
+        super.initCause(cause);
 
         return;
     }
@@ -23,7 +23,7 @@ public class WxpayException extends RuntimeException
     public WxpayException(WxpayErrorCode aErrorCode, Throwable cause)
     {
         this.errorCode = aErrorCode;
-        this.initCause(cause);
+        super.initCause(cause);
 
         return;
     }

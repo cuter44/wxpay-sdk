@@ -21,7 +21,7 @@
     <p />
 
     <form id="form" enctype="application/x-www-form-urlencoded" method="post">
-      图像...的 data-utl:
+      图像...的 data-url:
       <br />
       <span style="color:gray; font-size:small;">因为不想引入不必要的依赖性<span style="background-color:gray">以及作者懒癌发作</span>所以要用data-url</span>
       <br />

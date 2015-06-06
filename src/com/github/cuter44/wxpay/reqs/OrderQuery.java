@@ -48,7 +48,7 @@ public class OrderQuery extends WxpayRequestBase{
     public OrderQuery sign()
         throws UnsupportedEncodingException
     {
-        this.sign(KEYS_PARAM_NAME);
+        super.sign(KEYS_PARAM_NAME);
 
         return(this);
     }
@@ -68,9 +68,9 @@ public class OrderQuery extends WxpayRequestBase{
         throws WxpayException, WxpayProtocolException, IOException
     {
         String url = URL_API_BASE;
-        String body = this.toXml(KEYS_PARAM_NAME);
+        String body = super.buildXMLBody(KEYS_PARAM_NAME);
 
-        String respXml = this.executePostXML(url, body);
+        String respXml = super.executePostXML(url, body);
 
         return(new OrderQueryResponse(respXml));
     }
@@ -79,7 +79,7 @@ public class OrderQuery extends WxpayRequestBase{
      */
     public OrderQuery setOutTradeNo(String outTradeNo)
     {
-        this.setProperty(KEY_OUT_TRADE_NO, outTradeNo);
+        super.setProperty(KEY_OUT_TRADE_NO, outTradeNo);
 
         return(this);
     }
@@ -88,7 +88,7 @@ public class OrderQuery extends WxpayRequestBase{
      */
     public OrderQuery setTransactionId(String transactionId)
     {
-        this.setProperty(KEY_TRANSACTION_ID,transactionId);
+        super.setProperty(KEY_TRANSACTION_ID,transactionId);
 
         return (this);
     }

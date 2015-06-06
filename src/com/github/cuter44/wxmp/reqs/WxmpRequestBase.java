@@ -135,6 +135,25 @@ public abstract class WxmpRequestBase
         return(ub.toString());
     }
 
+    protected JSONObject buildJSONBody(JSONObject schema)
+    {
+        JSONObject json = new JSONObject();
+
+        for (String k:schema.keySet())
+        {
+            Object t = schema.get(k);
+            Object v;
+
+            if (t instanceof JSONObject)
+                v = this.buildJSONBody((JSONObject)t);
+            else
+                v = this.getProperty(k);
+
+            json.put(k, v);
+        }
+
+        return(json);
+    }
 
   // EXECUTE
     /** Execute the constructed query

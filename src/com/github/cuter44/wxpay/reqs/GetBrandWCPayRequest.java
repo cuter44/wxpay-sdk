@@ -37,19 +37,19 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
     {
         super(prop);
 
-        if (this.getProperty(KEY_GBWCPR_APP_ID) == null)
-            this.setAppid(
-                this.getProperty(KEY_APPID)
+        if (super.getProperty(KEY_GBWCPR_APP_ID) == null)
+            this.setAppId(
+                super.getProperty(KEY_APPID)
             );
 
-        if (this.getProperty(KEY_GBWCPR_NONCE_STR) == null)
+        if (super.getProperty(KEY_GBWCPR_NONCE_STR) == null)
             this.setNonceStr(
-                this.getProperty(KEY_NONCE_STR)
+                super.getProperty(KEY_NONCE_STR)
             );
 
-        if (this.getProperty(KEY_PACKAGE) == null)
+        if (super.getProperty(KEY_PACKAGE) == null)
             this.setPackage(
-                this.getProperty(KEY_PREPAY_ID)
+                super.getProperty(KEY_PREPAY_ID)
             );
 
         this.setTimeStamp(new Date());
@@ -70,11 +70,11 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
     public GetBrandWCPayRequest sign()
         throws UnsupportedEncodingException
     {
-        this.sign(KEYS_PARAM_NAME);
+        super.sign(KEYS_PARAM_NAME);
 
-        this.setProperty(
+        super.setProperty(
             KEY_PAY_SIGN,
-            this.getProperty(KEY_SIGN)
+            super.getProperty(KEY_SIGN)
         );
 
         return(this);
@@ -97,10 +97,10 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
         for (String key:KEYS_PARAM_NAME)
             json.put(
                 key,
-                this.getProperty(key)
+                super.getProperty(key)
             );
 
-        json.put(KEY_PAY_SIGN, this.getProperty(KEY_PAY_SIGN));
+        json.put(KEY_PAY_SIGN, super.getProperty(KEY_PAY_SIGN));
 
         return(json.toString());
     }
@@ -115,21 +115,11 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
     }
 
   // PROPERTY
-    /** Overrided method for key changing
-     */
-    @Override
-    public GetBrandWCPayRequest setAppid(String appid)
-    {
-        this.setProperty(KEY_GBWCPR_APP_ID, appid);
-
-        return(this);
-    }
-
     /** 商户注册具有支付权限的公众号成功后即可获得
      */
     public GetBrandWCPayRequest setAppId(String appid)
     {
-        this.setAppid(appid);
+        super.setProperty(KEY_GBWCPR_APP_ID, appid);
 
         return(this);
     }
@@ -140,7 +130,7 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
     @Override
     public WxpayRequestBase setNonceStr(String nonceStr)
     {
-        this.setProperty(KEY_GBWCPR_NONCE_STR, nonceStr);
+        super.setProperty(KEY_GBWCPR_NONCE_STR, nonceStr);
 
         return(this);
     }
@@ -149,7 +139,7 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
      */
     public WxpayRequestBase setTimeStamp(Date timeStamp)
     {
-        this.setProperty(
+        super.setProperty(
             KEY_TIME_STAMP,
             Long.toString(timeStamp.getTime()/1000L)
         );
@@ -162,7 +152,7 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
      */
     public WxpayRequestBase setSignType(String signType)
     {
-        this.setProperty(KEY_SIGN_TYPE, signType);
+        super.setProperty(KEY_SIGN_TYPE, signType);
 
         return(this);
     }
@@ -172,7 +162,7 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
      */
     public WxpayRequestBase setPackage(String paxkage)
     {
-        this.setProperty(KEY_PACKAGE, "prepay_id="+paxkage);
+        super.setProperty(KEY_PACKAGE, "prepay_id="+paxkage);
 
         return(this);
     }

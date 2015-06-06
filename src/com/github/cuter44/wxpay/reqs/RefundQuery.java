@@ -54,7 +54,7 @@ public class RefundQuery extends WxpayRequestBase {
     @Override
     public RefundQuery sign() throws UnsupportedEncodingException
     {
-        this.sign(KEYS_PARAM_NAME);
+        super.sign(KEYS_PARAM_NAME);
         return (this);
     }
 
@@ -64,9 +64,9 @@ public class RefundQuery extends WxpayRequestBase {
         throws WxpayException, WxpayProtocolException, IOException
     {
         String url = URL_API_BASE;
-        String body = this.toXml(KEYS_PARAM_NAME);
+        String body = super.buildXMLBody(KEYS_PARAM_NAME);
 
-        String respXml = this.executePostXML(url, body);
+        String respXml = super.executePostXML(url, body);
 
         return(new RefundQueryResponse(respXml));
     }
@@ -86,7 +86,7 @@ public class RefundQuery extends WxpayRequestBase {
      */
     public RefundQuery setOutTradeNo(String outTradeNo)
     {
-        this.setProperty(KEY_OUT_TRADE_NO,outTradeNo);
+        super.setProperty(KEY_OUT_TRADE_NO,outTradeNo);
 
         return (this);
     }
@@ -95,7 +95,7 @@ public class RefundQuery extends WxpayRequestBase {
      */
     public RefundQuery setTransactionId(String transactionId)
     {
-        this.setProperty(KEY_TRANSACTION_ID,transactionId);
+        super.setProperty(KEY_TRANSACTION_ID,transactionId);
 
         return (this);
     }
@@ -104,7 +104,7 @@ public class RefundQuery extends WxpayRequestBase {
      */
     public RefundQuery setOutRefundNo(String outRefundNo)
     {
-        this.setProperty(KEY_OUT_REFUND_NO,outRefundNo);
+        super.setProperty(KEY_OUT_REFUND_NO,outRefundNo);
 
         return (this);
     }
@@ -115,7 +115,7 @@ public class RefundQuery extends WxpayRequestBase {
      */
     public RefundQuery setRefundId(String refundId)
     {
-        this.setProperty(KEY_REFUND_ID,refundId);
+        super.setProperty(KEY_REFUND_ID,refundId);
 
         return (this);
     }

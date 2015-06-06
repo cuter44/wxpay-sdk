@@ -53,7 +53,7 @@ public class OrderQueryResponse extends WxpayResponseBase {
             throws UnsupportedEncodingException
     {
         return(
-            this.verifySign(KEYS_PARAM_NAME, conf)
+            super.verifySign(KEYS_PARAM_NAME, conf)
         );
     }
 
@@ -61,14 +61,14 @@ public class OrderQueryResponse extends WxpayResponseBase {
     public String getTransactionId()
     {
         return(
-            this.getProperty(KEY_TRANSACTION_ID)
+            super.getProperty(KEY_TRANSACTION_ID)
         );
     }
 
     public String getOpenid()
     {
         return(
-            this.getProperty(KEY_OPENID)
+            super.getProperty(KEY_OPENID)
         );
     }
 
@@ -76,7 +76,7 @@ public class OrderQueryResponse extends WxpayResponseBase {
     {
         return(
             TradeState.valueOf(
-                this.getProperty(KEY_TRADE_STATE)
+                super.getProperty(KEY_TRADE_STATE)
             )
         );
     }
@@ -86,13 +86,13 @@ public class OrderQueryResponse extends WxpayResponseBase {
     public int getTotalFee(){
         return(
             Integer.valueOf(
-                this.getProperty(KEY_TOTAL_FEE)
+                super.getProperty(KEY_TOTAL_FEE)
             )
         );
     }
 
     public int getCouponFee(){
-        String sCouponFee = this.getProperty(KEY_COUPON_FEE);
+        String sCouponFee = super.getProperty(KEY_COUPON_FEE);
 
         if (sCouponFee!=null)
             return(
@@ -104,7 +104,7 @@ public class OrderQueryResponse extends WxpayResponseBase {
 
     public String getTimeEnd(){
         return(
-            this.getProperty(KEY_TIME_END)
+            super.getProperty(KEY_TIME_END)
         );
     }
 }

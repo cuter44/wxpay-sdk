@@ -45,15 +45,7 @@ public class RefundResponse extends WxpayResponseBase {
             throws UnsupportedEncodingException
     {
         return(
-            this.verifySign(KEYS_PARAM_NAME, conf)
-        );
-    }
-
-    // GET
-    public String getProperty(String key)
-    {
-        return(
-            this.respProp.getProperty(key)
+            super.verifySign(KEYS_PARAM_NAME, conf)
         );
     }
 
@@ -61,7 +53,7 @@ public class RefundResponse extends WxpayResponseBase {
     public String getRefundId()
     {
         return(
-            this.getProperty(KEY_REFUND_ID)
+            super.getProperty(KEY_REFUND_ID)
         );
     }
 
@@ -70,7 +62,7 @@ public class RefundResponse extends WxpayResponseBase {
     public int getRefundFee(){
         return(
             Integer.valueOf(
-                this.getProperty(KEY_REFUND_FEE)
+                super.getProperty(KEY_REFUND_FEE)
             )
         );
     }
@@ -78,7 +70,7 @@ public class RefundResponse extends WxpayResponseBase {
     /** @return coupon_refund_fee in CNY fen
      */
     public int getCouponRefundFee(){
-        String sCouponRefundFee = this.getProperty(KEY_COUPON_REFUND_FEE);
+        String sCouponRefundFee = super.getProperty(KEY_COUPON_REFUND_FEE);
 
         if (sCouponRefundFee!=null)
             return(

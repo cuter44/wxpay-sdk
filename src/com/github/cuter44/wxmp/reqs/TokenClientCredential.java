@@ -35,12 +35,12 @@ public class TokenClientCredential extends WxmpRequestBase
     {
         super(prop);
 
-        this.setProperty("grant_type", "client_credential");
+        super.setProperty("grant_type", "client_credential");
 
-        if (this.getProperty(KEY_SECRET) == null)
-            this.setProperty(
+        if (super.getProperty(KEY_SECRET) == null)
+            super.setProperty(
                 KEY_SECRET,
-                this.getProperty("SECRET")
+                super.getProperty("SECRET")
             );
 
         return;
@@ -50,7 +50,7 @@ public class TokenClientCredential extends WxmpRequestBase
     {
         super(new Properties());
 
-        this.setProperty("grant_type"   , "client_credential"   )
+        super.setProperty("grant_type"  , "client_credential"   )
             .setProperty(KEY_APPID      , appid                 )
             .setProperty(KEY_SECRET     , secret                );
 
@@ -59,14 +59,14 @@ public class TokenClientCredential extends WxmpRequestBase
 
     public TokenClientCredential setAppid(String appid)
     {
-        this.setProperty(KEY_APPID, appid);
+        super.setProperty(KEY_APPID, appid);
 
         return(this);
     }
 
     public TokenClientCredential setSecret(String secret)
     {
-        this.setProperty(KEY_SECRET, secret);
+        super.setProperty(KEY_SECRET, secret);
 
         return(this);
     }
@@ -93,9 +93,9 @@ public class TokenClientCredential extends WxmpRequestBase
     public TokenClientCredentialResponse execute()
         throws IOException
     {
-        String url = URL_API_BASE+"?"+this.toQueryString(KEYS_PARAM);
+        String url = URL_API_BASE+"?"+super.toQueryString(KEYS_PARAM);
 
-        String respJson = this.executeGet(url);
+        String respJson = super.executeGet(url);
 
         return(new TokenClientCredentialResponse(respJson));
     }
