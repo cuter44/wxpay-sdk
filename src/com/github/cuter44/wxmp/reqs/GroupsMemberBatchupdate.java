@@ -53,6 +53,8 @@ public class GroupsMemberBatchupdate extends WxmpRequestBase
     {
         this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
 
+        this.jsonBody.put("openid_list", this.openidList);
+
         return(this);
     }
 
