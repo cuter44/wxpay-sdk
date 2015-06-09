@@ -6,12 +6,12 @@ import com.alibaba.fastjson.*;
  * <br />
  * (No specification provided in official wiki)
  */
-public class MessageCustomSendResponse extends WxmpResponseBase
+public class GroupsDeleteResponse extends WxmpResponseBase
 {
   // CONSTANTS
 
   // CONSTRUCT
-    public MessageCustomSendResponse(String jsonString)
+    public GroupsDeleteResponse(String jsonString)
     {
         super(jsonString);
 
