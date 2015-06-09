@@ -107,4 +107,13 @@ public class GroupsMemberBatchupdate extends WxmpRequestBase
         return(this);
     }
 
+    /** chain method
+     */
+    public GroupsMemberBatchupdate add(String openid)
+    {
+        this.openidList.add(openid);
+
+        return(this);
+    }
+
 }
