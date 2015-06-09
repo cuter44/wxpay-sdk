@@ -18,8 +18,11 @@ public class WxmpFactory
 {
   // CONSTANT
     private static final String RESOURCE_WXPAY_PROPERTIES = "/wxpay.properties";
+
     protected static final String KEY_APPID = "appid";
     protected static final String KEY_SECRET = "SECRET";
+
+    protected static final String KEY_ACCESS_TOKEN = "access_token";
 
   // CONFIG
     protected Properties conf;
@@ -173,6 +176,15 @@ public class WxmpFactory
             ex.printStackTrace();
             throw(new RuntimeException(ex.getMessage(), ex));
         }
+    }
+
+    public WxmpRequestBase instantiateWithToken(Class<? extends WxmpRequestBase> clazz)
+    {
+        WxmpRequestBase req = this.instantiate(clazz);
+
+        req.setProperty(KEY_ACCESS_TOKEN, this.getTokenKeeper().getAccessToken());
+
+        return(req);
     }
 
     public TokenClientCredential newTokenClientCredential()

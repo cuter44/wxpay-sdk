@@ -12,6 +12,11 @@ public class WxmpResponseBase
 
     protected JSONObject json;
 
+    protected WxmpResponseBase()
+    {
+        return;
+    }
+
     public WxmpResponseBase(String jsonString)
         throws WxmpException
     {
