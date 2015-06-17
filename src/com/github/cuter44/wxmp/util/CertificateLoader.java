@@ -91,7 +91,7 @@ public class CertificateLoader
     }
 
   // IMPORT
-    /** Load trusts from .p12 file.
+    /** Load trusts from .crt file.
      * Existing <code>trusts</code> will be dropped.
      */
     public CertificateLoader loadTrusts(String ... resourcePaths)

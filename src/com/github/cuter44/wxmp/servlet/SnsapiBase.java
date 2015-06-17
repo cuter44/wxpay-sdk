@@ -35,11 +35,11 @@ import com.github.cuter44.wxmp.util.*;
     <strong>响应</strong>
     <i>当未附带 <code>redir</code> 参数时:</i>
     application/json
-    openid  :string , 当前用户的openid=:openid.
+    openid  :string , 当前用户的openid=${openid}.
 
     <i>当附带 <code>redir</code> 参数时:</i>
     302 Found
-    Location: :redir?openid=:openid
+    Location: :${redir}?openid=${openid}
 
  * </pre>
  */

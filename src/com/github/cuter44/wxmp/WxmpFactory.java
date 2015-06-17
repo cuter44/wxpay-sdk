@@ -116,11 +116,6 @@ public class WxmpFactory
                     WxmpFactory.class.getResourceAsStream(resource),
                     "utf-8"
             ));
-
-            this.initTokenKeeper();
-            this.initRequestBase();
-
-            return;
         }
         catch (Exception ex)
         {
@@ -133,6 +128,11 @@ public class WxmpFactory
 
             throw(mrex);
         }
+
+        this.initTokenKeeper();
+        this.initRequestBase();
+
+        return;
     }
 
   // SINGLETON

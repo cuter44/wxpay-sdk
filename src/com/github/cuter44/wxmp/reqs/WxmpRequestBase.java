@@ -186,7 +186,7 @@ public abstract class WxmpRequestBase
         // remember to load your proxy certificate
         //RequestConfig rc = RequestConfig.custom()
             //.setProxy(
-                //new HttpHost("localhost", 8888)
+                //new HttpHost("10.50.9.21", 8888)
             //)
             //.build();
         //req.setConfig(rc);

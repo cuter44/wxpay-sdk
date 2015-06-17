@@ -112,11 +112,6 @@ public class WxpayFactory
                     WxpayFactory.class.getResourceAsStream(resource),
                     "utf-8"
             ));
-
-            this.initTokenKeeper();
-            this.initRequestBase();
-
-            return;
         }
         catch (Exception ex)
         {
@@ -129,6 +124,11 @@ public class WxpayFactory
 
             throw(mrex);
         }
+
+        this.initTokenKeeper();
+        this.initRequestBase();
+
+        return;
     }
 
   // SINGLETON

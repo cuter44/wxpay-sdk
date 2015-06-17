@@ -6,6 +6,9 @@
     com.github.cuter44.wxmp.resps.*
   "
 %>
+<%
+  request.setCharacterEncoding("utf-8");
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
@@ -22,7 +25,7 @@
     <br />
     非服务号参见<del>这篇wiki</del><span style="background-color:black;">还没写</span>
     <p />
-    <form id="form" enctype="application/x-www-form-urlencoded" method="post">
+    <form id="form" method="post">
     <table>
       <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><input type="button" onclick="javascript:getOpenId()" value ="acquire(需要服务号)(重要的按钮点两次)" /></td></tr>
       <tr><td>文本</td><td><input id="content" name="content" value="喵喵喵 ฅ(・ω・ )ฅ"/></td></tr>
@@ -78,8 +81,6 @@
 
         return(false);
       }
-
-          
     </script>
   </body>
 </html>
