@@ -4,7 +4,7 @@ package com.github.cuter44.wxpay.constants;
  * @since 0.4.1
  *
  * Notice that <code>code</code> is NOT officially defined by wx.
- * And since wx does not provide a status diagram, this distribution is a temporary solution.
+ * And since wx does not provide a status diagram, some state codes are tentative.
  * It may be changed in later version. Take consideration before using them.
  */
 public enum TradeState
@@ -29,7 +29,6 @@ public enum TradeState
     REFUND(32),
 
     /** code=64, REVOKED—已撤销
-     * This is an unclear state.
      */
     REVOKED(64),
 

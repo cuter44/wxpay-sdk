@@ -3,6 +3,8 @@ package com.github.cuter44.wxpay.resps;
 import java.util.List;
 import java.util.Properties;
 import java.util.Iterator;
+import java.io.InputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import com.github.cuter44.nyafx.crypto.*;
@@ -38,9 +40,12 @@ public class WxpayResponseBase
     protected Boolean validity = null;
 
   // STRING
+    /** @deprecated since 0.4.5 WxpayResponse no longer preserve the origin response body
+     */
     protected String respString;
     /**
      * retrieve callback params or response content as String
+     * @deprecated since 0.4.5 WxpayResponse no longer preserve the origin response body
      */
     public String getString()
     {
@@ -73,6 +78,7 @@ public class WxpayResponseBase
     /** This construstor automatically parse input as xml, and output properties. Meanwhile, detect the fails.
      * Notice that Properties does not support hierachy, so it go down if tag names are non-unique.
      * It is raw in present. If it really happens, a new response type and parser should be defined to cope with that.
+     * @deprecated since 0.4.5 this constructor is abandoned to pursue a higher performance.
      */
     public WxpayResponseBase(String xml)
         throws WxpayProtocolException, WxpayException
@@ -91,6 +97,28 @@ public class WxpayResponseBase
                 new WxpayException(
                     this.respProp.getProperty(KEY_ERR_CODE)
             ));
+
+        return;
+    }
+
+    public WxpayResponseBase(InputStream xml)
+        throws IOException
+    {
+        this.respProp = XMLParser.parseXML(xml);
+
+        if (!this.isReturnCodeSuccess())
+            throw(
+                new WxpayProtocolException(
+                    this.respProp.getProperty(KEY_RETURN_MSG)
+            ));
+
+        if (!this.isResultCodeSuccess())
+            throw(
+                new WxpayException(
+                    this.respProp.getProperty(KEY_ERR_CODE)
+            ));
+
+        xml.close();
 
         return;
     }

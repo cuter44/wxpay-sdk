@@ -43,15 +43,8 @@ public class WxpayNotifyGatewayServlet extends HttpServlet
                     @Override
                     public boolean handle(Notify n)
                     {
-                        //ServletContext ctx = WxpayNotifyGatewayServlet.this.getServletContext();
-
-                        //ctx.log(n.getString());
-                        System.out.println(n.getString());
-                        //ctx.log(n.getProperties().toString());
+                        //System.out.println(n.getString());
                         System.out.println(n.getProperties().toString());
-
-                        //ctx.log("verify notify... "+n.verify(AlipayFactory.getDefaultInstance().getConf()));
-                        //System.out.println("verify notify... "+n.verify(AlipayFactory.getDefaultInstance().getConf()));
 
                         return(false);
                     }
@@ -84,8 +77,7 @@ public class WxpayNotifyGatewayServlet extends HttpServlet
         resp.setContentType("text/xml; charset=utf-8");
         PrintWriter out = resp.getWriter();
 
-        Properties parsedProp = parseXML(reqBody);
-        Notify n = new Notify(null, parsedProp);
+        Notify n = new Notify(reqBody);
 
         if (this.handle(n))
             out.print("<xml><return_code>SUCCESS</return_code></xml>");
@@ -95,6 +87,8 @@ public class WxpayNotifyGatewayServlet extends HttpServlet
         return;
     }
 
+    /** @deperacted As it is unjust to acquire access a servlet instance, this method should not be used.
+     */
     public void addListener(WxpayNotifyListener l)
     {
         this.gateway.addListener(l);
@@ -102,6 +96,8 @@ public class WxpayNotifyGatewayServlet extends HttpServlet
         return;
     }
 
+    /** @deperacted As it is unjust to acquire access a servlet instance, this method should not be used.
+     */
     public void removeListener(WxpayNotifyListener l)
     {
         this.gateway.removeListener(l);

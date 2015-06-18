@@ -69,6 +69,11 @@ public class WxpayException extends RuntimeException
     @Override
     public String getMessage()
     {
-        return(this.errorCode!=null ? this.errorCode.getMsg() : null);
+        if (this.errorCode == null)
+            return(null);
+        // else
+        return(
+            this.errorCode.toString()+':'+this.errorCode.getMsg()
+        );
     }
 }

@@ -3,6 +3,7 @@ package com.github.cuter44.wxpay.resps;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.io.InputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -32,7 +33,17 @@ public class RefundResponse extends WxpayResponseBase {
     );
 
     //CONSTRUCT
+    /** @deprecated since 0.4.5
+     */
     public RefundResponse(String respXml)
+    {
+        super(respXml);
+
+        return;
+    }
+
+    public RefundResponse(InputStream respXml)
+        throws IOException
     {
         super(respXml);
 

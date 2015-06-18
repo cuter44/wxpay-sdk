@@ -1,11 +1,12 @@
 package com.github.cuter44.wxpay.resps;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import com.github.cuter44.wxpay.constants.RefundStatus;
 
@@ -52,7 +53,17 @@ public class RefundQueryResponse extends WxpayResponseBase {
     //);
 
   //CONSTRUCT
+    /** @deprecated since 0.4.5
+     */
     public RefundQueryResponse(String respXml)
+    {
+        super(respXml);
+
+        return;
+    }
+
+    public RefundQueryResponse(InputStream respXml)
+        throws IOException
     {
         super(respXml);
 

@@ -2,11 +2,12 @@ package com.github.cuter44.wxpay.reqs;
 
 import com.github.cuter44.wxpay.resps.RefundQueryResponse;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import com.github.cuter44.wxpay.WxpayException;
 import com.github.cuter44.wxpay.WxpayProtocolException;
@@ -66,7 +67,7 @@ public class RefundQuery extends WxpayRequestBase {
         String url = URL_API_BASE;
         String body = super.buildXMLBody(KEYS_PARAM_NAME);
 
-        String respXml = super.executePostXML(url, body);
+        InputStream respXml = super.executePostXML(url, body);
 
         return(new RefundQueryResponse(respXml));
     }
