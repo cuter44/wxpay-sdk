@@ -33,8 +33,6 @@ public class RefundResponse extends WxpayResponseBase {
     );
 
     //CONSTRUCT
-    /** @deprecated since 0.4.5
-     */
     public RefundResponse(String respXml)
     {
         super(respXml);

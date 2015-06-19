@@ -5,8 +5,6 @@ import java.io.IOException;
 
 public class UnifiedOrderResponse extends WxpayResponseBase
 {
-    /** @deprecated since 0.4.5
-     */
     public UnifiedOrderResponse(String respXml)
     {
         super(respXml);

@@ -78,7 +78,6 @@ public class WxpayResponseBase
     /** This construstor automatically parse input as xml, and output properties. Meanwhile, detect the fails.
      * Notice that Properties does not support hierachy, so it go down if tag names are non-unique.
      * It is raw in present. If it really happens, a new response type and parser should be defined to cope with that.
-     * @deprecated since 0.4.5 this constructor is abandoned to pursue a higher performance.
      */
     public WxpayResponseBase(String xml)
         throws WxpayProtocolException, WxpayException

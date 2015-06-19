@@ -53,8 +53,6 @@ public class RefundQueryResponse extends WxpayResponseBase {
     //);
 
   //CONSTRUCT
-    /** @deprecated since 0.4.5
-     */
     public RefundQueryResponse(String respXml)
     {
         super(respXml);

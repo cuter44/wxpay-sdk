@@ -42,8 +42,6 @@ public class OrderQueryResponse extends WxpayResponseBase {
     );
 
   //CONSTRUCT
-    /** @deprecated since 0.4.5
-     */
     public OrderQueryResponse(String respXml)
     {
         super(respXml);
