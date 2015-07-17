@@ -83,6 +83,7 @@ public class SnsapiUserinfo extends HttpServlet
     public void trigger(SnsUserinfoResponse resp, HttpServletRequest req)
     {
         // NOOP
+
         return;
     }
 
@@ -137,6 +138,14 @@ public class SnsapiUserinfo extends HttpServlet
         return;
     }
 
+    /** Block ambiguous <code>init()</code> inherition.
+     */
+    @Override
+    public final void init()
+    {
+        return;
+    }
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
@@ -149,7 +158,7 @@ public class SnsapiUserinfo extends HttpServlet
         {
             String thisUrl = req.getRequestURL()
                 .append('?')
-                .append(req.getQueryString()!=null?req.getQueryString():"")
+                .append(req.getQueryString()!=null?"?"+req.getQueryString():"")
                 .toString();
 
             String url = new URLBuilder()

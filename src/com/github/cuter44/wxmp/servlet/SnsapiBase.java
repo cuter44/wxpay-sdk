@@ -81,6 +81,7 @@ public class SnsapiBase extends HttpServlet
     public void trigger(SnsOAuthAccessTokenResponse resp, HttpServletRequest req)
     {
         // NOOP
+
         return;
     }
 
@@ -135,6 +136,14 @@ public class SnsapiBase extends HttpServlet
         return;
     }
 
+    /** Block ambiguous <code>init()</code> inherition.
+     */
+    @Override
+    public final void init()
+    {
+        return;
+    }
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
@@ -146,8 +155,7 @@ public class SnsapiBase extends HttpServlet
         if (code == null)
         {
             String thisUrl = req.getRequestURL()
-                .append('?')
-                .append(req.getQueryString()!=null?req.getQueryString():"")
+                .append(req.getQueryString()!=null?"?"+req.getQueryString():"")
                 .toString();
 
             String url = new URLBuilder()
