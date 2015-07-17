@@ -29,12 +29,12 @@ import com.github.cuter44.wxpay.resps.WxpayResponseBase;
  */
 public abstract class WxpayRequestBase
 {
-    protected static final String KEY_APPID         = "appid";
-    protected static final String KEY_SIGN          = "sign";
-    protected static final String KEY_KEY           = "KEY";
-    protected static final String KEY_SECRET        = "SECRET";
-    protected static final String KEY_NOTIFY_URL    = "notify_url";
-    protected static final String KEY_NONCE_STR     = "nonce_str";
+    public static final String KEY_APPID         = "appid";
+    public static final String KEY_SIGN          = "sign";
+    public static final String KEY_KEY           = "KEY";
+    public static final String KEY_SECRET        = "SECRET";
+    public static final String KEY_NOTIFY_URL    = "notify_url";
+    public static final String KEY_NONCE_STR     = "nonce_str";
 
     protected static CryptoBase crypto = CryptoBase.getInstance();
 

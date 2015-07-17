@@ -156,6 +156,26 @@ public class WxpayFactory
     }
 
   // FACTORY
+    /** Instantiate and fill default conf.
+     * @param clazz Subclass of WxpayRequestBase, must implement constructor `clazz(Properties)`.
+     */
+    public WxpayRequestBase instantiate(Class<? extends WxpayRequestBase> clazz)
+    {
+        try
+        {
+            return(
+                clazz.getConstructor(Properties.class).newInstance(new Properties(this.conf))
+            );
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            throw(new RuntimeException(ex.getMessage(), ex));
+        }
+    }
+
+    /** @deprecated use <code>instantiate(UnifiedOrder.class)</code> instead.
+     */
     public UnifiedOrder newUnifiedOrder()
     {
         return(
@@ -171,6 +191,8 @@ public class WxpayFactory
         ));
     }
 
+    /** @deprecated use <code>instantiate(JSAPIUnifiedOrder.class)</code> instead.
+     */
     public JSAPIUnifiedOrder newJSAPIUnifiedOrder()
     {
         return(
@@ -186,6 +208,8 @@ public class WxpayFactory
         ));
     }
 
+    /** @deprecated use <code>instantiate(GetBrandWCPayRequest.class)</code> instead.
+     */
     public GetBrandWCPayRequest newGetBrandWCPayRequest()
     {
         return(

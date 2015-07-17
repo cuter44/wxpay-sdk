@@ -8,6 +8,8 @@ public class MsgLink extends MsgBase
   // CONSTRUCT
     public MsgLink()
     {
+        super();
+
         return;
     }
 

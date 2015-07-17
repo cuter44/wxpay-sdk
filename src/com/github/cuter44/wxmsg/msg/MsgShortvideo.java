@@ -7,6 +7,8 @@ public class MsgShortvideo extends MsgBase
   // CONSTRUCT
     public MsgShortvideo()
     {
+        super();
+
         return;
     }
 

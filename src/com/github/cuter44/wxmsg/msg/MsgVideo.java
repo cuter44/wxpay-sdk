@@ -7,6 +7,8 @@ public class MsgVideo extends MsgBase
   // CONSTRUCT
     public MsgVideo()
     {
+        super();
+
         return;
     }
 

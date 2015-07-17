@@ -7,6 +7,8 @@ public class MsgVoice extends MsgBase
   // CONSTRUCT
     public MsgVoice()
     {
+        super();
+
         return;
     }
 

@@ -7,6 +7,8 @@ public class MsgBase extends WxmsgBase
   // CONSTRUCT
     public MsgBase()
     {
+        super();
+
         return;
     }
 

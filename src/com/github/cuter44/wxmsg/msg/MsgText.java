@@ -7,6 +7,8 @@ public class MsgText extends MsgBase
   // CONSTRUCT
     public MsgText()
     {
+        super();
+
         return;
     }
 

@@ -7,6 +7,8 @@ public class MsgImage extends MsgBase
   // CONSTRUCT
     public MsgImage()
     {
+        super();
+
         return;
     }
 

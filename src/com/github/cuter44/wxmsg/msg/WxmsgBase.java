@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.IOException;
 
 import com.github.cuter44.wxmsg.constants.MsgType;
+import com.github.cuter44.wxmsg.reply.WxmsgReplyBase;
 //import static com.github.cuter44.wxpay.util.XMLParser.parseXML;
 
 public class WxmsgBase
@@ -15,6 +16,8 @@ public class WxmsgBase
 
     public WxmsgBase()
     {
+        this.prop = new Properties();
+
         return;
     }
 
@@ -44,6 +47,21 @@ public class WxmsgBase
         return(
             this.prop.getProperty(key)
         );
+    }
+
+  // REPLY
+    protected WxmsgReplyBase reply;
+
+    public WxmsgReplyBase getReply()
+    {
+        return(this.reply);
+    }
+
+    public WxmsgBase setReply(WxmsgReplyBase reply)
+    {
+        this.reply = reply;
+
+        return(this);
     }
 
   // ACCESSOR
@@ -83,11 +101,18 @@ public class WxmsgBase
 
     public MsgType getMsgType()
     {
-        return(
-            MsgType.valueOf(
-                this.getProperty(KEY_MSG_TYPE)
-            )
-        );
+        try
+        {
+            return(
+                MsgType.valueOf(
+                    this.getProperty(KEY_MSG_TYPE)
+                )
+            );
+        }
+        catch (Exception ex)
+        {
+            return(MsgType.UNKNOWN);
+        }
     }
 
 }

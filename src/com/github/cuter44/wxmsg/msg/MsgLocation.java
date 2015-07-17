@@ -8,6 +8,8 @@ public class MsgLocation extends MsgBase
   // CONSTRUCT
     public MsgLocation()
     {
+        super();
+
         return;
     }
 
