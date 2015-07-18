@@ -92,4 +92,12 @@ public class SnsUserinfo extends WxmpRequestBase
         return(new SnsUserinfoResponse(respJson));
     }
 
+  // MISC
+    public SnsUserinfo setOpenid(String openid)
+    {
+        super.setProperty(KEY_OPENID, openid);
+
+        return(this);
+    }
+
 }
