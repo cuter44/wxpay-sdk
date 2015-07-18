@@ -7,6 +7,7 @@ import java.net.URL;
 import java.io.UnsupportedEncodingException;
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import javax.net.ssl.SSLContext;
 
@@ -28,12 +29,12 @@ import com.github.cuter44.wxpay.resps.WxpayResponseBase;
  */
 public abstract class WxpayRequestBase
 {
-    protected static final String KEY_APPID         = "appid";
-    protected static final String KEY_SIGN          = "sign";
-    protected static final String KEY_KEY           = "KEY";
-    protected static final String KEY_SECRET        = "SECRET";
-    protected static final String KEY_NOTIFY_URL    = "notify_url";
-    protected static final String KEY_NONCE_STR     = "nonce_str";
+    public static final String KEY_APPID         = "appid";
+    public static final String KEY_SIGN          = "sign";
+    public static final String KEY_KEY           = "KEY";
+    public static final String KEY_SECRET        = "SECRET";
+    public static final String KEY_NOTIFY_URL    = "notify_url";
+    public static final String KEY_NONCE_STR     = "nonce_str";
 
     protected static CryptoBase crypto = CryptoBase.getInstance();
 
@@ -51,7 +52,6 @@ public abstract class WxpayRequestBase
     /** Http client to use to send request to weixin server.
      * Provide object-scope http client, major for multi-account use.
      * You can directly set this field. This will takes effect on time when <code>.execute()</code> is called.
-     * It is supposed that
      */
     public CloseableHttpClient httpClient;
 
@@ -235,6 +235,8 @@ public abstract class WxpayRequestBase
     public abstract WxpayResponseBase execute()
         throws WxpayException, WxpayProtocolException, IOException;
 
+    /** @deprecated since 0.4.5 as no longer used.
+     */
     protected static String getResponseBody(HttpResponse resp)
         throws IOException
     {
@@ -249,7 +251,19 @@ public abstract class WxpayRequestBase
         return(content);
     }
 
-    public String executePostXML(String fullURL, String bodyXML)
+    /** @return a http client, ought to be used to process the request.
+     */
+    protected CloseableHttpClient getHttpClient()
+    {
+        return(
+            (this.httpClient != null) ? this.httpClient : defaultHttpClient
+        );
+    }
+
+    /**
+     * @return response body as InputStream, MUST be closed by invoker.
+     */
+    public InputStream executePostXML(String fullURL, String bodyXML)
         throws IOException
     {
         CloseableHttpClient hc = (this.httpClient != null) ? this.httpClient : defaultHttpClient;
@@ -264,11 +278,9 @@ public abstract class WxpayRequestBase
 
         CloseableHttpResponse resp = hc.execute(req);
 
-        String content = getResponseBody(resp);
-
-        resp.close();
-
-        return(content);
+        return(
+            resp.getEntity().getContent()
+        );
     }
 
   // MISC

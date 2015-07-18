@@ -3,6 +3,8 @@ package com.github.cuter44.wxpay.resps;
 import java.util.List;
 import java.util.Properties;
 import java.util.Iterator;
+import java.io.InputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import com.github.cuter44.nyafx.crypto.*;
@@ -38,9 +40,12 @@ public class WxpayResponseBase
     protected Boolean validity = null;
 
   // STRING
+    /** @deprecated since 0.4.5 WxpayResponse no longer preserve the origin response body
+     */
     protected String respString;
     /**
      * retrieve callback params or response content as String
+     * @deprecated since 0.4.5 WxpayResponse no longer preserve the origin response body
      */
     public String getString()
     {
@@ -91,6 +96,28 @@ public class WxpayResponseBase
                 new WxpayException(
                     this.respProp.getProperty(KEY_ERR_CODE)
             ));
+
+        return;
+    }
+
+    public WxpayResponseBase(InputStream xml)
+        throws IOException
+    {
+        this.respProp = XMLParser.parseXML(xml);
+
+        if (!this.isReturnCodeSuccess())
+            throw(
+                new WxpayProtocolException(
+                    this.respProp.getProperty(KEY_RETURN_MSG)
+            ));
+
+        if (!this.isResultCodeSuccess())
+            throw(
+                new WxpayException(
+                    this.respProp.getProperty(KEY_ERR_CODE)
+            ));
+
+        xml.close();
 
         return;
     }

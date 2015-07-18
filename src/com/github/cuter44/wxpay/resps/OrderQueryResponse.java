@@ -1,5 +1,7 @@
 package com.github.cuter44.wxpay.resps;
 
+import java.io.InputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +43,14 @@ public class OrderQueryResponse extends WxpayResponseBase {
 
   //CONSTRUCT
     public OrderQueryResponse(String respXml)
+    {
+        super(respXml);
+
+        return;
+    }
+
+    public OrderQueryResponse(InputStream respXml)
+        throws IOException
     {
         super(respXml);
 

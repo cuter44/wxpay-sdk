@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.Date;
+import java.io.InputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 
@@ -62,7 +64,17 @@ public class Notify extends WxpayResponseBase
         return;
     }
 
+    /** @deprecated since 0.4.5.
+     */
     public Notify(String notifyXml)
+    {
+        super(notifyXml);
+
+        return;
+    }
+
+    public Notify(InputStream notifyXml)
+        throws IOException
     {
         super(notifyXml);
 
