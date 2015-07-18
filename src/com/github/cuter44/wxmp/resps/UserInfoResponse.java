@@ -45,9 +45,7 @@ public class UserInfoResponse extends SnsUserinfoResponse
     public Boolean getSubscribe()
     {
         return(
-            Boolean.valueOf(
-                super.getProperty(KEY_SUBSCRIBE)
-            )
+            "1".equals(super.getProperty(KEY_SUBSCRIBE))
         );
     }
 
