@@ -18,8 +18,11 @@ public class Notify extends WxpayResponseBase
 {
   // CONSTANTS
     //protected Boolean validity = null;
-    public static final String KEY_OPENID       = "openid";
-    public static final String KEY_OUT_TRADE_NO = "out_trade_no";
+    public static final String KEY_OPENID           = "openid";
+    public static final String KEY_OUT_TRADE_NO     = "out_trade_no";
+    public static final String KEY_TRANSACTION_ID   = "transaction_id";
+    public static final String KEY_TOTAL_FEE        = "total_fee";
+    public static final String KEY_CASH_FEE         = "cash_fee";
 
     public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
         "appid",
@@ -92,17 +95,72 @@ public class Notify extends WxpayResponseBase
     }
 
   // PROPERTY
-    public String getOpenid()
+    public final String getOpenid()
     {
         return(
             super.getProperty(KEY_OPENID)
         );
     }
 
-    public String getOutTradeNo()
+    public final String getOutTradeNo()
     {
         return(
             super.getProperty(KEY_OUT_TRADE_NO)
+        );
+    }
+
+    public final String getTransactionId()
+    {
+        return(
+            super.getProperty(KEY_TRANSACTION_ID)
+        );
+    }
+
+    public final Integer getTotalFee()
+    {
+        return(
+            Integer.valueOf(
+                super.getProperty(KEY_TOTAL_FEE)
+            )
+        );
+    }
+
+    public final Integer getTotalFeeFen()
+    {
+        return(
+            this.getTotalFee()
+        );
+    }
+
+    public final Double getTotalFeeYuan()
+    {
+        Integer fen = this.getTotalFee();
+        return(
+            fen!=null ? (fen.doubleValue()/100.0) : null
+        );
+    }
+
+    public final Integer getCashFee()
+    {
+        return(
+            Integer.valueOf(
+                super.getProperty(KEY_CASH_FEE)
+            )
+        );
+    }
+
+    public final Integer getCashFeeFen()
+    {
+        return(
+            this.getCashFee()
+        );
+    }
+
+    public final Double getCashFeeYuan()
+    {
+        Integer fen = this.getCashFee();
+        return(
+            fen!=null ? (fen.doubleValue()/100.0) : null
         );
     }
 }

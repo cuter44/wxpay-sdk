@@ -92,4 +92,12 @@ public class UserInfo extends WxmpRequestBase
         return(new UserInfoResponse(respJson));
     }
 
+  // MISC
+    public UserInfo setOpenid(String openid)
+    {
+        super.setProperty(KEY_OPENID, openid);
+
+        return(this);
+    }
+
 }
