@@ -219,9 +219,9 @@ public abstract class WxpayRequestBase
                    .append("</").append(k).append('>');
         }
 
-        xml.append('<').append(KEY_SIGN).append('>')
-           .append(this.getProperty(KEY_SIGN))
-           .append("</").append(KEY_SIGN).append('>');
+        //xml.append('<').append(KEY_SIGN).append('>')
+           //.append(this.getProperty(KEY_SIGN))
+           //.append("</").append(KEY_SIGN).append('>');
 
         xml.append("</xml>");
 

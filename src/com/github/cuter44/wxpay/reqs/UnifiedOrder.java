@@ -3,6 +3,8 @@ package com.github.cuter44.wxpay.reqs;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.IOException;
@@ -24,6 +26,8 @@ public class UnifiedOrder extends WxpayRequestBase
     protected static final String KEY_TRADE_TYPE        = "trade_type";
     protected static final String KEY_OPENID            = "openid";
     protected static final String KEY_PRODUCT_ID        = "product_id";
+    protected static final String KEY_TIME_START        = "time_start";
+    protected static final String KEY_TIME_EXPIRE       = "time_expire";
 
     public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
         "appid",
@@ -99,7 +103,7 @@ public class UnifiedOrder extends WxpayRequestBase
         return(this);
     }
 
-    /** 商户系统内部的订单号,32个字符内、可包含字母
+    /** 商户系统内部的订单号, 32个字符内、可包含字母
      */
     public UnifiedOrder setOutTradeNo(String outTradeNo)
     {
@@ -110,14 +114,14 @@ public class UnifiedOrder extends WxpayRequestBase
 
     /** 订单总金额，单位为分，不能带小数点
      */
-    public UnifiedOrder setTotalFee(int totalFeeInCNYFen)
+    public final UnifiedOrder setTotalFee(int totalFeeInCNYFen)
     {
         super.setProperty(KEY_TOTAL_FEE, Integer.toString(totalFeeInCNYFen));
 
         return(this);
     }
 
-    /** wrap method
+    /** 订单总金额，单位元
      */
     public UnifiedOrder setTotalFee(double totalFeeInCNYYuan)
     {
@@ -166,6 +170,26 @@ public class UnifiedOrder extends WxpayRequestBase
     public UnifiedOrder setProductId(Object productId)
     {
         super.setProperty(KEY_PRODUCT_ID, productId.toString());
+
+        return(this);
+    }
+
+    public UnifiedOrder setTimeStart(Date timeStart)
+    {
+        super.setProperty(
+            KEY_TIME_START,
+            new SimpleDateFormat("yyyyMMddHHmmss").format(timeStart)
+        );
+
+        return(this);
+    }
+
+    public UnifiedOrder setTimeExpire(Date timeExpire)
+    {
+        super.setProperty(
+            KEY_TIME_EXPIRE,
+            new SimpleDateFormat("yyyyMMddHHmmss").format(timeExpire)
+        );
 
         return(this);
     }
