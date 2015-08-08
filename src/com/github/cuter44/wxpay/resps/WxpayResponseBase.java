@@ -26,8 +26,8 @@ import com.github.cuter44.wxpay.util.*;
 public class WxpayResponseBase
 {
   // CONSTANTS
-    public static final String KEY_KEY              = "key_key";
-    public static final String KEY_SIGN             = "key_sign";
+    public static final String KEY_KEY              = "KEY";
+    public static final String KEY_SIGN             = "sign";
     public static final String KEY_SKIP_VERIFY_SIGN = "SKIP_VERIFY_SIGN";
 
     public static final String KEY_RETURN_CODE  = "return_code";
