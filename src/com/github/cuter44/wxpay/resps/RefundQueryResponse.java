@@ -41,6 +41,7 @@ public class RefundQueryResponse extends WxpayResponseBase {
         "out_trade_no",
         "refund_channel_$0",
         "refund_count",
+        "refund_fee",
         "refund_fee_$0",
         "refund_id_$0",
         "refund_status_$0",
