@@ -190,12 +190,19 @@ public abstract class WxpayRequestBase
         URLBuilder ub = new URLBuilder();
 
         for (String key:paramNames)
-            if (!KEY_SIGN.equals(key))
-                ub.appendParam(key, this.getProperty(key));
+        {
+            if (KEY_SIGN.equals(key))
+                continue;
+
+            String value = this.getProperty(key);
+            if (value == null || value.isEmpty())
+                continue;
+
+            ub.appendParam(key, value);
+        }
 
         return(ub.toString());
     }
-
 
   // TO_URL
     /** Extract URL to execute request on client
