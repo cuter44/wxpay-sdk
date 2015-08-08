@@ -259,7 +259,7 @@ public class WxpayResponseBase
     protected boolean verifySign(List<String> paramNames, Properties conf)
         throws UnsupportedEncodingException
     {
-        this.respProp = buildConf(conf, this.respProp);
+        this.respProp = buildConf(this.respProp, conf);
         String stated = this.getProperty("sign");
         String calculated = this.sign(
             paramNames
