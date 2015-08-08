@@ -1,8 +1,12 @@
 package com.github.cuter44.wxpay.resps;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Iterator;
+import java.util.Arrays;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -63,11 +67,35 @@ public class WxpayResponseBase
         return(this.respProp);
     }
 
-    public String getProperty(String key)
+    public final String getProperty(String key)
     {
         return(this.respProp.getProperty(key));
     }
 
+    public final Integer getIntProperty(String key)
+    {
+        String v = this.getProperty(key);
+        return(
+            (v!=null) ? Integer.valueOf(v) : null
+        );
+    }
+
+    public final Date getDateProperty(String key)
+    {
+        try
+        {
+            String v = this.getProperty(key);
+            return(
+                (v!=null) ? new SimpleDateFormat("yyyyMMddHHmmss").parse(v) : null
+            );
+        }
+        catch (Exception ex)
+        {
+            // rarely occurs
+            ex.printStackTrace();
+            return(null);
+        }
+    }
 
   // CONSTRUCT
     public WxpayResponseBase()
@@ -75,7 +103,8 @@ public class WxpayResponseBase
         return;
     }
 
-    /** This construstor automatically parse input as xml, and output properties. Meanwhile, detect the fails.
+    /**
+     * This construstor automatically parse input as xml, and output properties. Meanwhile, detect the fails.
      * Notice that Properties does not support hierachy, so it go down if tag names are non-unique.
      * It is raw in present. If it really happens, a new response type and parser should be defined to cope with that.
      */
@@ -100,6 +129,11 @@ public class WxpayResponseBase
         return;
     }
 
+    /**
+     * This construstor automatically parse input as xml, and output properties. Meanwhile, detect the fails.
+     * Notice that Properties does not support hierachy, so it go down if tag names are non-unique.
+     * It is raw in present. If it really happens, a new response type and parser should be defined to cope with that.
+     */
     public WxpayResponseBase(InputStream xml)
         throws IOException
     {
@@ -123,7 +157,7 @@ public class WxpayResponseBase
     }
 
 
-    /** @deprecated due to it doesn't parse and detect fails.
+    /** @deprecated due to it doesn't parse and detect fails. ONLY FOR DEBUGGING.
      */
     public WxpayResponseBase(Properties aRespProp)
     {
@@ -132,7 +166,7 @@ public class WxpayResponseBase
         return;
     }
 
-    /** @deprecated due to it doesn't parse and detect fails.
+    /** @deprecated due to it doesn't parse and detect fails. ONLY FOR DEBUGGING.
      */
     public WxpayResponseBase(String aRespString, Properties aRespProp)
     {
@@ -190,6 +224,53 @@ public class WxpayResponseBase
 
   // VERIFY
     /**
+     * verify response sign
+     * @return true if passed (i.e. response content should be trusted), otherwise false
+     */
+    public boolean verify(Properties conf)
+        throws UnsupportedEncodingException
+    {
+        if (this.validity != null)
+            return(this.validity);
+
+        Boolean skipSign    = Boolean.valueOf(conf.getProperty("SKIP_VERIFY_SIGN"));
+
+        // else
+        this.validity = true;
+
+        if (!skipSign)
+            this.validity = this.validity && this.verifySign(conf);
+
+        return(this.validity);
+    }
+
+    /** 子类应该实现这个方法以验证签名
+     * SUB-CLASS MUST IMPLEMENT THIS METHOD TO BE CALLBACKED. Default behavior do no verification, i.e. always return true.
+     * A typical implemention should be <code>return(super.verifySign(this.keysParamName, conf)</code> where
+     *  );
+     */
+    protected boolean verifySign(Properties conf)
+        throws UnsupportedEncodingException, UnsupportedOperationException
+    {
+        // DEFAULT IMPLEMENT
+        return(true);
+    }
+
+    protected boolean verifySign(List<String> paramNames, Properties conf)
+        throws UnsupportedEncodingException
+    {
+        this.respProp = buildConf(conf, this.respProp);
+        String stated = this.getProperty("sign");
+        String calculated = this.sign(
+            paramNames
+        );
+
+        return(
+            stated!=null && stated.equals(calculated)
+        );
+    }
+
+    /**
      * @param paramNames key names to submit, in dictionary order
      */
     protected String sign(List<String> paramNames)
@@ -226,6 +307,7 @@ public class WxpayResponseBase
         return(sign);
     }
 
+
     /** Provide query string to sign().
      * toURL() may not invoke this method.
      */
@@ -240,51 +322,7 @@ public class WxpayResponseBase
         return(ub.toString());
     }
 
-    protected boolean verifySign(List<String> paramNames, Properties conf)
-        throws UnsupportedEncodingException
-    {
-        this.respProp = buildConf(conf, this.respProp);
-        String stated = this.getProperty("sign");
-        String calculated = this.sign(
-            paramNames
-        );
-
-        return(
-            stated!=null && stated.equals(calculated)
-        );
-    }
-
-    /** 子类应该实现这个方法以验证签名
-     * SUB-CLASS MUST IMPLEMENT THIS METHOD TO BE CALLBACKED. Default behavior do no verification, i.e. always return true.
-     */
-    protected boolean verifySign(Properties conf)
-        throws UnsupportedEncodingException, UnsupportedOperationException
-    {
-        // DEFAULT IMPLEMENT
-        return(true);
-    }
-
-    /**
-     * verify response sign
-     * @return true if passed (i.e. response content should be trusted), otherwise false
-     */
-    public boolean verify(Properties conf)
-        throws UnsupportedEncodingException
-    {
-        if (this.validity != null)
-            return(this.validity);
-
-        Boolean skipSign    = Boolean.valueOf(conf.getProperty("SKIP_VERIFY_SIGN"));
-
-        // else
-        this.validity = true;
-
-        if (!skipSign)
-            this.validity = this.validity && this.verifySign(conf);
-
-        return(this.validity);
-    }
-
+  // UTIL
     protected static Properties buildConf(Properties prop, Properties defaults)
     {
         Properties ret = new Properties(defaults);
@@ -297,4 +335,101 @@ public class WxpayResponseBase
 
         return(ret);
     }
+
+    protected static String materializeParamName(String template, Integer ... params)
+    {
+        String s = template;
+
+        for (int i=0; i<params.length; i++)
+            s = s.replace("$"+i, Integer.toString(params[i]));
+
+        return(s);
+    }
+
+    private static String[] internalMaterializeParamNames(String template, int level, Integer count0)
+    {
+        if (count0 == null || count0 == 0)
+            return(new String[0]);
+
+        if (!template.contains("$"))
+            return(new String[]{template});
+
+        String placeholder = "$"+level;
+
+        String[] m0 = new String[count0];
+
+        for (int i=0; i<count0; i++)
+            m0[i] = template.replace(placeholder, Integer.toString(i));
+
+        Arrays.sort(m0);
+
+        return(m0);
+    }
+
+    protected static List<String> materializeParamNames(String template, int level, Integer count0)
+    {
+        if (count0 == null || count0 == 0)
+            return(new ArrayList<String>());
+
+        return(
+            Arrays.asList(
+                WxpayResponseBase.internalMaterializeParamNames(template, level, count0)
+            )
+        );
+    }
+
+
+    protected static List<String> materializeParamNames(String template, int level, Integer count0, List ... counts)
+    {
+        if (count0 == null || count0 == 0)
+            return(new ArrayList<String>());
+
+        String[] m0 = WxpayResponseBase.internalMaterializeParamNames(template, level, count0);
+        List<String> mx;
+
+        if (!m0[0].contains("$"))
+        {
+            mx = Arrays.asList(m0);
+        }
+        else
+        {
+            mx = new ArrayList<String>();
+
+            List<Integer> count1s = (List<Integer>)counts[0];
+
+            if (counts.length == 1)
+            {
+                for (int i=0; i<count0; i++)
+                {
+                    Integer count1 = count1s.get(i);
+                    if (count1 == null)
+                        continue;
+
+                    mx.addAll(
+                        materializeParamNames(m0[i], level+1, count1)
+                    );
+                }
+            }
+            else
+            {
+                for (int i=0; i<count0; i++)
+                {
+                    Integer count1 = count1s.get(i);
+                    if (count1 == null)
+                        continue;
+
+                    List[] countsDesc = new List[counts.length-1];
+                    for (int j=1; j<counts.length; j++)
+                        countsDesc[j-1] = (List)counts[j].get(i);
+
+                    mx.addAll(
+                        materializeParamNames(m0[i], level+1, count1, countsDesc)
+                    );
+                }
+            }
+        }
+
+        return(mx);
+    }
 }
+
