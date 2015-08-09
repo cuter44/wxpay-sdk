@@ -42,6 +42,7 @@
         wxreq.setOutTradeNo(outTradeNo);
 
         RefundQueryResponse wxresp = wxreq.build().sign().execute();
+        assert(wxresp.verify(factory.getConf()));
         Properties prop = wxresp.getProperties();
         System.out.println(prop);
 

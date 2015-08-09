@@ -68,24 +68,19 @@ public class RefundResponse extends WxpayResponseBase {
 
     /** @return refund_fee in CNY fen
      */
-    public int getRefundFee(){
+    public Integer getRefundFee()
+    {
         return(
-            Integer.valueOf(
-                super.getProperty(KEY_REFUND_FEE)
-            )
+            super.getIntProperty(KEY_REFUND_FEE)
         );
     }
 
     /** @return coupon_refund_fee in CNY fen
      */
-    public int getCouponRefundFee(){
-        String sCouponRefundFee = super.getProperty(KEY_COUPON_REFUND_FEE);
-
-        if (sCouponRefundFee!=null)
-            return(
-                Integer.valueOf(sCouponRefundFee)
-            );
-        // else
-            return(0);
+    public int getCouponRefundFee()
+    {
+        return(
+            super.getIntProperty(KEY_COUPON_REFUND_FEE)
+        );
     }
 }

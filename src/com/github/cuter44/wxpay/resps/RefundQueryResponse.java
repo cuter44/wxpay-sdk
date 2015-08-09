@@ -15,42 +15,45 @@ import com.github.cuter44.wxpay.constants.RefundStatus;
  */
 public class RefundQueryResponse extends WxpayResponseBase {
 
+    public static final String KEY_REFUND_COUNT             = "refund_count";
+    public static final String KEY_REFUND_ID_$0             = "refund_id_$0";
+    public static final String KEY_OUT_REFUND_NO_$0         = "out_refund_no_$0";
+    public static final String KEY_REFUND_FEE_$0            = "refund_fee_$0";
+    public static final String KEY_REFUND_STATUS_$0         = "refund_status_$0";
+    public static final String KEY_COUPON_REFUND_COUNT_$0   = "coupon_refund_count_$0";
+    public static final String KEY_COUPON_REFUND_FEE_$0     = "coupon_refund_fee_$0";
 
-    public static final String KEY_APPID                = "appid";
-    public static final String KEY_COUPON_REFUND_FEE_   = "refund_fee_";
-    public static final String KEY_DEVICE_INFO          = "device_info";
-    public static final String KEY_MCH_ID               = "mch_id";
-    public static final String KEY_NONCE_STR            = "nonce_str";
-    public static final String KEY_OUT_REFUND_NO_       = "out_refund_no_";
-    public static final String KEY_OUT_TRADE_NO         = "nonce_str";
-    public static final String KEY_REFUND_CHANNEL_      = "refund_channel_";
-    public static final String KEY_REFUND_COUNT         = "refund_count";
-    public static final String KEY_REFUND_FEE_          = "refund_fee_";
-    public static final String KEY_REFUND_ID_           = "refund_id_";
-    public static final String KEY_REFUND_STATUS_       = "refund_status_";
-    public static final String KEY_TOTAL_FEE            = "total_fee";
-    public static final String KEY_TRANSACTION_ID       = "transaction_id";
-    public static final String KEY_SIGN                 = "sign";
+    public static List<String> KEYS_PARAM_NAME_TEMPLATE= Arrays.asList(
+        "appid",
+        "cash_fee",
+        "coupon_refund_batch_id_$0_$1",
+        "coupon_refund_count_$0",
+        "coupon_refund_fee_$0",
+        "coupon_refund_fee_$0_$1",
+        "coupon_refund_id_$0_$1",
+        "device_info",
+        "err_code",
+        "err_code_des",
+        "fee_type",
+        "mch_id",
+        "nonce_str",
+        "out_refund_no_$0",
+        "out_trade_no",
+        "refund_channel_$0",
+        "refund_count",
+        "refund_fee",
+        "refund_fee_$0",
+        "refund_id_$0",
+        "refund_status_$0",
+        "result_code",
+        "return_code",
+        "return_msg",
+        "sign",
+        "total_fee",
+        "transaction_id"
+    );
 
     public List<String> keysParamName = null;
-
-    //public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
-            //"appid",
-            //"coupon_refund_fee_0",
-            //"device_info",
-            //"mch_id",
-            //"nonce_str",
-            //"out_refund_no_0",
-            //"out_trade_no",
-            //"refund_channel_0",
-            //"refund_count",
-            //"refund_fee_0",
-            //"refund_id_0",
-            //"refund_status_0",
-            //"total_fee",
-            //"transaction_id",
-            //"sign"
-    //);
 
   //CONSTRUCT
     public RefundQueryResponse(String respXml)
@@ -69,75 +72,57 @@ public class RefundQueryResponse extends WxpayResponseBase {
     }
 
   //VERIFY
-    //public List<String> build_keys_param_name()
-    //{
-        //List<String> params = KEYS_PARAM_NAME;
-
-        //for (int i = 1; i < Integer.valueOf(this.getProperty("refund_count")); i++)
-        //{
-            //params.add((i + 1       ), "coupon_refund_fee_"     + i);
-            //params.add((i * 2 + 5   ), "out_refund_no_"         + i);
-            //params.add((i * 3 + 7   ), "refund_channel_"        + i);
-            //params.add((i * 4 + 9   ), "refund_fee_"            + i);
-            //params.add((i * 5 + 10  ), "refund_id_"             + i);
-            //params.add((i * 6 + 11  ), "refund_status_"         + i);
-        //}
-
-        //return params;
-    //}
-
-    //@Override
-    protected boolean verifySign(Properties conf)
-            throws UnsupportedEncodingException
+    protected List<String> getKeysParamName()
     {
-        if (this.keysParamName == null)
+        if (this.keysParamName != null)
+            return(this.keysParamName);
+
+        // else
+        Integer refundCount = this.getRefundCount();
+        List<Integer> couponRefundCount = Arrays.asList(this.getCouponRefundCount());
+
+        List<String> l = new ArrayList<String>();
+        for (String k:KEYS_PARAM_NAME_TEMPLATE)
         {
-            int count = this.getRefundCount();
-            List<String> l = new ArrayList<String>(10+6*count);
-
-            keysParamName.add       (KEY_APPID                  );
-            for (int i=0; i<count; i++)
-                keysParamName.add   (KEY_COUPON_REFUND_FEE_+i   );
-            keysParamName.add       (KEY_DEVICE_INFO            );
-            keysParamName.add       (KEY_MCH_ID                 );
-            keysParamName.add       (KEY_NONCE_STR              );
-            for (int i=0; i<count; i++)
-                keysParamName.add   (KEY_OUT_REFUND_NO_+i       );
-            keysParamName.add       (KEY_OUT_TRADE_NO           );
-            for (int i=0; i<count; i++)
-                keysParamName.add   (KEY_REFUND_CHANNEL_+i      );
-            keysParamName.add       (KEY_REFUND_COUNT           );
-            for (int i=0; i<count; i++)
-                keysParamName.add   (KEY_REFUND_FEE_+i          );
-            for (int i=0; i<count; i++)
-                keysParamName.add   (KEY_REFUND_ID_+i           );
-            for (int i=0; i<count; i++)
-                keysParamName.add   (KEY_REFUND_STATUS_+i       );
-            keysParamName.add       (KEY_TOTAL_FEE              );
-            keysParamName.add       (KEY_TRANSACTION_ID         );
-            keysParamName.add       (KEY_SIGN                   );
-
-            this.keysParamName = l;
+            if (k.contains("$"))
+                l.addAll(materializeParamNames(k, 0, refundCount, couponRefundCount));
+            else
+                l.add(k);
         }
 
+        this.keysParamName = l;
+
+        return(this.keysParamName);
+    }
+
+    @Override
+    protected boolean verifySign(Properties conf)
+        throws UnsupportedEncodingException
+    {
         return (
-            super.verifySign(this.keysParamName, conf)
+            super.verifySign(
+                this.getKeysParamName(),
+                conf
+            )
         );
     }
 
   // PROPERTY
-    public int getRefundCount()
+    // REFUND_COUND
+    public final int getRefundCount()
     {
         return Integer.valueOf(
             super.getProperty(KEY_REFUND_COUNT)
         );
     }
 
-
-    public String getRefundId(int i)
+    // REFUND_ID
+    public String getRefundId(int n)
     {
         return(
-            super.getProperty(KEY_REFUND_ID_+i)
+            super.getProperty(
+                materializeParamName(KEY_REFUND_ID_$0, n)
+            )
         );
     }
 
@@ -152,11 +137,13 @@ public class RefundQueryResponse extends WxpayResponseBase {
         return(v);
     }
 
-
-    public String getOutRefundNo(int i)
+    // OUT_REFUND_NO
+    public String getOutRefundNo(int n)
     {
         return(
-            super.getProperty(KEY_OUT_REFUND_NO_+i)
+            super.getProperty(
+                materializeParamName(KEY_OUT_REFUND_NO_$0, n)
+            )
         );
     }
 
@@ -171,55 +158,14 @@ public class RefundQueryResponse extends WxpayResponseBase {
         return(v);
     }
 
-
-    /** @return in CNY fen
-     */
-    public int getRefundFee(int i)
-    {
-        return(
-            Integer.valueOf(
-                super.getProperty(KEY_REFUND_FEE_+i)
-            )
-        );
-    }
-
-    public int[] getRefundFee()
-    {
-        int count = this.getRefundCount();
-        int[] v = new int[count];
-
-        for (int i=0; i<count; i++)
-            v[i] = this.getRefundFee(i);
-
-        return(v);
-    }
-
-
-    public Integer getCouponRefundFee(int i)
-    {
-        String v = super.getProperty(KEY_COUPON_REFUND_FEE_+i);
-        return(
-            (v!=null) ? Integer.valueOf(v) : 0
-        );
-    }
-
-    public Integer[] getCouponRefundFee()
-    {
-        int count = this.getRefundCount();
-        Integer[] v = new Integer[count];
-
-        for (int i=0; i<count; i++)
-            v[i] = this.getCouponRefundFee(i);
-
-        return(v);
-    }
-
-
-    public RefundStatus getRefundStatus(int i)
+    // REFUND_STATUS
+    public RefundStatus getRefundStatus(int n)
     {
         return(
             RefundStatus.valueOf(
-                super.getProperty(KEY_REFUND_STATUS_+i)
+                super.getProperty(
+                    materializeParamName(KEY_REFUND_STATUS_$0, n)
+                )
             )
         );
     }
@@ -235,4 +181,67 @@ public class RefundQueryResponse extends WxpayResponseBase {
         return(v);
     }
 
+    // REFUND_FEE
+    /** @return in CNY fen
+     */
+    public Integer getRefundFee(int n)
+    {
+        return(
+            super.getIntProperty(
+                materializeParamName(KEY_REFUND_FEE_$0, n)
+            )
+        );
+    }
+
+    public Integer[] getRefundFee()
+    {
+        int count = this.getRefundCount();
+        Integer[] v = new Integer[count];
+
+        for (int i=0; i<count; i++)
+            v[i] = this.getRefundFee(i);
+
+        return(v);
+    }
+
+  // COUPON
+    public final Integer getCouponRefundFee(int n)
+    {
+        return(
+            super.getIntProperty(
+                materializeParamName(KEY_COUPON_REFUND_FEE_$0, n)
+            )
+        );
+    }
+
+    public Integer[] getCouponRefundFee()
+    {
+        int count = this.getRefundCount();
+        Integer[] v = new Integer[count];
+
+        for (int i=0; i<count; i++)
+            v[i] = this.getCouponRefundFee(i);
+
+        return(v);
+    }
+
+    public Integer getCouponRefundCount(int n)
+    {
+        return(
+            super.getIntProperty(
+                materializeParamName(KEY_COUPON_REFUND_COUNT_$0, n)
+            )
+        );
+    }
+
+    public Integer[] getCouponRefundCount()
+    {
+        int count = this.getRefundCount();
+        Integer[] v = new Integer[count];
+
+        for (int i=0; i<count; i++)
+            v[i] = this.getCouponRefundCount(i);
+
+        return(v);
+    }
 }
