@@ -13,11 +13,18 @@ public class MsgParser
 
     protected static Map<MsgType, Class<? extends WxmsgBase>> mapping;
 
-    static {
+    static
+    {
         mapping = new HashMap<MsgType, Class<? extends WxmsgBase>>(16);
 
-        mapping.put(MsgType.UNKNOWN    , WxmsgBase.class);
-        //mapping.put(MsgType.ECHO       , Echo.class);
+        mapping.put(MsgType.UNKNOWN     , WxmsgBase.class       );
+        mapping.put(MsgType.text        , MsgText.class         );
+        mapping.put(MsgType.image       , MsgImage.class        );
+        mapping.put(MsgType.voice       , MsgVoice.class        );
+        mapping.put(MsgType.video       , MsgVideo.class        );
+        mapping.put(MsgType.shortvideo  , MsgShortvideo.class   );
+        mapping.put(MsgType.location    , MsgLocation.class     );
+        mapping.put(MsgType.link        , MsgLink.class         );
     }
 
     public static Class<? extends WxmsgBase> getMsgClass(MsgType type)
@@ -29,10 +36,10 @@ public class MsgParser
     {
         try
         {
+            Class<? extends WxmsgBase> msgClass = getMsgClass(MsgType.valueOf(type));
+
             return(
-                getMsgClass(
-                    MsgType.valueOf(type)
-                )
+                (msgClass != null ) ? msgClass : WxmsgBase.class
             );
         }
         catch (IllegalArgumentException ex)
@@ -58,10 +65,6 @@ public class MsgParser
     {
         try
         {
-            //// ECHO
-            //if (prop.getProperty(KEY_ECHOSTR) != null)
-                //return(new Echo(prop));
-
             Class<? extends WxmsgBase> c = getMsgClass(
                 prop.getProperty(KEY_MSG_TYPE)
             );
