@@ -85,9 +85,9 @@ public abstract class WxmsgReplyBase
     public abstract WxmsgReplyBase build();
 
   // TO_XML
-    /** Subclass should implements this method, to generate reply text
+    /** Subclass should implements this method, to generate reply content, as string
      */
-    public abstract String toXML();
+    public abstract String toContent();
 
     protected String buildXMLBody(List<String> paramNames)
     {

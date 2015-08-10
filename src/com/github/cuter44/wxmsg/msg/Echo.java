@@ -46,20 +46,35 @@ public class Echo extends WxmsgBase
     public String getToUserName()
         throws UnsupportedOperationException
     {
-        throw(new UnsupportedOperationException());
+        throw(new UnsupportedOperationException("Echo comes without ToUserName"));
     }
 
     @Override
     public String getFromUserName()
         throws UnsupportedOperationException
     {
-        throw(new UnsupportedOperationException());
+        throw(new UnsupportedOperationException("Echo coms without FromUserName"));
     }
 
+    @Override
     public Date getCreateTime()
         throws UnsupportedOperationException
     {
-        throw(new UnsupportedOperationException());
+        throw(new UnsupportedOperationException("Echo coms without CreateTime"));
+    }
+
+    @Override
+    public WxmsgReplyBase getReply()
+        throws UnsupportedOperationException
+    {
+        throw(new UnsupportedOperationException("Echo is not repliable."));
+    }
+
+    @Override
+    public Echo setReply(WxmsgReplyBase reply)
+        throws UnsupportedOperationException
+    {
+        throw(new UnsupportedOperationException("Echo is not repliable, return true on handler."));
     }
 
     @Override

@@ -44,7 +44,8 @@ public class ReplyText extends WxmsgReplyBase
         return(this);
     }
 
-    public String toXML()
+    @Override
+    public String toContent()
     {
         return(
             super.buildXMLBody(KEYS_PARAM_NAME)

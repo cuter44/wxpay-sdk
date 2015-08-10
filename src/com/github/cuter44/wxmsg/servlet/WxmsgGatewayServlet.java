@@ -13,6 +13,7 @@ import static com.github.cuter44.wxmsg.msg.MsgParser.parseMsg;
 import com.github.cuter44.wxmsg.WxmsgDispatcher;
 import com.github.cuter44.wxmsg.WxmsgHandler;
 import com.github.cuter44.wxmsg.msg.*;
+import com.github.cuter44.wxmsg.reply.*;
 import com.github.cuter44.wxmsg.constants.*;
 
 public class WxmsgGatewayServlet extends HttpServlet
@@ -25,7 +26,7 @@ public class WxmsgGatewayServlet extends HttpServlet
     protected WxmsgDispatcher dispatcher;
 
     /** 接收到通知时的回调方法
-     * 默认实现是调度 WxpayNotifyPublisher.getInstance(). 进行处理
+     * 默认实现是调度 WxpayNotifyPublisher.getInstance() 进行处理
      * 覆盖此方法可以实现自己的通知处理逻辑.
      */
     public boolean handle(WxmsgBase m)
@@ -62,7 +63,7 @@ public class WxmsgGatewayServlet extends HttpServlet
             );
         }
 
-        if (Boolean.valueOf(config.getInitParameter("com.github.cuter44.wxmsg.msggateway.acceptlinkin")))
+        if (Boolean.valueOf(config.getInitParameter("com.github.cuter44.wxmsg.msggateway.acceptalllinkin")))
         {
             this.dispatcher.subscribe(
                 MsgType.ECHO,
@@ -77,15 +78,21 @@ public class WxmsgGatewayServlet extends HttpServlet
             );
         }
 
-        if (Boolean.valueOf(config.getInitParameter("com.github.cuter44.wxmsg.msggateway.echo")))
+        if (Boolean.valueOf(config.getInitParameter("com.github.cuter44.wxmsg.msggateway.echotext")))
         {
             this.dispatcher.subscribe(
-                MsgType.FALLBACK,
+                MsgType.text,
                 new WxmsgHandler()
                 {
                     @Override
                     public boolean handle(WxmsgBase msg)
                     {
+                        MsgText m = (MsgText)msg;
+                        m.setReply(
+                            new ReplyText(m)
+                                .setContent(m.getContent())
+                        );
+
                         return(true);
                     }
                 }
@@ -123,9 +130,14 @@ public class WxmsgGatewayServlet extends HttpServlet
         //}
     }
 
-    @Override
+    public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
+    {
+        ex.printStackTrace();
+    }
+
     /** Echo
      */
+    @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
     {
         try
@@ -162,16 +174,30 @@ public class WxmsgGatewayServlet extends HttpServlet
         InputStream reqBody = req.getInputStream();
 
         resp.setCharacterEncoding("utf-8");
-        resp.setContentType("text/xml; charset=utf-8");
         PrintWriter out = resp.getWriter();
 
-        Properties parsedProp = parseXML(reqBody);
-        WxmsgBase msg = parseMsg(parsedProp);
+        try
+        {
+            Properties parsedProp = parseXML(reqBody);
+            WxmsgBase msg = parseMsg(parsedProp);
 
-        //if (this.handle(n))
-            //out.print("<xml><return_code>SUCCESS</return_code></xml>");
-        // else
-        out.print("success");
+            if (this.handle(msg))
+            {
+                resp.setContentType("text/xml; charset=utf-8");
+                out.print(
+                    msg.getReply().build().toContent()
+                );
+            }
+            else
+            {
+                resp.setContentType("text/plain; charset=utf-8");
+                out.print("success");
+            }
+        }
+        catch (Exception ex)
+        {
+            this.onError(ex, req, resp);
+        }
 
         return;
     }
