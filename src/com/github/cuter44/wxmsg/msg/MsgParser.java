@@ -8,7 +8,6 @@ import com.github.cuter44.wxmsg.constants.MsgType;
 
 public class MsgParser
 {
-    //public static final String KEY_ECHOSTR = "echostr";
     public static final String KEY_MSG_TYPE = "MsgType";
 
     protected static Map<MsgType, Class<? extends WxmsgBase>> mapping;
