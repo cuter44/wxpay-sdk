@@ -12,8 +12,6 @@ import com.github.cuter44.wxmsg.reply.WxmsgReplyBase;
 public class Echo extends WxmsgBase
 {
   // CONSTRUCT
-    protected Properties prop;
-
     public Echo()
     {
         super();
