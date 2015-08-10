@@ -162,7 +162,7 @@ public class WxmsgGatewayServlet extends HttpServlet
         }
         catch (Exception ex)
         {
-            this.log("Exception on handling echo.", ex);
+            this.onError(ex, req, resp);
         }
     }
 
@@ -170,14 +170,14 @@ public class WxmsgGatewayServlet extends HttpServlet
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
     {
-        req.setCharacterEncoding("utf-8");
-        InputStream reqBody = req.getInputStream();
-
-        resp.setCharacterEncoding("utf-8");
-        PrintWriter out = resp.getWriter();
-
         try
         {
+            req.setCharacterEncoding("utf-8");
+            InputStream reqBody = req.getInputStream();
+
+            resp.setCharacterEncoding("utf-8");
+            PrintWriter out = resp.getWriter();
+
             Properties parsedProp = parseXML(reqBody);
             WxmsgBase msg = parseMsg(parsedProp);
 
