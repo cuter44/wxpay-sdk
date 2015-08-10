@@ -19,9 +19,13 @@ public abstract class WxmsgReplyBase
     public static final String KEY_CREATE_TIME     = "CreateTime";
     public static final String KEY_MSG_TYPE        = "MsgType";
 
+    protected Properties prop;
+
   // CONSTRUCT
     public WxmsgReplyBase()
     {
+        this.prop = new Properties();
+
         this.setProperty(KEY_CREATE_TIME, Long.toString(System.currentTimeMillis()/1000L));
 
         return;
@@ -40,18 +44,16 @@ public abstract class WxmsgReplyBase
     }
 
   // CONFIG
-    protected Properties conf;
-
     public final String getProperty(String key)
     {
         return(
-            this.conf.getProperty(key)
+            this.prop.getProperty(key)
         );
     }
 
     public Properties getProperties()
     {
-        return(this.conf);
+        return(this.prop);
     }
 
     /**
@@ -59,13 +61,13 @@ public abstract class WxmsgReplyBase
      */
     public final WxmsgReplyBase setProperty(String key, String value)
     {
-        this.conf.setProperty(key, value);
+        this.prop.setProperty(key, value);
         return(this);
     }
 
     //public WxmsgReplyBase setCDATAProperty(String key, String value)
     //{
-        //this.conf.setProperty(key, "<![CDATA["+value+"]]>");
+        //this.prop.setProperty(key, "<![CDATA["+value+"]]>");
         //return(this);
     //}
 
@@ -75,7 +77,7 @@ public abstract class WxmsgReplyBase
      */
     public WxmsgReplyBase setProperties(Map aConf)
     {
-        this.conf.putAll(aConf);
+        this.prop.putAll(aConf);
         return(this);
     }
 
@@ -85,9 +87,9 @@ public abstract class WxmsgReplyBase
     public abstract WxmsgReplyBase build();
 
   // TO_XML
-    /** Subclass should implements this method, to generate reply text
+    /** Subclass should implements this method, to generate reply content, as string
      */
-    public abstract String toXML();
+    public abstract String toContent();
 
     protected String buildXMLBody(List<String> paramNames)
     {

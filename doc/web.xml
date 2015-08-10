@@ -12,7 +12,7 @@
     <servlet-name>WxpayNotifyGatewayServlet</servlet-name>
     <servlet-class>com.github.cuter44.wxpay.servlet.WxpayNotifyGatewayServlet</servlet-class>
     <init-param> 
-        <description>DEBUG SWITCH: If true, content of Notify.getString() &amp; .getProperties() will be dumped to container's log/stdout.</description>
+        <description>DEBUG SWITCH: If true, internal Properties storing parsed content will be dumped to container's stdout.</description>
         <param-name>com.github.cuter44.wxpay.notifygateway.dump</param-name> 
         <param-value>true</param-value> 
     </init-param>
@@ -61,6 +61,30 @@
   <servlet-mapping>
     <servlet-name>JSSDKConfig</servlet-name>
     <url-pattern>/jssdk-config.api</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>WxmsgGatewayServlet</servlet-name>
+    <servlet-class>com.github.cuter44.wxmsg.servlet.WxmsgGatewayServlet</servlet-class>
+    <init-param> 
+        <description>DEBUG SWITCH: If true, internal Properties storing parsed content will be dumped to container's stdout.</description>
+        <param-name>com.github.cuter44.wxmsg.msggateway.dump</param-name> 
+        <param-value>true</param-value> 
+    </init-param>
+    <init-param> 
+        <description>DEBUG SWITCH: If true, automatically accept Echos with no checks.</description>
+        <param-name>com.github.cuter44.wxmsg.msggateway.acceptalllinkin</param-name> 
+        <param-value>true</param-value> 
+    </init-param>
+    <init-param> 
+        <description>DEBUG SWITCH: If true, reply text message by echoing same content.</description>
+        <param-name>com.github.cuter44.wxmsg.msggateway.echotext</param-name> 
+        <param-value>true</param-value> 
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WxmsgGatewayServlet</servlet-name>
+    <url-pattern>/msg-gateway.spi</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>
