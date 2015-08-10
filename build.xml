@@ -19,7 +19,7 @@
   <property name="rtlibdir" value="lib" />
   <property name="javadocdir" value="javadoc" />
   <property name="destdir" value="bin" />
-  <property name="version" value="0.6.1.0-dev" />
+  <property name="version" value="0.6.1.1-dev" />
   <property name="wxpay-api-version" value="3.3.7" />
 
   <property name="webdir" value="web" />

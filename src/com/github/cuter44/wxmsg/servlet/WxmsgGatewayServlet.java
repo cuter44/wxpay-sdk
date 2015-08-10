@@ -1,4 +1,4 @@
-package com.github.cuter44.wxpay.servlet;
+package com.github.cuter44.wxmsg.servlet;
 
 import java.io.*;
 import javax.servlet.*;
