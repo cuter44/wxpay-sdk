@@ -54,10 +54,15 @@ public class TokenKeeper
         if (!ENABLE_SINGLETON_MANAGEMENT)
             return(new TokenKeeper(appid, secret));
 
+        TokenKeeper tk = TokenKeeper.instances.get(appid);
+
+        if (tk != null)
+            return(tk);
+
         // else
         synchronized(TokenKeeper.instances)
         {
-            TokenKeeper tk = TokenKeeper.instances.get(appid);
+            tk = TokenKeeper.instances.get(appid);
 
             if (tk != null)
                 return(tk);

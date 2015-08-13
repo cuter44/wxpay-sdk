@@ -125,6 +125,18 @@ public class SnsapiUserinfo extends HttpServlet
         return;
     }
 
+    /** Trigger on error encountered
+     * <br />
+     * This method can be overrided to plant your own error handling implemention.
+     * <br />
+     * Default behavior is <code>ex.printStackTrace()</code>
+     */
+    public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
+    {
+        System.err.println("ERROR: SnsapiUserinfo failed.");
+        ex.printStackTrace();
+    }
+
     /** 读取配置文件
      * 覆盖此方法可以删除对配置文件的访问.
      */
@@ -150,43 +162,50 @@ public class SnsapiUserinfo extends HttpServlet
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
     {
-        req.setCharacterEncoding("utf-8");
-
-        String code = req.getParameter(CODE);
-
-        if (code == null)
+        try
         {
-            String thisUrl = req.getRequestURL()
-                .append('?')
-                .append(req.getQueryString()!=null?"?"+req.getQueryString():"")
-                .toString();
+            req.setCharacterEncoding("utf-8");
 
-            String url = new URLBuilder()
-                .appendPath("https://open.weixin.qq.com/connect/oauth2/authorize")
-                .appendParam("appid", this.getAppid(req))
-                .appendParamEncode("redirect_uri", thisUrl)
-                .appendParam("response_type", "code")
-                .appendParam("scope", "snsapi_userinfo")
-                .appendLabel("wechat_redirect")
-                .toString();
+            String code = req.getParameter(CODE);
 
-            resp.sendRedirect(url);
+            if (code == null)
+            {
+                String thisUrl = req.getRequestURL()
+                    .append('?')
+                    .append(req.getQueryString()!=null?"?"+req.getQueryString():"")
+                    .toString();
 
-            return;
+                String url = new URLBuilder()
+                    .appendPath("https://open.weixin.qq.com/connect/oauth2/authorize")
+                    .appendParam("appid", this.getAppid(req))
+                    .appendParamEncode("redirect_uri", thisUrl)
+                    .appendParam("response_type", "code")
+                    .appendParam("scope", "snsapi_userinfo")
+                    .appendLabel("wechat_redirect")
+                    .toString();
+
+                resp.sendRedirect(url);
+
+                return;
+            }
+
+            // else
+            String appid = this.getAppid(req);
+            String secret = this.getSecret(appid);
+            SnsOAuthAccessTokenResponse snsapiBaseResp = new SnsOAuthAccessToken(appid, secret, code)
+                .execute();
+
+            SnsUserinfoResponse snsUserinfoResp = new SnsUserinfo(snsapiBaseResp)
+                .execute();
+
+            this.trigger(snsUserinfoResp, req);
+
+            this.response(snsUserinfoResp, req, resp);
         }
-
-        // else
-        String appid = this.getAppid(req);
-        String secret = this.getSecret(appid);
-        SnsOAuthAccessTokenResponse snsapiBaseResp = new SnsOAuthAccessToken(appid, secret, code)
-            .execute();
-
-        SnsUserinfoResponse snsUserinfoResp = new SnsUserinfo(snsapiBaseResp)
-            .execute();
-
-        this.trigger(snsUserinfoResp, req);
-
-        this.response(snsUserinfoResp, req, resp);
+        catch (Exception ex)
+        {
+            this.onError(ex, req, resp);
+        }
 
         return;
     }

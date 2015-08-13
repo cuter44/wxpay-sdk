@@ -1,4 +1,5 @@
 # wxpay-sdk configure file
+# using by wxpay|wxmp module
 
 # Config this to load certificate for https://api.weixin.qq.com or other alike.
 # Usually it is the GeoTrustGlobalCA.crt, provided along with the source code or release.
@@ -30,9 +31,9 @@ SECRET=9efe892ad890a5aa61e3xxxxxxxxxxxx
 mch_id=10027922
 KEY=gdkxzxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-# Notify SPI callback by wx-server
+# Notify SPI callback by wxpay after user pay
 # This is needed while playing demos or the notify gateway.
-# In produce environment, this value is usually set individually on composing requests.
+# In production environment, this value is usually set individually on composing requests.
 notify_url=http://www.example.com/wxpay/notify.api
 
 # You can also fill other annoying parameter here, with keys as same as wx document mentioned.
