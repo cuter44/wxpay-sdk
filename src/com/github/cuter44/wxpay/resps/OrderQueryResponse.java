@@ -77,7 +77,6 @@ public class OrderQueryResponse extends WxpayResponseBase {
     }
 
   // VERIFY
-  //VERIFY
     protected List<String> getKeysParamName()
     {
         if (this.keysParamName != null)
@@ -112,7 +111,7 @@ public class OrderQueryResponse extends WxpayResponseBase {
         );
     }
 
-  //PROPERTY
+  // PROPERTY
   // ID
     public String getTransactionId()
     {
