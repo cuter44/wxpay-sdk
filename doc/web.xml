@@ -6,8 +6,7 @@
         id="WebApp_ID" version="2.5">
   <display-name>蓝星微信支付样例</display-name>
 
-  <!-- Merry Christmas! -->
-
+  <!-- wxpay -->
   <servlet>
     <servlet-name>WxpayNotifyGatewayServlet</servlet-name>
     <servlet-class>com.github.cuter44.wxpay.servlet.WxpayNotifyGatewayServlet</servlet-class>
@@ -36,6 +35,7 @@
     <url-pattern>/jsapi-signer.api</url-pattern>
   </servlet-mapping>
 
+  <!-- wxmp -->
   <servlet>
     <servlet-name>SnsapiBase</servlet-name>
     <servlet-class>com.github.cuter44.wxmp.servlet.SnsapiBase</servlet-class>
@@ -63,6 +63,7 @@
     <url-pattern>/jssdk-config.api</url-pattern>
   </servlet-mapping>
 
+  <!-- wxmsg -->
   <servlet>
     <servlet-name>WxmsgGatewayServlet</servlet-name>
     <servlet-class>com.github.cuter44.wxmsg.servlet.WxmsgGatewayServlet</servlet-class>
@@ -87,6 +88,17 @@
     <url-pattern>/msg-gateway.spi</url-pattern>
   </servlet-mapping>
 
+  <!-- wxcp -->
+  <servlet>
+    <servlet-name>CorpSnsapiBase</servlet-name>
+    <servlet-class>com.github.cuter44.wxcp.servlet.CorpSnsapiBase</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CorpSnsapiBase</servlet-name>
+    <url-pattern>/corp-snsapi-base.api</url-pattern>
+  </servlet-mapping>
+
+  <!-- common -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
