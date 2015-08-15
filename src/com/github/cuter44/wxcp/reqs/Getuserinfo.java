@@ -21,7 +21,7 @@ public class Getuserinfo extends WxcpRequestBase
 {
   // KEYS
     protected static final List<String> KEYS_PARAM = Arrays.asList(
-        "access_token", "openid", "lang"
+        "access_token", "code"
     );
 
     protected static final String KEY_ACCESS_TOKEN  = "access_token";
