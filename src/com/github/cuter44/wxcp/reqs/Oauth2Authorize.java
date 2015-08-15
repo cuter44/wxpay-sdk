@@ -58,15 +58,14 @@ public class Oauth2Authorize extends WxcpRequestBase
 
     public Oauth2Authorize(String appid, String redirectUri, String state)
     {
-        this(new Properties());
+        this(appid, redirectUri);
 
-        super.setProperty(KEY_APPID         , appid         )
-            .setProperty(KEY_REDIRECT_URI   , redirectUri   )
-            .setProperty(KEY_STATE          , state   );
+        super.setProperty(KEY_STATE, state);
 
         return;
     }
 
+  // PROPERTY
     public Oauth2Authorize setAppid(String appid)
     {
         super.setProperty(KEY_APPID, appid);
