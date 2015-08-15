@@ -1,4 +1,4 @@
-package com.github.cuter44.wxmp.resps;
+package com.github.cuter44.wxcp.resps;
 
 import com.alibaba.fastjson.*;
 
@@ -10,7 +10,7 @@ import com.alibaba.fastjson.*;
     expires_in      凭证有效时间，单位：秒
  * </pre>
  */
-public class TokenClientCredentialResponse extends WxmpResponseBase
+public class GettokenResponse extends WxcpResponseBase
 {
   // CONSTANTS
     public static final String KEY_ACCESS_TOKEN = "access_token";
@@ -21,7 +21,7 @@ public class TokenClientCredentialResponse extends WxmpResponseBase
      */
     public final long tmCreate;
 
-    public TokenClientCredentialResponse(String jsonString)
+    public GettokenResponse(String jsonString)
     {
         super(jsonString);
 
@@ -40,7 +40,7 @@ public class TokenClientCredentialResponse extends WxmpResponseBase
 
     /** @return expires_in is in second
      */
-    public Long getExpiresIn()
+    public final Long getExpiresIn()
     {
         return(
             this.json.getLong(KEY_EXPIRES_IN)

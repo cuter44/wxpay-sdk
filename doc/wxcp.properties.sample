@@ -1,0 +1,26 @@
+# wxpay-sdk configure file
+# using by wxcp module
+
+# Config this to load certificate for https://api.weixin.qq.com or other alike.
+# Usually it is the GeoTrustGlobalCA.crt, provided along with the source code or release.
+# Wxpay-sdk does not load JDK's default, so unsetting this value may cause error.
+# As the same reason, unless you know what you do, leave this default.
+# Both colon(:) and semicolon(;) are seperators.
+LOAD_TRUSTS=/GeoTrustGlobalCA.crt
+
+# Turn on/off exception while wx server seponse a fail. This functionality is not supported yet.
+# true - throw corresponding exception on abnormal
+# false - return response whatever, invoker is responisible to check fails.
+EXCEPTION_ON_FAIL=true
+
+# These 4 parameters are described in page#1 in offical doc.
+# Remain their keys and fill with your own one.
+# You can also pass these parameters using the SAME keys programtically.
+corpid=wx67f201a851066c5c
+corpsecret=9efe892ad890a5aa61e3xxxxxxxxxxxx
+
+# You can also fill other annoying parameter here, with keys as same as wx document mentioned.
+# Parameters passed by config file WILL BE OVERRIDED by those passed inline.
+
+# After all, don't forget to change filename to wxpay.properties AND put it in your classpath, defualt as '/wxcp.properties'.
+
