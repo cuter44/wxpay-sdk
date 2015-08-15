@@ -27,7 +27,7 @@
 
         ConvertToOpenid wxreq1 = (ConvertToOpenid)factory.instantiateWithToken(ConvertToOpenid.class);
 
-        MenuGetResponse wxresp1 = wxreq1.setUserid(userid).build().execute();
+        ConvertToOpenidResponse wxresp1 = wxreq1.setUserid(userid).build().execute();
 
         openid = wxresp1.getOpenid();
       }
@@ -40,7 +40,7 @@
       </tr>
       <tr>
         <td>openid</td>
-        <td><input id="openid" name="openid"  value="<%=openid%>/></td>
+        <td><input id="openid" name="openid"  value="<%=openid%>"/></td>
         <td><input type="submit" name="action" value="ToUserid"/></td>
       </tr>
     </table>
@@ -59,12 +59,12 @@
       }
 
       void(function getOpenId(){
-        var openid = getPrarmValue("openid") || getParamValue("OpenId");
+        var openid = getParamValue("openid") || getParamValue("OpenId");
         var userid = getParamValue("userid") || getParamValue("UserId");
         if (!(openid || userid))
         {
           var thisUrl = location.href;
-          location.href="snsapi-base.api?redir="+encodeURIComponent(thisUrl);
+          location.href="corp-snsapi-base.api?redir="+encodeURIComponent(thisUrl);
         }
         else
         {

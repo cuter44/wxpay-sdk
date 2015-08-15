@@ -19,7 +19,7 @@ public class WxcpFactory
     private static final String RESOURCE_WXCP_PROPERTIES = "/wxcp.properties";
 
     protected static final String KEY_CORPID = "corpid";
-    protected static final String KEY_CORPSECRET = "corpcorpscrect";
+    protected static final String KEY_CORPSECRET = "corpsecret";
 
     protected static final String KEY_ACCESS_TOKEN = "access_token";
 
