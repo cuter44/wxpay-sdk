@@ -27,12 +27,7 @@ public class GroupsGetResponse extends WxmpResponseBase
 
     public GroupsGetResponse(String jsonString)
     {
-        JSONObject json = JSON.parseObject(jsonString);
-
-        Integer errcode = json.getInteger(ERRCODE);
-
-        if ((errcode != null) && !(errcode.equals(0)))
-            throw(new WxmpException(errcode, this.json.getString(ERRMSG)));
+        super(jsonString);
 
         this.groups = json.getJSONArray("groups");
 
@@ -44,23 +39,6 @@ public class GroupsGetResponse extends WxmpResponseBase
      */
     @Override
     public JSONObject getJson()
-        throws UnsupportedOperationException
-    {
-        throw(new UnsupportedOperationException());
-    }
-
-    /** @deprecated GroupsGetResponse does not support this op.
-     */
-    @Override
-    public String getProperty(String key)
-        throws UnsupportedOperationException
-    {
-        throw(new UnsupportedOperationException());
-    }
-    /** @deprecated GroupsGetResponse does not support this op.
-     */
-    @Override
-    public String getString(String key)
         throws UnsupportedOperationException
     {
         throw(new UnsupportedOperationException());

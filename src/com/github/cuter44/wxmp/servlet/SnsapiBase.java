@@ -172,13 +172,8 @@ public class SnsapiBase extends HttpServlet
                     .append(req.getQueryString()!=null?"?"+req.getQueryString():"")
                     .toString();
 
-                String url = new URLBuilder()
-                    .appendPath("https://open.weixin.qq.com/connect/oauth2/authorize")
-                    .appendParam("appid", this.getAppid(req))
-                    .appendParamEncode("redirect_uri", thisUrl)
-                    .appendParam("response_type", "code")
-                    .appendParam("scope", "snsapi_base")
-                    .appendLabel("wechat_redirect")
+                String url = new Oauth2Authorize.SnsapiBase(this.getAppid(req), thisUrl)
+                    .build()
                     .toString();
 
                 resp.sendRedirect(url);

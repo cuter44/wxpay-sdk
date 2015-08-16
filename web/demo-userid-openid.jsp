@@ -29,19 +29,21 @@
 
         ConvertToOpenidResponse wxresp1 = wxreq1.setUserid(userid).build().execute();
 
+        System.out.println(wxresp1.getJson().toString());
+
         openid = wxresp1.getOpenid();
       }
     %>
     <table>
       <tr>
         <td>userid</td>
-        <td><input id="userid" name="userid" value="<%=userid%>"/></td>
+        <td><input id="userid" size="48" name="userid" value="<%=userid!=null?userid:""%>"/></td>
         <td><input type="submit" name="action" value="ToOpenid"/></td>
       </tr>
       <tr>
         <td>openid</td>
-        <td><input id="openid" name="openid"  value="<%=openid%>"/></td>
-        <td><input type="submit" name="action" value="ToUserid"/></td>
+        <td><input id="openid" size="48" name="openid" value="<%=openid!=null?openid:""%>"/></td>
+        <td><input type="submit" name="action" value="ToUserid" disabled /></td>
       </tr>
     </table>
     </form>
@@ -59,8 +61,8 @@
       }
 
       void(function getOpenId(){
-        var openid = getParamValue("openid") || getParamValue("OpenId");
-        var userid = getParamValue("userid") || getParamValue("UserId");
+        var userid = document.getElementById("userid").value || getParamValue("userid") || getParamValue("UserId");
+        var openid = document.getElementById("openid").value || getParamValue("openid") || getParamValue("OpenId");
         if (!(openid || userid))
         {
           var thisUrl = location.href;
@@ -68,8 +70,8 @@
         }
         else
         {
-          document.getElementById("openid").value = openid;  
           document.getElementById("userid").value = userid;  
+          document.getElementById("openid").value = openid;  
         }
       })();
     </script>

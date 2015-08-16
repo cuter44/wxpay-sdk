@@ -7,8 +7,8 @@ import com.github.cuter44.wxmp.WxmpException;
 public class WxmpResponseBase
 {
   // CONSTANTS
-    public static final String ERRCODE  = "errcode";
-    public static final String ERRMSG   = "errmsg";
+    public static final String KEY_ERRCODE  = "errcode";
+    public static final String KEY_ERRMSG   = "errmsg";
 
     protected JSONObject json;
 
@@ -22,10 +22,8 @@ public class WxmpResponseBase
     {
         this.json = JSON.parseObject(jsonString);
 
-        Integer errcode = this.json.getInteger(ERRCODE);
-
-        if ((errcode != null) && !(errcode.equals(0)))
-            throw(new WxmpException(errcode, this.json.getString(ERRMSG)));
+        if (this.isErrorEncountered())
+            throw(new WxmpException(this.getErrcode(), this.getErrmsg()));
 
         return;
     }
@@ -37,7 +35,7 @@ public class WxmpResponseBase
 
     /** synonym of this.json.getString(key)
      */
-    public String getProperty(String key)
+    public final String getProperty(String key)
     {
         return(
             this.json.getString(key)
@@ -46,10 +44,49 @@ public class WxmpResponseBase
 
     /** synonym of this.json.getString(key)
      */
-    public String getString(String key)
+    public final String getString(String key)
     {
         return(
             this.json.getString(key)
+        );
+    }
+
+
+    public final Integer getInteger(String key)
+    {
+        return(
+            this.json.getInteger(key)
+        );
+    }
+
+    public final Long getLong(String key)
+    {
+        return(
+            this.json.getLong(key)
+        );
+    }
+
+  // ERROR
+    public final boolean isErrorEncountered()
+    {
+        Integer errcode = this.getErrcode();
+
+        return(
+            (errcode != null) && !(errcode.equals(0))
+        );
+    }
+
+    public final Integer getErrcode()
+    {
+        return(
+            this.getInteger(KEY_ERRCODE)
+        );
+    }
+
+    public final String getErrmsg()
+    {
+        return(
+            this.getString(KEY_ERRMSG)
         );
     }
 }
