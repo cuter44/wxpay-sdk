@@ -177,7 +177,7 @@ public class SnsapiUserinfo extends HttpServlet
 
                 String url = new Oauth2Authorize.SnsapiUserinfo(this.getAppid(req), thisUrl)
                     .build()
-                    .toString();
+                    .toURL();
 
                 resp.sendRedirect(url);
 

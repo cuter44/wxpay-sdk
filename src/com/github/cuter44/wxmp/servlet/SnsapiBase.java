@@ -174,7 +174,7 @@ public class SnsapiBase extends HttpServlet
 
                 String url = new Oauth2Authorize.SnsapiBase(this.getAppid(req), thisUrl)
                     .build()
-                    .toString();
+                    .toURL();
 
                 resp.sendRedirect(url);
 
