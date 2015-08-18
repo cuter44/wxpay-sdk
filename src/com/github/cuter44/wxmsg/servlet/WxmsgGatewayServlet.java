@@ -131,6 +131,7 @@ public class WxmsgGatewayServlet extends HttpServlet
     }
 
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException
     {
         ex.printStackTrace();
     }
@@ -139,6 +140,7 @@ public class WxmsgGatewayServlet extends HttpServlet
      */
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException
     {
         try
         {

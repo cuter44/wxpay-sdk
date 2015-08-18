@@ -190,6 +190,7 @@ public class CorpSnsapiBase extends HttpServlet
      * Default behavior is <code>ex.printStackTrace()</code>
      */
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException
     {
         System.err.println("ERROR: CorpSnsapiBase failed.");
         ex.printStackTrace();

@@ -132,6 +132,7 @@ public class SnsapiUserinfo extends HttpServlet
      * Default behavior is <code>ex.printStackTrace()</code>
      */
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException
     {
         System.err.println("ERROR: SnsapiUserinfo failed.");
         ex.printStackTrace();
