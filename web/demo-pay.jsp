@@ -1,6 +1,7 @@
 <%@ page language="java"  pageEncoding="UTF-8" 
   import="
     java.util.Date,
+    java.net.URLEncoder,
     com.github.cuter44.wxpay.*,
     com.github.cuter44.wxpay.reqs.*,
     com.github.cuter44.wxpay.resps.*,
@@ -19,9 +20,9 @@
     <p />
     <form id="form" enctype="application/x-www-form-urlencoded">
     <table>
-      <tr><td>商品名称</td><td><input id="body" value="喵喵喵"/></td></tr>
-      <tr><td>价格</td><td><input id="total_fee" value="0.01"/></td></tr>
-      <tr><td>openid</td><td><input id="openid" size="32" /></td></tr>
+      <tr><td>商品名称</td><td><input name="body" value="喵喵喵"/></td></tr>
+      <tr><td>价格</td><td><input name="total_fee" value="0.01"/></td></tr>
+      <tr><td>openid</td><td><input id="openid" name="openid" size="32" /></td></tr>
       <tr><td></td><td><button name="action" value="pay">买买买~</button></td></tr>
     </table>
     </form>
@@ -54,12 +55,12 @@
 
         String jsonGbwxpr = gbwxpr.toJSON();
 
-        resp.sendRedirect(
+        response.sendRedirect(
           "demo-pay.jsp"
           +"?"+
-          "openid="+openid
+          "openid="+request.getParameter("openid")
           +"&"+
-          "gbwxpr="+URLEncoder.encode(jsonGbwxpr, "utf-8");
+          "gbwxpr="+URLEncoder.encode(jsonGbwxpr, "utf-8")
         );
 
         return;

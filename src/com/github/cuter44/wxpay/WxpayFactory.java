@@ -181,8 +181,9 @@ public class WxpayFactory
             return(
                 clazz.getConstructor(Properties.class)
                     .newInstance(
-                        new Properties(this.conf),
-                        this.buildConf(conf, this.conf)
+                        new Properties(
+                            this.buildConf(conf, this.conf)
+                        )
                     )
             );
         }
