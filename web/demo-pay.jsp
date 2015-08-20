@@ -22,14 +22,14 @@
     <table>
       <tr><td>商品名称</td><td><input name="body" value="喵喵喵"/></td></tr>
       <tr><td>价格</td><td><input name="total_fee" value="0.01"/></td></tr>
-      <tr><td>openid</td><td><input id="openid" name="openid" size="32" /></td></tr>
-      <tr><td></td><td><button name="action" value="pay">买买买~</button></td></tr>
+      <tr><td>openid</td><td><input id="openid" name="openid" size="32" /><button type="button" onclick="javascript:getOpenid(event)">acquire</button></td></tr>
+      <tr><td></td><td><button type="submit" name="action" value="sign">创建订单</button><button id="do-pay-button" type="button" onclick="javascript:buybuybuy(event);" disabled>支付</button></td></tr>
     </table>
     </form>
 
     <%
       String action = request.getParameter("action");
-      if ("pay".equals(action))
+      if ("sign".equals(action))
       {
         request.setCharacterEncoding("utf-8");
         WxpayFactory factory = WxpayFactory.getDefaultInstance();
@@ -79,64 +79,32 @@
         }
       }
 
-      void(function getOpenId(){
+      function getOpenid(ev)
+      {
         if (!getParamValue("openid"))
         {
           var thisUrl = location.href;
           location.href="snsapi-base.api?redir="+encodeURIComponent(thisUrl);
         }
-        else
-        {
-          document.getElementById("openid").value = getParamValue("openid");  
-        }
-      })();
 
-      void(function onGbwxpr(){
-        if (!getParamValue("gbwxpr"))
-          return;
+        ev || ev.preventDefault();
+      }
 
-        //else
-        document.onreadystatechange = function() {
-          if (document.redayState != "complete")
-            return;
+      if (getParamValue("openid"))
+        document.getElementById("openid").value = getParamValue("openid");  
 
-          // else
-          var gbwcpr = JSON.parse(getParameterValue("gbwxpr"));
-          WeixinJSBridge.invoke(
-            'getBrandWCPayRequest',
-            gbwcpr,
-            function(res){
-              if(res.err_msg == "get_brand_wcpay_request:ok" )
-              {
-                alert("喵喵喵! ฅ(`Д´#)ฅ");
-              }
-              else
-              {
-                alert(res.err_msg);
-              }
-              // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg 将在用户支付成功后返回 ok，但幵丌保证它绝对可靠。
-            }
-          );
-        }
-      })();
-
+      if (getParamValue("gbwxpr"))
+        document.getElementById("do-pay-button").disabled = false;
 
       function buybuybuy(ev)
       {
-        var ajax = new XMLHttpRequest();
-        ajax.open(
-          "POST",
-          "jsapi-signer.api",
-          false
-        );
-        ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        ajax.send(
-          "body="+document.getElementById("body").value
-          +"&total_fee="+document.getElementById("total_fee").value
-          +"&openid="+document.getElementById("openid").value
-        );
+        if (!getParamValue("gbwxpr"))
+        {
+          return;
+          // to submit form
+        }
 
-        var gbwcpr = JSON.parse(ajax.responseText);
+        var gbwcpr = JSON.parse(decodeURIComponent(getParamValue("gbwxpr")));
         WeixinJSBridge.invoke(
           'getBrandWCPayRequest',
           gbwcpr,

@@ -34,7 +34,9 @@ import com.github.cuter44.wxpay.constants.*;
     Content-Type: application/json
 
  * </pre>
+ * @deprecated Code of this class have been merged into demo-pay.jsp, this class will be completely abandoned on next major version.
  */
+@Deprecated
 public class JSAPISigner extends HttpServlet
 {
     private static final String BODY        = "body";

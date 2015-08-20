@@ -25,7 +25,7 @@
     <p />
     <form id="form" enctype="application/x-www-form-urlencoded" method="post">
     <table>
-      <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><input type="button" onclick="javascript:getOpenId()" value ="acquire(需要服务号)(重要的按钮点两次)" /></td></tr>
+      <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><button type="button" onclick="javascript:getOpenid(event)">acquire</button></td></tr>
       <tr><td>media_id</td><td><input id="media_id" name="media_id" size="32"/></td></tr>
       <tr><td></td><td><input type="submit"></td></tr>
     </table>
@@ -65,20 +65,20 @@
         }
       }
 
-      function getOpenId()
+      function getOpenid(ev)
       {
         if (!getParamValue("openid"))
         {
           var thisUrl = location.href;
           location.href="snsapi-base.api?redir="+encodeURIComponent(thisUrl);
         }
-        else
-        {
-          document.getElementById("openid").value = getParamValue("openid");  
-        }
 
-        return(false);
+        ev || ev.preventDefault();
       }
+
+      if (getParamValue("openid"))
+        document.getElementById("openid").value = getParamValue("openid");  
+
 
           
     </script>
