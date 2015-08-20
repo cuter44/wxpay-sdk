@@ -27,7 +27,7 @@
     <p />
     <form id="form" method="post">
     <table>
-      <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><input type="button" onclick="javascript:getOpenId()" value ="acquire(需要服务号)(重要的按钮点两次)" /></td></tr>
+      <tr><td>发给(openid)</td><td><input id="openid" name="touser" size="32" /><button type="button" onclick="javascript:getOpenid(event)">acquire</button></td></tr>
       <tr><td>文本</td><td><input id="content" name="content" value="喵喵喵 ฅ(・ω・ )ฅ"/></td></tr>
       <tr><td></td><td><input type="submit"></td></tr>
     </table>
@@ -67,7 +67,7 @@
         }
       }
 
-      function getOpenId()
+      function getOpenid()
       {
         if (!getParamValue("openid"))
         {
