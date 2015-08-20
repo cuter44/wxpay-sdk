@@ -174,6 +174,25 @@ public class WxpayFactory
         }
     }
 
+    public WxpayRequestBase instantiate(Class<? extends WxpayRequestBase> clazz, Properties conf)
+    {
+        try
+        {
+            return(
+                clazz.getConstructor(Properties.class)
+                    .newInstance(
+                        new Properties(this.conf),
+                        this.buildConf(conf, this.conf)
+                    )
+            );
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            throw(new RuntimeException(ex.getMessage(), ex));
+        }
+    }
+
     /** @deprecated use <code>instantiate(UnifiedOrder.class)</code> instead.
      */
     public UnifiedOrder newUnifiedOrder()
