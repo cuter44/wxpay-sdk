@@ -19,7 +19,7 @@
   <property name="rtlibdir" value="lib" />
   <property name="javadocdir" value="javadoc" />
   <property name="destdir" value="bin" />
-  <property name="version" value="0.6.5.0-dev" />
+  <property name="version" value="0.6.6.0-dev" />
 
   <property name="webdir" value="web" />
   <property name="webinfdir" value="${webdir}/WEB-INF" />
