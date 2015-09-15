@@ -1,18 +1,24 @@
-> (Reserved publicity area for [SCAU-SIDC](https://github.com/scau-sidc), project's sponsor & technical support & practical wx-develop service )
-> 这个广告位留给 SCAU-SIDC](https://github.com/scau-sidc), 该项目的资助方/官方支持/资深微信开发服务提供商
-
-# 微信支付服务器端SDK for Java / wx-pay sdk for JavaEE  
-# 以及 微信公众平台SDK for Java / wx-mp sdk for JavaEE  
-# 以及 微信消息响应SDK for Java / wx-msg sdk for JavaEE(TODO)  
+# 微信支付服务器端SDK for Java
+以及 
+# 微信公众平台SDK for Java
+以及 
+# 微信消息响应SDK for Java
+以及 
+# 微信企业号SDK for Java
 
 > yet another wheel for wx (╯‵д′)╯︵┻━┻
 
+## Sponser
+This project is brought to you by:
+
+* ![](https://avatars3.githubusercontent.com/u/9026603?v=3&s=96) [SCAU-SIDC](https://github.com/scau-sidc), specialized in third-party wx application development
+
+with love and humorousness.
+
 ## News
 
-We are on a refactor now, please be patient and refers to [issue#5](https://github.com/cuter44/wxpay-sdk/issues/5)  
-Sorry to keep you waiting, it is a bit tough-job to make you ease :P
-
-这个项目正在重构以便于您更方便地使用. 请参阅 [issue#5](https://github.com/cuter44/wxpay-sdk/issues/5) 以了解重构进度.
+This project is still in development. And we are out of collaborator.  
+We are now looking into wxmp.event. (2015-09-16)  
 
 ## Release
 
@@ -20,20 +26,15 @@ Sorry to keep you waiting, it is a bit tough-job to make you ease :P
 
 ## License & Acknokledgement/授权 & 鸣谢
 
-see [LICENSE.md](LICENSE.md)
-
-## Disclaimer/免责声明
-
-Though I made effort to not stealing your money or any secret about your wxpay account, or leak them to third-party. But I am still not responsable for any direct or indriect lost for your using of these (or part of) source code. It is your responsibility to check any risk before applying them.  
-
-作者不对使用代码所带来的直接或间接损失负责. 由于源代码是公开的, 检查和确保代码的安全性是属于使用者的职责. 请时刻清醒地意识这一点.  
+@see [LICENSE.md](LICENSE.md).  
+请务必阅读 [LICENSE.md](LICENSE.md), 几分钟就可以了.
 
 ## Tutorial/使用说明
 
-Detailed tutorial & guidelines are pending on our [wiki](https://github.con/cuter44/wxpay-sdk/wiki).
-Content below is partly outdated.  
+Detailed tutorial & guidelines are now available on our [wiki](https://github.con/cuter44/wxpay-sdk/wiki).  
+Though it is still under construction.  
 
-我们正在计划提供更完善的 [wiki](https://github.com/cuter44/wxpay-sdk/wiki). 以下内容部分已经不适用了.
+**Content below are OUTDATED.** Things are changed since I wrote these lines for version 0.3-.
 
 ====
 

@@ -20,7 +20,6 @@
   <property name="javadocdir" value="javadoc" />
   <property name="destdir" value="bin" />
   <property name="version" value="0.6.5.0-dev" />
-  <property name="wxpay-api-version" value="3.3.7" />
 
   <property name="webdir" value="web" />
   <property name="webinfdir" value="${webdir}/WEB-INF" />
