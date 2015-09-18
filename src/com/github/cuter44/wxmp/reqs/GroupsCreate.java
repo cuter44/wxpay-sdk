@@ -33,7 +33,16 @@ public class GroupsCreate extends WxmpRequestBase
 
     protected JSONObject jsonBody;
 
-    public static final JSONObject BODY_SCHEMA = JSON.parseObject("{'group':{'name':''}}");
+    public static final JSONObject BODY_SCHEMA = JSON.parseObject(
+        "{"+
+          "'properties':{"+
+            "'group':{"+
+              "'type':'object',"+
+              "'schema':{"+
+                "'properties':{"+
+                  "'name':{'type':'string',}"+
+        "} } } } }"
+    );
 
   // CONSTRUCT
     public GroupsCreate(Properties prop)
@@ -47,7 +56,7 @@ public class GroupsCreate extends WxmpRequestBase
     @Override
     public GroupsCreate build()
     {
-        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
 
         return(this);
     }

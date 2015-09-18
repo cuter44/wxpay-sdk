@@ -36,7 +36,14 @@ public class ConvertToOpenid extends WxcpRequestBase
 
     protected JSONObject jsonBody;
 
-    public static final JSONObject BODY_SCHEMA = JSON.parseObject("{'userid':'', 'agentid':''}");
+    public static final JSONObject BODY_SCHEMA = JSON.parseObject(
+        "{"+
+          "'properties':{"+
+            "'userid':{'type':'string'},"+
+            "'agentid':{'type':'string'}"+
+          "}"+
+        "}"
+    );
 
   // CONSTRUCT
     public ConvertToOpenid(Properties prop)
@@ -85,7 +92,7 @@ public class ConvertToOpenid extends WxcpRequestBase
     @Override
     public ConvertToOpenid build()
     {
-        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
 
         return(this);
     }

@@ -22,6 +22,7 @@ import com.alibaba.fastjson.*;
 
 import com.github.cuter44.wxcp.WxcpException;
 import com.github.cuter44.wxcp.resps.WxcpResponseBase;
+import com.github.cuter44.wxmp.util.JSONMaterializer;
 
 /**
  * @author galin<cuter44@foxmail.com>
@@ -42,7 +43,6 @@ public abstract class WxcpRequestBase
     /** Http client to use to send request to weixin server.
      * Provide object-scope http client, major for multi-account use.
      * You can directly set this field. This will takes effect on time when <code>.execute()</code> is called.
-     * It is supposed that
      */
     public CloseableHttpClient httpClient;
 
@@ -135,24 +135,11 @@ public abstract class WxcpRequestBase
         return(ub.toString());
     }
 
-    protected JSONObject buildJSONBody(JSONObject schema)
+    protected JSONObject buildJSONBody(JSONObject schema, Properties p)
     {
-        JSONObject json = new JSONObject();
-
-        for (String k:schema.keySet())
-        {
-            Object t = schema.get(k);
-            Object v;
-
-            if (t instanceof JSONObject)
-                v = this.buildJSONBody((JSONObject)t);
-            else
-                v = this.getProperty(k);
-
-            json.put(k, v);
-        }
-
-        return(json);
+        return(
+            JSONMaterializer.instance.materialize(schema, p)
+        );
     }
 
   // EXECUTE

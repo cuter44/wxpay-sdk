@@ -34,7 +34,18 @@ public class MessageCustomSendImage extends MessageCustomSend
   // KEYS
     public static final String KEY_MEDIA_ID = "media_id";
 
-    public static final JSONObject BODY_SCHEMA = JSON.parseObject("{'touser':'','msgtype':'','image':{'media_id':''}}");
+    public static final JSONObject BODY_SCHEMA = JSON.parseObject(
+        "{"+
+          "'properties':{"+
+            "'touser':{'type':'string'},"+
+            "'msgtype':{'type':'string'},"+
+            "'image':{"+
+              "'type':'object',"+
+              "'schema':{"+
+                "'properties':{"+
+                  "'media_id':{'type':'string'}"+
+        "} } } } }"
+    );
 
   // CONSTRUCT
     public MessageCustomSendImage(Properties prop)
@@ -50,7 +61,7 @@ public class MessageCustomSendImage extends MessageCustomSend
     @Override
     public MessageCustomSendImage build()
     {
-        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
 
         return(this);
     }

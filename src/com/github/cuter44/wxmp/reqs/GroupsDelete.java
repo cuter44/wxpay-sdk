@@ -34,7 +34,16 @@ public class GroupsDelete extends WxmpRequestBase
 
     protected JSONObject jsonBody;
 
-    public static final JSONObject BODY_SCHEMA = JSON.parseObject("{'group':{'id':''}}");
+    public static final JSONObject BODY_SCHEMA = JSON.parseObject(
+        "{"+
+          "'properties':{"+
+            "'group':{"+
+              "'type':'object',"+
+              "'schema':{"+
+                "'properties':{"+
+                  "'id':{'type':'string'}"+
+        "} } } } }"
+    );
 
   // CONSTRUCT
     public GroupsDelete(Properties prop)
@@ -48,7 +57,7 @@ public class GroupsDelete extends WxmpRequestBase
     @Override
     public GroupsDelete build()
     {
-        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
 
         return(this);
     }

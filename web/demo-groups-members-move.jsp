@@ -38,13 +38,13 @@
 
         WxmpFactory factory = WxmpFactory.getDefaultInstance();
 
-        GroupsMemberBatchupdate wxreq1 = (GroupsMemberBatchupdate)factory.instantiateWithToken(GroupsMemberBatchupdate.class);
+        GroupsMembersBatchupdate wxreq1 = (GroupsMembersBatchupdate)factory.instantiateWithToken(GroupsMembersBatchupdate.class);
 
         //wxreq1.setAccessToken(factory.getTokenKeeper().getAccessToken());
         wxreq1.setToGroupid(id);
         wxreq1.getOpenidList().add(openid);
 
-        GroupsMemberBatchupdateResponse wxresp1 = wxreq1.build().execute();
+        GroupsMembersBatchupdateResponse wxresp1 = wxreq1.build().execute();
 
         out.println(wxresp1.getJson());
       }
