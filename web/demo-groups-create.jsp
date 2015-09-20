@@ -15,11 +15,17 @@
   <body>
     <h1>微信分组创建样例</h1>
 
-    <form id="form" enctype="application/x-www-form-urlencoded" method="post">
-    <table>
-      <tr><td>分组名</td><td><input id="name" name="name" size="32" /></td></tr>
-      <tr><td></td><td><input type="submit"></td></tr>
-    </table>
+    <form id="form" method="GET">
+      <table>
+        <tr><td>分组名</td><td><input id="name" name="name" size="32" /></td></tr>
+        <tr><td></td><td><input type="submit"></td></tr>
+      </table>
+      <script>
+        (function(){
+          var ran = Math.random().toString().substr(3, 4);
+          document.getElementById("name").value = getParamValue("name") || ran;
+        })();
+      </script>
     </form>
 
     <p />
@@ -42,9 +48,5 @@
         out.println(prop1);
       }
     %>
-  <script>
-    var elemName = document.getElementById("name");
-    elemName.value = "demo-"+Math.random().toString().substr(3, 4);
-  </script>
   </body>
 </html>
