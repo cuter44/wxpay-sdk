@@ -18,8 +18,8 @@ public class OrderQuery extends WxpayRequestBase{
 
     public static final String URL_API_BASE = "https://api.mch.weixin.qq.com/pay/orderquery";
 
-    protected static final String KEY_OUT_TRADE_NO      = "out_trade_no";
-    protected static final String KEY_TRANSACTION_ID    = "transaction_id";
+    public static final String KEY_OUT_TRADE_NO      = "out_trade_no";
+    public static final String KEY_TRANSACTION_ID    = "transaction_id";
 
     public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
             "appid",

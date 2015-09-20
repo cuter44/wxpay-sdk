@@ -25,8 +25,8 @@ public class TokenClientCredential extends WxmpRequestBase
         "grant_type", "appid", "secret"
     );
 
-    protected static final String KEY_APPID         = "appid";
-    protected static final String KEY_SECRET        = "secret";
+    public static final String KEY_APPID         = "appid";
+    public static final String KEY_SECRET        = "secret";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/token";
 

@@ -47,8 +47,8 @@ import com.github.cuter44.wxmp.resps.*;
  */
 public class SnsapiUserinfo extends HttpServlet
 {
-    protected static final String KEY_APPID     = "appid";
-    protected static final String KEY_SECRET    = "SECRET";
+    public static final String KEY_APPID     = "appid";
+    public static final String KEY_SECRET    = "SECRET";
 
     protected static final String CODE      = "code";
     protected static final String REDIR     = "redir";

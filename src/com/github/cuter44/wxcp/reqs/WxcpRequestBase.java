@@ -30,8 +30,8 @@ import com.github.cuter44.wxmp.util.JSONMaterializer;
  */
 public abstract class WxcpRequestBase
 {
-    protected static final String KEY_APPID         = "appid";
-    protected static final String KEY_SECRET        = "SECRET";
+    public static final String KEY_APPID         = "appid";
+    public static final String KEY_SECRET        = "SECRET";
 
   // SSL
     /** Default http client to use to send request to weixin server.

@@ -26,8 +26,8 @@ public class GroupsCreate extends WxmpRequestBase
         "access_token"
     );
 
-    protected static final String KEY_ACCESS_TOKEN  = "access_token";
-    protected static final String KEY_NAME          = "name";
+    public static final String KEY_ACCESS_TOKEN  = "access_token";
+    public static final String KEY_NAME          = "name";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/groups/create";
 

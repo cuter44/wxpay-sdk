@@ -2,7 +2,7 @@ package com.github.cuter44.wxmp.resps;
 
 import com.alibaba.fastjson.*;
 
-/** 客服接口-发消息
+/** 创建分组
  * <pre style="font-size:12px">
     返回说明
     id      分组id，由微信分配

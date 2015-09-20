@@ -28,9 +28,9 @@ public class ConvertToOpenid extends WxcpRequestBase
         "access_token"
     );
 
-    protected static final String KEY_ACCESS_TOKEN  = "access_token";
-    protected static final String KEY_USERID        = "userid";
-    protected static final String KEY_AGENTID       = "agentid";
+    public static final String KEY_ACCESS_TOKEN  = "access_token";
+    public static final String KEY_USERID        = "userid";
+    public static final String KEY_AGENTID       = "agentid";
 
     public static final String URL_API_BASE = "https://qyapi.weixin.qq.com/cgi-bin/user/convert_to_openid";
 

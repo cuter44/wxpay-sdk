@@ -2,7 +2,7 @@ package com.github.cuter44.wxmp.resps;
 
 import com.alibaba.fastjson.*;
 
-/** 客服接口-发消息
+/** 批量移动用户分组
  * <br />
  * (No specification provided in official wiki)
  */

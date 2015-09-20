@@ -57,8 +57,8 @@ import com.github.cuter44.wxcp.util.*;
  */
 public class CorpSnsapiBase extends HttpServlet
 {
-    protected static final String KEY_CORPID        = "corpid";
-    protected static final String KEY_CORPSECRET    = "corpsecret";
+    public static final String KEY_CORPID        = "corpid";
+    public static final String KEY_CORPSECRET    = "corpsecret";
 
     protected static final String CODE  = "code";
     protected static final String REDIR = "redir";

@@ -36,9 +36,9 @@ public abstract class MessageCustomSend extends WxmpRequestBase
         "access_token"
     );
 
-    protected static final String KEY_ACCESS_TOKEN  = "access_token";
-    protected static final String KEY_TOUSER        = "touser";
-    protected static final String KEY_MSGTYPE       = "msgtype";
+    public static final String KEY_ACCESS_TOKEN  = "access_token";
+    public static final String KEY_TOUSER        = "touser";
+    public static final String KEY_MSGTYPE       = "msgtype";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
 

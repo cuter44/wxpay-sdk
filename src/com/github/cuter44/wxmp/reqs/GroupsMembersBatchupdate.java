@@ -29,8 +29,8 @@ public class GroupsMembersBatchupdate extends WxmpRequestBase
         "access_token"
     );
 
-    protected static final String KEY_ACCESS_TOKEN  = "access_token";
-    protected static final String KEY_TO_GROUPID    = "to_groupid";
+    public static final String KEY_ACCESS_TOKEN  = "access_token";
+    public static final String KEY_TO_GROUPID    = "to_groupid";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/groups/members/batchupdate";
 
