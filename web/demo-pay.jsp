@@ -81,20 +81,14 @@
 
       function getOpenid(ev)
       {
-        if (!getParamValue("openid"))
-        {
-          var thisUrl = location.href;
-          location.href="snsapi-base.api?redir="+encodeURIComponent(thisUrl);
-        }
+        var thisUrl = location.href;
+        location.href="snsapi-base.api?redir="+encodeURIComponent(thisUrl);
 
         ev || ev.preventDefault();
       }
 
-      if (getParamValue("openid"))
-        document.getElementById("openid").value = getParamValue("openid");  
-
-      if (getParamValue("gbwxpr"))
-        document.getElementById("do-pay-button").disabled = false;
+      document.getElementById("openid").value = getParamValue("openid") || "";  
+      document.getElementById("do-pay-button").disabled = (getParamValue("gbwxpr")==null);
 
       function buybuybuy(ev)
       {

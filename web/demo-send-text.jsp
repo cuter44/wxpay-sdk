@@ -67,20 +67,15 @@
         }
       }
 
-      function getOpenid()
+      function getOpenid(ev)
       {
-        if (!getParamValue("openid"))
-        {
-          var thisUrl = location.href;
-          location.href="snsapi-base.api?redir="+encodeURIComponent(thisUrl);
-        }
-        else
-        {
-          document.getElementById("openid").value = getParamValue("openid");  
-        }
+        var thisUrl = location.href;
+        location.href="snsapi-base.api?redir="+encodeURIComponent(thisUrl);
 
-        return(false);
+        ev && ev.preventDefault();
       }
+      document.getElementById("openid").value = getParamValue("openid") || "";  
+
     </script>
   </body>
 </html>
