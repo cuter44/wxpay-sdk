@@ -143,7 +143,7 @@ public class QrcodeCreate extends WxmpRequestBase
   // CONCRETE
     public static class QrScene extends QrcodeCreate
     {
-        public static String AN_QR_SCENE = "QR_SCENE";
+        public static final String AN_QR_SCENE = "QR_SCENE";
 
         public QrScene(Properties p)
         {
@@ -163,7 +163,7 @@ public class QrcodeCreate extends WxmpRequestBase
 
     public static class QrLimitScene extends QrcodeCreate
     {
-        public static String AN_QR_LIMIT_SCENE = "QR_LIMIT_SCENE";
+        public static final String AN_QR_LIMIT_SCENE = "QR_LIMIT_SCENE";
 
         public QrLimitScene(Properties p)
         {
@@ -189,7 +189,7 @@ public class QrcodeCreate extends WxmpRequestBase
 
     public static class QrLimitStrScene extends QrcodeCreate
     {
-        public static String AN_QR_LIMIT_STR_SCENE = "QR_LIMIT_STR_SCENE";
+        public static final String AN_QR_LIMIT_STR_SCENE = "QR_LIMIT_STR_SCENE";
 
         public QrLimitStrScene(Properties p)
         {
