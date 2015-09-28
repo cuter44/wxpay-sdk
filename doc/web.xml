@@ -4,7 +4,7 @@
         xmlns="http://java.sun.com/xml/ns/javaee"
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         id="WebApp_ID" version="2.5">
-  <display-name>蓝星微信支付样例</display-name>
+  <display-name>wxpay-sdk demos</display-name>
 
   <!-- wxpay -->
   <servlet>
@@ -80,6 +80,11 @@
     <init-param> 
         <description>DEBUG SWITCH: If true, reply text message by echoing same content.</description>
         <param-name>com.github.cuter44.wxmsg.msggateway.echotext</param-name> 
+        <param-value>true</param-value> 
+    </init-param>
+    <init-param> 
+        <description>DEBUG SWITCH: If true, reply fallback "success" as wx-spec instructs.</description>
+        <param-name>com.github.cuter44.wxmsg.msggateway.replysuccess</param-name> 
         <param-value>true</param-value> 
     </init-param>
   </servlet>

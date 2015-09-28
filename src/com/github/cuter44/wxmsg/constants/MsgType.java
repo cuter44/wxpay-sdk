@@ -21,14 +21,19 @@ public enum MsgType
      */
     UNKNOWN(),
 
-  // STANDARD
+  // INCOME MSG
     text(),
     image(),
     voice(),
     video(),
     shortvideo(),
     location(),
-    link();
+    link(),
+    event(),
+
+  // OUTGO REPLY
+    music(),
+    news();
 
     private MsgType()
     {

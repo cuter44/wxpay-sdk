@@ -86,16 +86,30 @@ public abstract class WxmsgReplyBase
      */
     public abstract WxmsgReplyBase build();
 
-  // TO_XML
+  // EXPORT
+    /** Subclass should states concrete content type, default gives <pre>text/xml; charset=utf-8</pre>.
+     */
+    public String contentType()
+    {
+        return("text/xml; charset=utf-8");
+    }
+
     /** Subclass should implements this method, to generate reply content, as string
      */
     public abstract String toContent();
 
     protected String buildXMLBody(List<String> paramNames)
     {
+        return(
+            this.buildXMLBody(paramNames, "xml")
+        );
+    }
+
+    protected String buildXMLBody(List<String> paramNames, String rootTag)
+    {
         StringBuilder xml = new StringBuilder();
 
-        xml.append("<xml>");
+        xml.append('<').append(rootTag).append('>');
 
         for (String k:paramNames)
         {
@@ -106,7 +120,7 @@ public abstract class WxmsgReplyBase
                    .append("</").append(k).append('>');
         }
 
-        xml.append("</xml>");
+        xml.append('<').append(rootTag).append("/>");
 
         return(xml.toString());
     }
