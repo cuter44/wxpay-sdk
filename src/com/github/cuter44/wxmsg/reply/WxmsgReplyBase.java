@@ -120,7 +120,7 @@ public abstract class WxmsgReplyBase
                    .append("</").append(k).append('>');
         }
 
-        xml.append('<').append(rootTag).append("/>");
+        xml.append("</").append(rootTag).append('>');
 
         return(xml.toString());
     }
