@@ -2,16 +2,16 @@ package com.github.cuter44.wxmp.resps;
 
 import com.alibaba.fastjson.*;
 
-/** 客服接口-发消息
+/** 批量移动用户分组
  * <br />
  * (No specification provided in official wiki)
  */
-public class GroupsMemberBatchupdateResponse extends WxmpResponseBase
+public class GroupsMembersBatchupdateResponse extends WxmpResponseBase
 {
   // CONSTANTS
 
   // CONSTRUCT
-    public GroupsMemberBatchupdateResponse(String jsonString)
+    public GroupsMembersBatchupdateResponse(String jsonString)
     {
         super(jsonString);
 

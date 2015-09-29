@@ -40,9 +40,9 @@ import com.github.cuter44.wxmp.util.*;
  */
 public class JSSDKConfig extends HttpServlet
 {
-    protected static final String KEY_APPID     = "appid";
-    protected static final String KEY_SECRET    = "SECRET";
-    protected static final String KEY_OPENID    = "openid";
+    public static final String KEY_APPID     = "appid";
+    public static final String KEY_SECRET    = "SECRET";
+    public static final String KEY_OPENID    = "openid";
 
     protected static final String DEBUG         = "debug";
     protected static final String APP_ID        = "appId";

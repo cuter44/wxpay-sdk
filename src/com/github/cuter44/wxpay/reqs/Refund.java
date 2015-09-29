@@ -18,14 +18,14 @@ public class Refund extends WxpayRequestBase {
 
     public static final String URL_API_BASE = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 
-    protected static final String KEY_MCH_ID            = "mch_id";
+    public static final String KEY_MCH_ID            = "mch_id";
 
-    protected static final String KEY_OUT_TRADE_NO      = "out_trade_no";
-    protected static final String KEY_OUT_REFUND_NO     = "out_refund_no";
-    protected static final String KEY_TRANSACTION_ID    = "transaction_id";
-    protected static final String KEY_TOTAL_FEE         = "total_fee";
-    protected static final String KEY_REFUND_FEE        = "refund_fee";
-    protected static final String KEY_OP_USER_ID        = "op_user_id";
+    public static final String KEY_OUT_TRADE_NO      = "out_trade_no";
+    public static final String KEY_OUT_REFUND_NO     = "out_refund_no";
+    public static final String KEY_TRANSACTION_ID    = "transaction_id";
+    public static final String KEY_TOTAL_FEE         = "total_fee";
+    public static final String KEY_REFUND_FEE        = "refund_fee";
+    public static final String KEY_OP_USER_ID        = "op_user_id";
 
     public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
         "appid",

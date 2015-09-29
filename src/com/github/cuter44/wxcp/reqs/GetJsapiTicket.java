@@ -17,7 +17,7 @@ public class GetJsapiTicket extends WxcpRequestBase
         "access_token", "type"
     );
 
-    protected static final String KEY_ACCESS_TOKEN = "access_token";
+    public static final String KEY_ACCESS_TOKEN = "access_token";
 
     public static final String URL_API_BASE = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket";
 

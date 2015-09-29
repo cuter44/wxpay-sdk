@@ -24,8 +24,8 @@ public class Gettoken extends WxcpRequestBase
         "corpid", "corpsecret"
     );
 
-    protected static final String KEY_CORPID        = "corpid";
-    protected static final String KEY_CORPSECRET    = "corpsecret";
+    public static final String KEY_CORPID        = "corpid";
+    public static final String KEY_CORPSECRET    = "corpsecret";
 
     public static final String URL_API_BASE = "https://qyapi.weixin.qq.com/cgi-bin/gettoken";
 

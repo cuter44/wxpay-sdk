@@ -19,15 +19,15 @@ public class UnifiedOrder extends WxpayRequestBase
   // KEYS
     public static final String URL_API_BASE = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
-    protected static final String KEY_BODY              = "body";
-    protected static final String KEY_OUT_TRADE_NO      = "out_trade_no";
-    protected static final String KEY_TOTAL_FEE         = "total_fee";
-    protected static final String KEY_SPBILL_CREATE_IP  = "spbill_create_ip";
-    protected static final String KEY_TRADE_TYPE        = "trade_type";
-    protected static final String KEY_OPENID            = "openid";
-    protected static final String KEY_PRODUCT_ID        = "product_id";
-    protected static final String KEY_TIME_START        = "time_start";
-    protected static final String KEY_TIME_EXPIRE       = "time_expire";
+    public static final String KEY_BODY              = "body";
+    public static final String KEY_OUT_TRADE_NO      = "out_trade_no";
+    public static final String KEY_TOTAL_FEE         = "total_fee";
+    public static final String KEY_SPBILL_CREATE_IP  = "spbill_create_ip";
+    public static final String KEY_TRADE_TYPE        = "trade_type";
+    public static final String KEY_OPENID            = "openid";
+    public static final String KEY_PRODUCT_ID        = "product_id";
+    public static final String KEY_TIME_START        = "time_start";
+    public static final String KEY_TIME_EXPIRE       = "time_expire";
 
     public static final List<String> KEYS_PARAM_NAME = Arrays.asList(
         "appid",

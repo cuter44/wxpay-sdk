@@ -8,11 +8,13 @@ import com.alibaba.fastjson.*;
 
 import com.github.cuter44.wxmp.WxmpException;
 
-/** 客服接口-发消息
+/** 查询所有分组
  * <pre style="font-size:12px">
     返回说明
+    <del>groups  公众平台分组信息列表</del>
     id      分组id，由微信分配
     name    分组名字，UTF8编码
+    count   分组内用户数量
  * </pre>
  */
 public class GroupsGetResponse extends WxmpResponseBase
@@ -42,6 +44,20 @@ public class GroupsGetResponse extends WxmpResponseBase
         throws UnsupportedOperationException
     {
         throw(new UnsupportedOperationException());
+    }
+
+    public static class Group
+    {
+        public int id;
+        public String name;
+        public long count;
+
+        protected Group(JSONObject json)
+        {
+            this.id     = json.getInteger("id");
+            this.name   = json.getString("name");
+            this.count  = json.getLong("count");
+        }
     }
 
     public class GroupsIterator
@@ -77,26 +93,11 @@ public class GroupsGetResponse extends WxmpResponseBase
             throw(new UnsupportedOperationException());
         }
     }
+
     public GroupsIterator iterator()
     {
         return(
             new GroupsIterator()
         );
     }
-
-
-    public static class Group
-    {
-        public int id;
-        public String name;
-        public long count;
-
-        protected Group(JSONObject json)
-        {
-            this.id     = json.getInteger("id");
-            this.name   = json.getString("name");
-            this.count  = json.getLong("count");
-        }
-    }
-
 }

@@ -29,9 +29,9 @@ public class Oauth2Authorize extends WxmpRequestBase
         "appid", "redirect_uri", "response_type", "scope", "state"
     );
 
-    protected static final String KEY_APPID         = "appid";
-    protected static final String KEY_REDIRECT_URI  = "redirect_uri";
-    protected static final String KEY_STATE         = "state";
+    public static final String KEY_APPID         = "appid";
+    public static final String KEY_REDIRECT_URI  = "redirect_uri";
+    public static final String KEY_STATE         = "state";
 
     public static final String URL_API_BASE = "https://open.weixin.qq.com/connect/oauth2/authorize";
 

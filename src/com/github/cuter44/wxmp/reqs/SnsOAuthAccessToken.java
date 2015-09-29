@@ -30,9 +30,9 @@ public class SnsOAuthAccessToken extends WxmpRequestBase
         "appid", "secret", "code", "grant_type"
     );
 
-    protected static final String KEY_APPID     = "appid";
-    protected static final String KEY_SECRET    = "secret";
-    protected static final String KEY_CODE      = "code";
+    public static final String KEY_APPID     = "appid";
+    public static final String KEY_SECRET    = "secret";
+    public static final String KEY_CODE      = "code";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/sns/oauth2/access_token";
 

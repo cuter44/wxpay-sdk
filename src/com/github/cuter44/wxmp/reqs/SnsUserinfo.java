@@ -25,9 +25,9 @@ public class SnsUserinfo extends WxmpRequestBase
         "access_token", "openid", "lang"
     );
 
-    protected static final String KEY_ACCESS_TOKEN  = "access_token";
-    protected static final String KEY_OPENID        = "openid";
-    protected static final String KEY_LANG          = "lang";
+    public static final String KEY_ACCESS_TOKEN  = "access_token";
+    public static final String KEY_OPENID        = "openid";
+    public static final String KEY_LANG          = "lang";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/sns/userinfo";
 

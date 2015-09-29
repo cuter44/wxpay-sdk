@@ -10,35 +10,42 @@ import com.alibaba.fastjson.*;
 
 import com.github.cuter44.wxmp.resps.*;
 
-/** 创建分组
+/** 批量移动用户分组
  * <br />
  * <a href="http://mp.weixin.qq.com/wiki/0/56d992c605a97245eb7e617854b169fc.html#.E5.88.9B.E5.BB.BA.E5.88.86.E7.BB.84">ref ↗</a>
  * <br />
  * <pre style="font-size:12px">
     参数说明
     access_token    调用接口凭证
-    name            分组名字（30个字符以内） *
+    openid_list     用户唯一标识符openid的列表（size不能超过50）
+    to_groupid      分组id
  * </pre>
+ * ADDITIONAL NOTE: <code>openid_list</code> is set via setOpenidList, not via setPrperty(since poor performance to parse array from Properties)
  */
-public class GroupsMemberBatchupdate extends WxmpRequestBase
+public class GroupsMembersBatchupdate extends WxmpRequestBase
 {
   // KEYS
     protected static final List<String> KEYS_PARAM = Arrays.asList(
         "access_token"
     );
 
-    protected static final String KEY_ACCESS_TOKEN  = "access_token";
-    protected static final String KEY_TO_GROUPID    = "to_groupid";
+    public static final String KEY_ACCESS_TOKEN  = "access_token";
+    public static final String KEY_TO_GROUPID    = "to_groupid";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/groups/members/batchupdate";
 
     protected JSONObject jsonBody;
     protected List<String> openidList;
 
-    public static final JSONObject BODY_SCHEMA = JSON.parseObject("{'to_groupid':''}");
+    public static final JSONObject BODY_SCHEMA = JSON.parseObject(
+        "{"+
+          "'properties':{"+
+            "'to_groupid':{'type':'string'}"+
+        "} }"
+    );
 
   // CONSTRUCT
-    public GroupsMemberBatchupdate(Properties prop)
+    public GroupsMembersBatchupdate(Properties prop)
     {
         super(prop);
 
@@ -49,9 +56,9 @@ public class GroupsMemberBatchupdate extends WxmpRequestBase
 
   // BUILD
     @Override
-    public GroupsMemberBatchupdate build()
+    public GroupsMembersBatchupdate build()
     {
-        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
 
         this.jsonBody.put("openid_list", this.openidList);
 
@@ -69,7 +76,7 @@ public class GroupsMemberBatchupdate extends WxmpRequestBase
 
   // EXECUTE
     @Override
-    public GroupsMemberBatchupdateResponse execute()
+    public GroupsMembersBatchupdateResponse execute()
         throws IOException
     {
         String url = URL_API_BASE+"?"+super.toQueryString(KEYS_PARAM);
@@ -77,18 +84,18 @@ public class GroupsMemberBatchupdate extends WxmpRequestBase
 
         String respJson = super.executePostJSON(url, body);
 
-        return(new GroupsMemberBatchupdateResponse(respJson));
+        return(new GroupsMembersBatchupdateResponse(respJson));
     }
 
   // MISC
-    public GroupsMemberBatchupdate setAccessToken(String accessToken)
+    public GroupsMembersBatchupdate setAccessToken(String accessToken)
     {
         super.setProperty(KEY_ACCESS_TOKEN, accessToken);
 
         return(this);
     }
 
-    public GroupsMemberBatchupdate setToGroupid(int toGroupid)
+    public GroupsMembersBatchupdate setToGroupid(int toGroupid)
     {
         super.setProperty(KEY_TO_GROUPID, Integer.toString(toGroupid));
 
@@ -100,7 +107,7 @@ public class GroupsMemberBatchupdate extends WxmpRequestBase
         return(this.openidList);
     }
 
-    public GroupsMemberBatchupdate setOpenidList(List<String> list)
+    public GroupsMembersBatchupdate setOpenidList(List<String> list)
     {
         this.openidList = list;
 
@@ -109,7 +116,7 @@ public class GroupsMemberBatchupdate extends WxmpRequestBase
 
     /** chain method
      */
-    public GroupsMemberBatchupdate add(String openid)
+    public GroupsMembersBatchupdate add(String openid)
     {
         this.openidList.add(openid);
 

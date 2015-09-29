@@ -36,7 +36,18 @@ public class MessageCustomSendText extends MessageCustomSend
   // KEYS
     public static final String KEY_CONTENT = "content";
 
-    public static final JSONObject BODY_SCHEMA = JSON.parseObject("{'touser':'','msgtype':'','text':{'content':''}}");
+    public static final JSONObject BODY_SCHEMA = JSON.parseObject(
+        "{"+
+          "'properties':{"+
+            "'touser':{'type':'string'},"+
+            "'msgtype':{'type':'string'},"+
+            "'text':{"+
+              "'type':'object',"+
+              "'schema':{"+
+                "'properties':{"+
+                  "'content':{'type':'string'}"+
+        "} } } } }"
+    );
 
   // CONSTRUCT
     public MessageCustomSendText(Properties prop)
@@ -52,7 +63,7 @@ public class MessageCustomSendText extends MessageCustomSend
     @Override
     public MessageCustomSendText build()
     {
-        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
 
         return(this);
     }

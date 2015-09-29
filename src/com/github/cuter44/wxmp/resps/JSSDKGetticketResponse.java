@@ -8,6 +8,10 @@ import java.net.MalformedURLException;
 
 import com.alibaba.fastjson.*;
 
+/** 附录1-JS-SDK使用权限签名算法
+ * <br />
+ * (No specification provided in official wiki)
+ */
 public class JSSDKGetticketResponse extends WxmpResponseBase
 {
   // CONSTANTS

@@ -27,14 +27,23 @@ public class GroupsDelete extends WxmpRequestBase
         "access_token"
     );
 
-    protected static final String KEY_ACCESS_TOKEN  = "access_token";
-    protected static final String KEY_ID            = "id";
+    public static final String KEY_ACCESS_TOKEN  = "access_token";
+    public static final String KEY_ID            = "id";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/groups/delete";
 
     protected JSONObject jsonBody;
 
-    public static final JSONObject BODY_SCHEMA = JSON.parseObject("{'group':{'id':''}}");
+    public static final JSONObject BODY_SCHEMA = JSON.parseObject(
+        "{"+
+          "'properties':{"+
+            "'group':{"+
+              "'type':'object',"+
+              "'schema':{"+
+                "'properties':{"+
+                  "'id':{'type':'string'}"+
+        "} } } } }"
+    );
 
   // CONSTRUCT
     public GroupsDelete(Properties prop)
@@ -48,7 +57,7 @@ public class GroupsDelete extends WxmpRequestBase
     @Override
     public GroupsDelete build()
     {
-        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
 
         return(this);
     }

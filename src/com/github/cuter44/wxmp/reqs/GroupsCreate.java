@@ -26,14 +26,23 @@ public class GroupsCreate extends WxmpRequestBase
         "access_token"
     );
 
-    protected static final String KEY_ACCESS_TOKEN  = "access_token";
-    protected static final String KEY_NAME          = "name";
+    public static final String KEY_ACCESS_TOKEN  = "access_token";
+    public static final String KEY_NAME          = "name";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/groups/create";
 
     protected JSONObject jsonBody;
 
-    public static final JSONObject BODY_SCHEMA = JSON.parseObject("{'group':{'name':''}}");
+    public static final JSONObject BODY_SCHEMA = JSON.parseObject(
+        "{"+
+          "'properties':{"+
+            "'group':{"+
+              "'type':'object',"+
+              "'schema':{"+
+                "'properties':{"+
+                  "'name':{'type':'string',}"+
+        "} } } } }"
+    );
 
   // CONSTRUCT
     public GroupsCreate(Properties prop)
@@ -47,7 +56,7 @@ public class GroupsCreate extends WxmpRequestBase
     @Override
     public GroupsCreate build()
     {
-        this.jsonBody = super.buildJSONBody(BODY_SCHEMA);
+        this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
 
         return(this);
     }

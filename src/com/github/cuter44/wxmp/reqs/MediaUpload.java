@@ -40,10 +40,10 @@ public abstract class MediaUpload extends WxmpRequestBase
         "access_token", "type"
     );
 
-    protected static final String KEY_ACCESS_TOKEN  = "access_token";
-    protected static final String KEY_TYPE          = "type";
-    protected static final String KEY_FILENAME      = "filename";
-    protected static final String KEY_CONTENT_TYPE  = "content-type";
+    public static final String KEY_ACCESS_TOKEN  = "access_token";
+    public static final String KEY_TYPE          = "type";
+    public static final String KEY_FILENAME      = "filename";
+    public static final String KEY_CONTENT_TYPE  = "content-type";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/media/upload";
 
