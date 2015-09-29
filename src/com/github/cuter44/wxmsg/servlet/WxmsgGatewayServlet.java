@@ -54,8 +54,10 @@ public class WxmsgGatewayServlet extends HttpServlet
                     @Override
                     public boolean handle(WxmsgBase msg)
                     {
-                        System.out.println(" * WxmsgGateway dump");
-                        System.out.println(msg.getProperties());
+                        System.out.println("[WxmsgGateway dump]");
+                        System.out.println("[REQ]"+msg.getProperties());
+
+                        System.out.println("[RESP]"+msg.getReply().toContent());
 
                         return(false);
                     }
@@ -99,35 +101,25 @@ public class WxmsgGatewayServlet extends HttpServlet
             );
         }
 
+        if (Boolean.valueOf(config.getInitParameter("com.github.cuter44.wxmsg.msggateway.replysuccess")))
+        {
+            this.dispatcher.subscribe(
+                MsgType.FALLBACK,
+                new WxmsgHandler()
+                {
+                    @Override
+                    public boolean handle(WxmsgBase msg)
+                    {
+                        msg.setReply(
+                            new ReplySuccess()
+                        );
 
-        //if (Boolean.valueOf(config.getInitParameter("com.github.cuter44.wxpay.notifygateway.dump")))
-        //{
-            //this.gateway.addListener(
-                //new WxpayNotifyListener(){
-                    //@Override
-                    //public boolean handle(Notify n)
-                    //{
-                        //System.out.println(n.getString());
-                        //System.out.println(n.getProperties().toString());
+                        return(true);
+                    }
+                }
+            );
+        }
 
-                        //return(false);
-                    //}
-                //}
-            //);
-        //}
-
-        //if (Boolean.valueOf(config.getInitParameter("com.github.cuter44.wxpay.notifygateway.dryrun")))
-        //{
-            //this.gateway.addListener(
-                //new WxpayNotifyListener(){
-                    //@Override
-                    //public boolean handle(Notify n)
-                    //{
-                        //return(true);
-                    //}
-                //}
-            //);
-        //}
     }
 
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
@@ -185,15 +177,11 @@ public class WxmsgGatewayServlet extends HttpServlet
 
             if (this.handle(msg))
             {
-                resp.setContentType("text/xml; charset=utf-8");
-                out.print(
-                    msg.getReply().build().toContent()
+                WxmsgReplyBase reply = msg.getReply();
+                resp.setContentType(reply.contentType());
+                out.println(
+                    reply.toContent()
                 );
-            }
-            else
-            {
-                resp.setContentType("text/plain; charset=utf-8");
-                out.print("success");
             }
         }
         catch (Exception ex)

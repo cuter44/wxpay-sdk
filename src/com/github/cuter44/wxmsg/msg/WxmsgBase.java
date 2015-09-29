@@ -49,6 +49,22 @@ public class WxmsgBase
         );
     }
 
+    public final Integer getIntProperty(String key)
+    {
+        String v = this.getProperty(key);
+        return(
+            (v!=null) ? Integer.valueOf(v) : null
+        );
+    }
+
+    public final Double getDoubleProperty(String key)
+    {
+        String v = this.getProperty(key);
+        return(
+            (v!=null) ? Double.valueOf(v) : null
+        );
+    }
+
   // REPLY
     protected WxmsgReplyBase reply;
 
