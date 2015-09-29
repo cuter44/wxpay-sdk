@@ -6,20 +6,25 @@ import java.util.List;
 import java.util.LinkedList;
 
 import com.github.cuter44.wxmsg.msg.WxmsgBase;
+import com.github.cuter44.wxmsg.msg.EventBase;
 import com.github.cuter44.wxmsg.constants.MsgType;
+import com.github.cuter44.wxmsg.constants.EventType;
 
 public class WxmsgDispatcher
     implements WxmsgHandler
 {
+    protected Map<MsgType, List<WxmsgHandler>> msgHandlers;
+    protected Map<EventType, List<WxmsgHandler>> eventHandlers;
+
     protected List<WxmsgHandler> preprocessors;
-    protected Map<MsgType, List<WxmsgHandler>> handlers;
     protected List<WxmsgHandler> fallbacks;
     protected List<WxmsgHandler> postprocessors;
 
   // CONSTRUCT
     public WxmsgDispatcher()
     {
-        this.handlers = new HashMap<MsgType, List<WxmsgHandler>>();
+        this.msgHandlers = new HashMap<MsgType, List<WxmsgHandler>>();
+        this.eventHandlers = new HashMap<EventType, List<WxmsgHandler>>();
 
         this.preprocessors = new LinkedList<WxmsgHandler>();
         this.fallbacks = new LinkedList<WxmsgHandler>();
@@ -39,7 +44,9 @@ public class WxmsgDispatcher
         return(Singleton.instance);
     }
 
-  // LISTENER
+  // HANDLER
+    /** Register as msg handler
+     */
     public synchronized WxmsgDispatcher subscribe(MsgType type, WxmsgHandler h)
     {
         switch (type)
@@ -54,15 +61,33 @@ public class WxmsgDispatcher
                 this.postprocessors.add(h);
                 break;
             default:
-                List<WxmsgHandler> l = this.handlers.get(type);
+                List<WxmsgHandler> l = this.msgHandlers.get(type);
                 if (l == null)
                 {
                     l = new LinkedList<WxmsgHandler>();
-                    this.handlers.put(type, l);
+                    this.msgHandlers.put(type, l);
                 }
                 l.add(h);
                 break;
         }
+
+        return(this);
+    }
+
+    /** Register as EventHandler
+     * <br />
+     * While event msg arrived, corresponding type of event handlers are invoked first, then the msg handlers registered in <code>MsgType.event</code> channel.
+     * If one of the event handlers reported handled, it suppresss the msg handlers.
+     */
+    public synchronized WxmsgDispatcher subscribe(EventType type, WxmsgHandler h)
+    {
+        List<WxmsgHandler> l = this.eventHandlers.get(type);
+        if (l == null)
+        {
+            l = new LinkedList<WxmsgHandler>();
+            this.eventHandlers.put(type, l);
+        }
+        l.add(h);
 
         return(this);
     }
@@ -81,9 +106,23 @@ public class WxmsgDispatcher
         for (WxmsgHandler h:this.preprocessors)
             h.handle(msg);
 
-        // STANDARD
         boolean handled = false;
-        List<WxmsgHandler> l = this.handlers.get(msg.getMsgType());
+
+        // EVENT
+        if (MsgType.event.equals(msg.getMsgType()))
+        {
+            EventBase ev = (EventBase)msg;
+            List<WxmsgHandler> l = this.eventHandlers.get(msg.getMsgType());
+            if (l != null)
+                for (WxmsgHandler h:l)
+                {
+                    handled = h.handle(msg);
+                    if (handled) break;
+                }
+        }
+
+        // MSG
+        List<WxmsgHandler> l = this.msgHandlers.get(msg.getMsgType());
         if (l != null)
             for (WxmsgHandler h:l)
             {
@@ -115,7 +154,7 @@ public class WxmsgDispatcher
         throws Exception
     {
         boolean handled = false;
-        List<WxmsgHandler> l = this.handlers.get(MsgType.ECHO);
+        List<WxmsgHandler> l = this.msgHandlers.get(MsgType.ECHO);
         if (l != null)
             for (WxmsgHandler h:l)
             {
