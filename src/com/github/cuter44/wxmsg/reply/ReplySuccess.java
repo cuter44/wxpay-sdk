@@ -26,6 +26,14 @@ public class ReplySuccess extends WxmsgReplyBase
         return;
     }
 
+  // SINGLETON
+    private static final ReplySuccess SINGLETON = new ReplySuccess();
+
+    public static ReplySuccess getInstance()
+    {
+        return(ReplySuccess.SINGLETON);
+    }
+
   // BUILD
     @Override
     public ReplySuccess build()

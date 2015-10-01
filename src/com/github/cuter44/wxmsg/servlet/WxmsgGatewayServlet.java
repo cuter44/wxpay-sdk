@@ -111,7 +111,7 @@ public class WxmsgGatewayServlet extends HttpServlet
                     public boolean handle(WxmsgBase msg)
                     {
                         msg.setReply(
-                            new ReplySuccess()
+                            ReplySuccess.getInstance()
                         );
 
                         return(true);
