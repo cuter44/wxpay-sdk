@@ -57,7 +57,8 @@ public class WxmsgGatewayServlet extends HttpServlet
                         System.out.println("[WxmsgGateway dump]");
                         System.out.println("[REQ]"+msg.getProperties());
 
-                        System.out.println("[RESP]"+msg.getReply().toContent());
+                        if (msg.getReply()!=null)
+                            System.out.println("[RESP]"+msg.getReply().toContent());
 
                         return(false);
                     }
@@ -149,7 +150,7 @@ public class WxmsgGatewayServlet extends HttpServlet
 
             Echo e = new Echo(p);
 
-            if (this.dispatcher.handleEcho(e))
+            if (this.dispatcher.handle(e))
                 resp.getWriter().write(e.getProperty(KEY_ECHOSTR));
 
             return;

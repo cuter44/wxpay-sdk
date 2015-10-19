@@ -62,20 +62,6 @@ public class Echo extends WxmsgBase
     }
 
     @Override
-    public WxmsgReplyBase getReply()
-        throws UnsupportedOperationException
-    {
-        throw(new UnsupportedOperationException("Echo is not repliable."));
-    }
-
-    @Override
-    public Echo setReply(WxmsgReplyBase reply)
-        throws UnsupportedOperationException
-    {
-        throw(new UnsupportedOperationException("Echo is not repliable, return true on handler."));
-    }
-
-    @Override
     public MsgType getMsgType()
     {
         return(MsgType.ECHO);

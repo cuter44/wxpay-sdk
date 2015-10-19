@@ -16,19 +16,33 @@ public class WxmsgDispatcher
     protected Map<MsgType, List<WxmsgHandler>> msgHandlers;
     protected Map<EventType, List<WxmsgHandler>> eventHandlers;
 
+    /** You are not overwriting as it is short-cut to <code>this.msgHandlers.get(MsgType.PREPOCESS)</code> since 0.7.1.2.
+     * Unless you read and comprehened the source.
+     */
     protected List<WxmsgHandler> preprocessors;
+    /** You are not overwriting as it is short-cut to <code>this.msgHandlers.get(MsgType.FALLBACK)</code> since 0.7.1.2.
+     * Unless you read and comprehened the source.
+     */
     protected List<WxmsgHandler> fallbacks;
+    /** You are not overwriting as it is short-cut to <code>this.msgHandlers.get(MsgType.POSTPOCESS)</code> since 0.7.1.2.
+     * Unless you read and comprehened the source.
+     */
     protected List<WxmsgHandler> postprocessors;
 
   // CONSTRUCT
     public WxmsgDispatcher()
     {
         this.msgHandlers = new HashMap<MsgType, List<WxmsgHandler>>();
-        this.eventHandlers = new HashMap<EventType, List<WxmsgHandler>>();
+        for (MsgType t:MsgType.values())
+            this.msgHandlers.put(t, new LinkedList<WxmsgHandler>());
 
-        this.preprocessors = new LinkedList<WxmsgHandler>();
-        this.fallbacks = new LinkedList<WxmsgHandler>();
-        this.postprocessors = new LinkedList<WxmsgHandler>();
+        this.eventHandlers = new HashMap<EventType, List<WxmsgHandler>>();
+        for (EventType t:EventType.values())
+            this.eventHandlers.put(t, new LinkedList<WxmsgHandler>());
+
+        this.preprocessors = this.msgHandlers.get(MsgType.PREPROCESS);
+        this.fallbacks = this.msgHandlers.get(MsgType.FALLBACK);
+        this.postprocessors = this.msgHandlers.get(MsgType.POSTPROCESS);
 
         return;
     }
@@ -49,45 +63,19 @@ public class WxmsgDispatcher
      */
     public synchronized WxmsgDispatcher subscribe(MsgType type, WxmsgHandler h)
     {
-        switch (type)
-        {
-            case PREPROCESS:
-                this.preprocessors.add(h);
-                break;
-            case FALLBACK:
-                this.fallbacks.add(h);
-                break;
-            case POSTPROCESS:
-                this.postprocessors.add(h);
-                break;
-            default:
-                List<WxmsgHandler> l = this.msgHandlers.get(type);
-                if (l == null)
-                {
-                    l = new LinkedList<WxmsgHandler>();
-                    this.msgHandlers.put(type, l);
-                }
-                l.add(h);
-                break;
-        }
+        this.msgHandlers.get(type).add(h);
 
         return(this);
     }
 
-    /** Register as EventHandler
+    /** Register as event handler
      * <br />
      * While event msg arrived, corresponding type of event handlers are invoked first, then the msg handlers registered in <code>MsgType.event</code> channel.
      * If one of the event handlers reported handled, it suppresss the msg handlers.
      */
     public synchronized WxmsgDispatcher subscribe(EventType type, WxmsgHandler h)
     {
-        List<WxmsgHandler> l = this.eventHandlers.get(type);
-        if (l == null)
-        {
-            l = new LinkedList<WxmsgHandler>();
-            this.eventHandlers.put(type, l);
-        }
-        l.add(h);
+        this.eventHandlers.get(type).add(h);
 
         return(this);
     }
@@ -98,37 +86,41 @@ public class WxmsgDispatcher
     public boolean handle(WxmsgBase msg)
         throws Exception
     {
-        // ECHO
-        if (MsgType.ECHO.equals(msg.getMsgType()))
-            return(this.handleEcho(msg));
-
         // PREPROCESS
         for (WxmsgHandler h:this.preprocessors)
             h.handle(msg);
 
         boolean handled = false;
 
-        // EVENT
-        if (MsgType.event.equals(msg.getMsgType()))
+        switch (msg.getMsgType())
         {
-            EventBase ev = (EventBase)msg;
-            List<WxmsgHandler> l = this.eventHandlers.get(msg.getMsgType());
-            if (l != null)
-                for (WxmsgHandler h:l)
+            // ECHO
+            case ECHO:
+                handled = this.handleEcho(msg);
+                break;
+
+            // EVENT
+            case event:
+                EventBase ev = (EventBase)msg;
+                List<WxmsgHandler> lEvent = this.eventHandlers.get(ev.getEventType());
+                for (WxmsgHandler h:lEvent)
+                {
+                    handled = h.handle(ev);
+                    if (handled) break;
+                }
+
+                if (handled) break;
+
+            // MSG
+            default:
+                List<WxmsgHandler> lMsg = this.msgHandlers.get(msg.getMsgType());
+                for (WxmsgHandler h:lMsg)
                 {
                     handled = h.handle(msg);
                     if (handled) break;
                 }
+                break;
         }
-
-        // MSG
-        List<WxmsgHandler> l = this.msgHandlers.get(msg.getMsgType());
-        if (l != null)
-            for (WxmsgHandler h:l)
-            {
-                handled = h.handle(msg);
-                if (handled) break;
-            }
 
         // FALLBACK
         if (!handled)
@@ -148,19 +140,18 @@ public class WxmsgDispatcher
     /** Handles echo request
      * Handlers registered in ECHO channel are invoked sequentailly, and stopped on once a handler returns true.
      * EchoHandler are responsible to verify the parameters to judge whether to accept the connection, but not responsible to generate reply.
-     * Echos will NOT trigger PREPROCESS/FALLBACK/POSTPROCESS channel.
+     * <code>handle()</code> invoke this method. Developers are able to directly call this method to skip the standard PRE/FALLBACK/POST process stages.
      */
     public boolean handleEcho(WxmsgBase echo)
         throws Exception
     {
         boolean handled = false;
         List<WxmsgHandler> l = this.msgHandlers.get(MsgType.ECHO);
-        if (l != null)
-            for (WxmsgHandler h:l)
-            {
-                handled = h.handle(echo);
-                if (handled) break;
-            }
+        for (WxmsgHandler h:l)
+        {
+            handled = h.handle(echo);
+            if (handled) break;
+        }
 
         return(handled);
     }
