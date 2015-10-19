@@ -8,15 +8,17 @@ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
 OTHER DEALINGS IN THE SOFTWARE. 
 
-0. As long as you retain the Contributors' name, you are agreed to do whatever you want to the source code.  
+0. As long as you retain the contributors' name, you are agreed to do whatever you want to the source code.  
 1. As long as you agree with the License, you MAY contribute to the Software and include your name below, in the same format.
 2. Additionally, if you find this helpful, you MAY send them postcards or private messages as encouragement.  
 
 **Contributors**
 
-[Galin Wu](https://github.com/cuter44) , the founder. 
+[Galin Wu](https://github.com/cuter44) , the founder.  
 > Rm. 935, College of Infomatics, South China Argicultural University, Guangzhou(GZ), Guangdong(GD), P.R.China  
+
 [Mkluas](https://github.com/mkluas) , suggested [PR#6](https://github.com/cuter44/wxpay-sdk/pull/6) , maintainer of ancient version.  
+
 [KeZhenxu](https://github.com/ikezhenxu) , suggested [PR#4](https://github.com/cuter44/wxpay-sdk/pull/4) , maintainer of ancient version.   
 
 ----

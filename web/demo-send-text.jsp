@@ -17,8 +17,6 @@
 
   <body>
     <h1>微信发送文本样例</h1>
-    如果乱码那多半是微信浏览器的问题, 尝试直接构造请求.
-    <br />
     目标客户端需要在过去24小时内曾与公众号发生交互. (以及前导条件, 此客户端关注公众号)
     <br />
     获取 openid↘ 仅支持服务号, 且需要配置 snsapi-base, 配置方法参见<a href="http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html">网页授权获取用户基本信息↗</a> -&gt; 关于网页授权回调域名的说明.
@@ -36,6 +34,8 @@
     <p />
 
     <% 
+      request.setCharacterEncoding("utf-8");
+
       String touser = request.getParameter("touser");
       String content = request.getParameter("content");
       if ((touser != null) && (content != null))
