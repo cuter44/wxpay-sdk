@@ -59,10 +59,10 @@ public class JSSDKConfig extends HttpServlet
     protected CryptoBase crypto = CryptoBase.getInstance();
 
     /** 读取配置文件
-     * 覆盖此方法可以删除对配置文件的访问. 除非显式调用 super.init(config) 否则 getAppid(), getJSSDKTicket() 均需要自行实现.
+     * 覆盖此方法可以删除对配置文件的访问, 此情况下 getAppid(), getJSSDKTicket() 均需要自行实现.
      */
     @Override
-    public void init(ServletConfig config)
+    public void init()
     {
         WxmpFactory factory = WxmpFactory.getDefaultInstance();
         this.tokenKeeper = factory.getTokenKeeper();

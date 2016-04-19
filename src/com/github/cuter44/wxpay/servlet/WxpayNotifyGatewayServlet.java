@@ -29,11 +29,13 @@ public class WxpayNotifyGatewayServlet extends HttpServlet
     }
 
     /** 默认初始化方法, 读取并配置调试开关
-     * 覆盖此方法可以删除对 web.xml 配置的访问, 以及删除对 WxpayNotifyPublisher 的访问(报告 NullPointerException)
+     * 覆盖此方法可以删除对 web.xml 配置的访问, 以及删除默认通知回调的工厂方法调用
      */
     @Override
-    public void init(ServletConfig config)
+    public void init()
     {
+        ServletConfig config = this.getServletConfig();
+
         this.gateway = WxpayNotifyPublisher.getDefaultInstance();
 
         if (Boolean.valueOf(config.getInitParameter("com.github.cuter44.wxpay.notifygateway.dump")))

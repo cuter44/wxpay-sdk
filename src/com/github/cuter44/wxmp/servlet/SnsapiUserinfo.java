@@ -34,14 +34,14 @@ import com.github.cuter44.wxmp.resps.*;
     <strong>响应</strong>
     <i>当未附带 <code>redir</code> 参数时:</i>
     application/json
-    openid      :string     , 当前用户的openid=:openid.
+    openid      :string     , 当前用户的openid
     nickname    :string     , 当前用户的名字
     headimgurl  :url-http   , 当前用户的头像的 URL
     etc.
 
     <i>当附带 <code>redir</code> 参数时:</i>
     302 Found
-    Location: :redir?openid=:openid
+    Location: $redir?openid=$openid
 
  * </pre>
  */
@@ -139,23 +139,15 @@ public class SnsapiUserinfo extends HttpServlet
     }
 
     /** 读取配置文件
-     * 覆盖此方法可以删除对配置文件的访问.
+     * 覆盖此方法可以删除对配置文件的访问, 此情况下 getAppid(), getSecret() 均需要自行实现.
      */
     @Override
-    public void init(ServletConfig config)
+    public void init()
     {
         Properties conf = WxmpFactory.getDefaultInstance().getConf();
         this.appid = conf.getProperty(KEY_APPID);
         this.secret = conf.getProperty(KEY_SECRET);
 
-        return;
-    }
-
-    /** Block ambiguous <code>init()</code> inherition.
-     */
-    @Override
-    public final void init()
-    {
         return;
     }
 

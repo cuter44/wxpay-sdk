@@ -51,14 +51,14 @@ public class Echo extends WxmsgBase
     public String getFromUserName()
         throws UnsupportedOperationException
     {
-        throw(new UnsupportedOperationException("Echo coms without FromUserName"));
+        throw(new UnsupportedOperationException("Echo comes without FromUserName"));
     }
 
     @Override
     public Date getCreateTime()
         throws UnsupportedOperationException
     {
-        throw(new UnsupportedOperationException("Echo coms without CreateTime"));
+        throw(new UnsupportedOperationException("Echo comes without CreateTime"));
     }
 
     @Override

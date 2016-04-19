@@ -197,23 +197,15 @@ public class CorpSnsapiBase extends HttpServlet
     }
 
     /** 读取配置文件
-     * 覆盖此方法可以删除对配置文件的访问.
+     * 覆盖此方法可以删除对配置文件的访问, 此情况下 getAppid(), getAccessToken() 均需要自行实现.
      */
     @Override
-    public void init(ServletConfig config)
+    public void init()
     {
         Properties conf = WxcpFactory.getDefaultInstance().getConf();
         this.appid = conf.getProperty(KEY_CORPID);
         this.secret = conf.getProperty(KEY_CORPSECRET);
 
-        return;
-    }
-
-    /** Block ambiguous <code>init()</code> inherition.
-     */
-    @Override
-    public final void init()
-    {
         return;
     }
 
