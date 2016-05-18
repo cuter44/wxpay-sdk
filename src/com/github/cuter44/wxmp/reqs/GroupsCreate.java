@@ -40,7 +40,7 @@ public class GroupsCreate extends WxmpRequestBase
               "'type':'object',"+
               "'schema':{"+
                 "'properties':{"+
-                  "'name':{'type':'string',}"+
+                  "'name':{'type':'string'}"+
         "} } } } }"
     );
 

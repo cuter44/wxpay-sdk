@@ -63,6 +63,7 @@ public class SnsapiUserinfo extends HttpServlet
      * 默认实现从配置文件 /wxmp.properties 读取
      */
     public String getAppid(HttpServletRequest req)
+        throws Exception
     {
         return(this.appid);
     }
@@ -72,6 +73,7 @@ public class SnsapiUserinfo extends HttpServlet
      * 默认实现从配置文件 /wxmp.properties 读取
      */
     public String getSecret(String appid)
+        throws Exception
     {
         return(this.secret);
     }
@@ -81,6 +83,7 @@ public class SnsapiUserinfo extends HttpServlet
      * 默认实现是 NOOP
      */
     public void trigger(SnsUserinfoResponse resp, HttpServletRequest req)
+        throws Exception
     {
         // NOOP
 
@@ -92,7 +95,7 @@ public class SnsapiUserinfo extends HttpServlet
      * 默认实现如文档所述
      */
     public void response(SnsUserinfoResponse snsUserinfoResp, HttpServletRequest req, HttpServletResponse resp)
-        throws IOException
+        throws Exception
     {
         JSONObject json = snsUserinfoResp.getJson();
 
@@ -132,7 +135,7 @@ public class SnsapiUserinfo extends HttpServlet
      * Default behavior is <code>ex.printStackTrace()</code>
      */
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException
+        throws IOException, ServletException
     {
         System.err.println("ERROR: SnsapiUserinfo failed.");
         ex.printStackTrace();

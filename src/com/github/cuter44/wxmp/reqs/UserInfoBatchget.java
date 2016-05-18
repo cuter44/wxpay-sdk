@@ -10,9 +10,9 @@ import com.alibaba.fastjson.*;
 
 import com.github.cuter44.wxmp.resps.*;
 
-/** 批量移动用户分组
+/** 批量获取用户信息.
  * <br />
- * <a href="http://mp.weixin.qq.com/wiki/0/56d992c605a97245eb7e617854b169fc.html#.E5.88.9B.E5.BB.BA.E5.88.86.E7.BB.84">ref ↗</a>
+ * <a href="http://mp.weixin.qq.com/wiki/14/bb5031008f1494a59c6f71fa0f319c66.html#.E6.89.B9.E9.87.8F.E8.8E.B7.E5.8F.96.E7.94.A8.E6.88.B7.E5.9F.BA.E6.9C.AC.E4.BF.A1.E6.81.AF">ref ↗</a>
  * <br />
  * <pre style="font-size:12px">
     参数说明
@@ -22,7 +22,7 @@ import com.github.cuter44.wxmp.resps.*;
  * </pre>
  * ADDITIONAL NOTE: <code>openid_list</code> is set via setOpenidList, not via setPrperty(since poor performance to parse array from Properties)
  */
-public class GroupsMembersBatchupdate extends WxmpRequestBase
+public class UserInfoBatchget extends WxmpRequestBase
 {
   // KEYS
     protected static final List<String> KEYS_PARAM = Arrays.asList(
@@ -30,23 +30,21 @@ public class GroupsMembersBatchupdate extends WxmpRequestBase
     );
 
     public static final String KEY_ACCESS_TOKEN = "access_token";
-    public static final String KEY_TO_GROUPID   = "to_groupid";
-    public static final String KEY_OPENID_LIST  = "openid_list";
+    public static final String KEY_USER_LIST    = "user_list";
+    public static final String KEY_OPENID       = "openid";
+    public static final String KEY_LANG         = "lang";
 
-    public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/groups/members/batchupdate";
+    public static final String VALUE_LANG_ZH_CN = "zh_CN";
+    public static final String VALUE_LANG_ZH_TW = "zh_TW";
+    public static final String VALUE_LANG_EN    = "en";
+
+    public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/user/info/batchget";
 
     protected JSONObject jsonBody;
     protected List<String> openidList;
 
-    public static final JSONObject BODY_SCHEMA = JSON.parseObject(
-        "{"+
-          "'properties':{"+
-            "'to_groupid':{'type':'string'}"+
-        "} }"
-    );
-
   // CONSTRUCT
-    public GroupsMembersBatchupdate(Properties prop)
+    public UserInfoBatchget(Properties prop)
     {
         super(prop);
 
@@ -57,11 +55,23 @@ public class GroupsMembersBatchupdate extends WxmpRequestBase
 
   // BUILD
     @Override
-    public GroupsMembersBatchupdate build()
+    public UserInfoBatchget build()
     {
-        this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
+        String lang = this.getProperty(KEY_LANG);
+        lang = lang!=null ? lang : VALUE_LANG_ZH_CN;
 
-        this.jsonBody.put(KEY_OPENID_LIST, this.openidList);
+        JSONArray userList = new JSONArray(this.openidList.size());
+
+        for (String v:this.openidList)
+        {
+            JSONObject u = new JSONObject();
+            u.put(KEY_OPENID, v);
+            u.put(KEY_LANG, lang);
+            userList.add(u);
+        }
+
+        this.jsonBody = new JSONObject();
+        this.jsonBody.put(KEY_USER_LIST, userList);
 
         return(this);
     }
@@ -77,7 +87,7 @@ public class GroupsMembersBatchupdate extends WxmpRequestBase
 
   // EXECUTE
     @Override
-    public GroupsMembersBatchupdateResponse execute()
+    public UserInfoBatchgetResponse execute()
         throws IOException
     {
         String url = URL_API_BASE+"?"+super.toQueryString(KEYS_PARAM);
@@ -85,30 +95,30 @@ public class GroupsMembersBatchupdate extends WxmpRequestBase
 
         String respJson = super.executePostJSON(url, body);
 
-        return(new GroupsMembersBatchupdateResponse(respJson));
+        return(new UserInfoBatchgetResponse(respJson));
     }
 
   // MISC
-    public GroupsMembersBatchupdate setAccessToken(String accessToken)
+    public UserInfoBatchget setAccessToken(String accessToken)
     {
         super.setProperty(KEY_ACCESS_TOKEN, accessToken);
 
         return(this);
     }
 
-    public GroupsMembersBatchupdate setToGroupid(int toGroupid)
+    public UserInfoBatchget setLang(String lang)
     {
-        super.setProperty(KEY_TO_GROUPID, Integer.toString(toGroupid));
+        super.setProperty(KEY_LANG, lang);
 
         return(this);
     }
 
-    public List<String> getOpenidList()
+    public List<String> getUserList()
     {
         return(this.openidList);
     }
 
-    public GroupsMembersBatchupdate setOpenidList(List<String> list)
+    public UserInfoBatchget setOpenidList(List<String> list)
     {
         this.openidList = list;
 
@@ -117,7 +127,7 @@ public class GroupsMembersBatchupdate extends WxmpRequestBase
 
     /** chain method
      */
-    public GroupsMembersBatchupdate add(String openid)
+    public UserInfoBatchget add(String openid)
     {
         this.openidList.add(openid);
 

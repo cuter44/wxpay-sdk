@@ -79,6 +79,7 @@ public class JSSDKConfig extends HttpServlet
      * 默认实现从配置文件 /wxpay.properties 读取
      */
     public String getAppid(HttpServletRequest req)
+        throws Exception
     {
         return(this.appid);
     }
@@ -89,6 +90,7 @@ public class JSSDKConfig extends HttpServlet
      * @see com.github.cuter44.wxpay.TokenKeeper
      */
     public String getTicket(String appid)
+        throws Exception
     {
         return(
             this.tokenKeeper.getJSSDKTicket()
@@ -101,6 +103,7 @@ public class JSSDKConfig extends HttpServlet
      * @see com.github.cuter44.wxpay.TokenKeeper
      */
     public void ifAcceptURL(String url)
+        throws Exception
     {
         return;
     }
@@ -110,7 +113,7 @@ public class JSSDKConfig extends HttpServlet
      * 默认实现如文档所述
      */
     public void response(String appId, Long timestamp, String nonceStr, String signature, HttpServletResponse resp)
-        throws IOException
+        throws Exception
     {
         JSONObject json = new JSONObject();
 
@@ -125,40 +128,54 @@ public class JSSDKConfig extends HttpServlet
         return;
     }
 
+    public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException
+    {
+        System.err.println("ERROR: SnsapiBase failed.");
+        ex.printStackTrace();
+    }
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
     {
         req.setCharacterEncoding("utf-8");
 
-        String  appId       = getString(req, APP_ID);
-                appId       = appId!=null?appId:this.getAppid(req);
+        try
+        {
+            String  appId       = getString(req, APP_ID);
+                    appId       = appId!=null?appId:this.getAppid(req);
 
-        Long    timestamp   = getLong(req, TIMESTAMP);
-                timestamp   = timestamp!=null?timestamp:System.currentTimeMillis();
+            Long    timestamp   = getLong(req, TIMESTAMP);
+                    timestamp   = timestamp!=null?timestamp:System.currentTimeMillis();
 
-        String  nonceStr    = getString(req, NONCE_STR);
-                nonceStr    = nonceStr!=null?nonceStr:this.crypto.bytesToHex(this.crypto.randomBytes(8));
+            String  nonceStr    = getString(req, NONCE_STR);
+                    nonceStr    = nonceStr!=null?nonceStr:this.crypto.bytesToHex(this.crypto.randomBytes(8));
 
-        String url = needString(req, URL);
+            String url = needString(req, URL);
 
-        this.ifAcceptURL(url);
+            this.ifAcceptURL(url);
 
-        String ticket = this.getTicket(appId);
+            String ticket = this.getTicket(appId);
 
-        URLBuilder ub = new URLBuilder()
-            .appendParam("jsapi_ticket", ticket)
-            .appendParam("noncestr", nonceStr)
-            .appendParam("timestamp", timestamp.toString())
-            .appendParam("url", url);
+            URLBuilder ub = new URLBuilder()
+                .appendParam("jsapi_ticket", ticket)
+                .appendParam("noncestr", nonceStr)
+                .appendParam("timestamp", timestamp.toString())
+                .appendParam("url", url);
 
-        String signature = this.crypto.bytesToHex(
-            this.crypto.SHA1Digest(
-                ub.toString().getBytes("utf-8")
-            )
-        );
+            String signature = this.crypto.bytesToHex(
+                this.crypto.SHA1Digest(
+                    ub.toString().getBytes("utf-8")
+                )
+            );
 
-        this.response(appId, timestamp, nonceStr, signature, resp);
+            this.response(appId, timestamp, nonceStr, signature, resp);
+        }
+        catch(Exception ex)
+        {
+            this.onError(ex, req, resp);
+        }
     }
 
 }

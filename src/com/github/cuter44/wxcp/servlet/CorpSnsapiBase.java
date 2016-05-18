@@ -75,6 +75,7 @@ public class CorpSnsapiBase extends HttpServlet
      * 默认实现从配置文件 <code>/wxcp.properties</code> 取得
      */
     public String getAppid(HttpServletRequest req)
+        throws Exception
     {
         return(this.appid);
     }
@@ -84,6 +85,7 @@ public class CorpSnsapiBase extends HttpServlet
      * 默认实现从配置文件 <code>/wxcp.properties</code> 取得
      */
     public String getSecret(String appid)
+        throws Exception
     {
         return(this.secret);
     }
@@ -95,6 +97,7 @@ public class CorpSnsapiBase extends HttpServlet
      * 从 <code>this.getSecret()</code> 取得 secret.
      */
     public String getAccessToken(String appid, String secret)
+        throws Exception
     {
         return(
             WxcpTokenKeeper.getInstance(appid, secret).getAccessToken()
@@ -106,6 +109,7 @@ public class CorpSnsapiBase extends HttpServlet
      * 默认实现是 NOOP
      */
     public void triggerCorpMember(GetuserinfoResponse resp, HttpServletRequest req)
+        throws Exception
     {
         // NOOP
 
@@ -117,6 +121,7 @@ public class CorpSnsapiBase extends HttpServlet
      * 默认实现是 NOOP
      */
     public void triggerNonCorpMember(GetuserinfoResponse resp, HttpServletRequest req)
+        throws Exception
     {
         // NOOP
 
@@ -128,7 +133,7 @@ public class CorpSnsapiBase extends HttpServlet
      * 默认实现如文档所述
      */
     public void responseCorpMember(GetuserinfoResponse getuserinfoResponse, HttpServletRequest req, HttpServletResponse resp)
-        throws IOException
+        throws Exception
     {
         JSONObject json = getuserinfoResponse.getJson();
 
@@ -158,7 +163,7 @@ public class CorpSnsapiBase extends HttpServlet
      * 默认实现如文档所述
      */
     public void responseNonCorpMember(GetuserinfoResponse getuserinfoResponse, HttpServletRequest req, HttpServletResponse resp)
-        throws IOException
+        throws Exception
     {
         JSONObject json = getuserinfoResponse.getJson();
 
@@ -190,7 +195,7 @@ public class CorpSnsapiBase extends HttpServlet
      * Default behavior is <code>ex.printStackTrace()</code>
      */
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException
+        throws ServletException, IOException
     {
         System.err.println("ERROR: CorpSnsapiBase failed.");
         ex.printStackTrace();

@@ -1,6 +1,9 @@
 package com.github.cuter44.wxmp.resps;
 
 import java.util.Date;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 import com.alibaba.fastjson.*;
 
@@ -33,6 +36,8 @@ public class UserInfoResponse extends SnsUserinfoResponse
     public static final String KEY_SUBSCRIBE_TIME   = "subscribe_time";
     public static final String KEY_GROUPID          = "groupid";
 
+    public static final Integer INT_1   = Integer.valueOf(1);
+
   // CONSTRUCT
     public UserInfoResponse(String jsonString)
     {
@@ -45,28 +50,64 @@ public class UserInfoResponse extends SnsUserinfoResponse
     public Boolean getSubscribe()
     {
         return(
-            "1".equals(super.getProperty(KEY_SUBSCRIBE))
+            INT_1.equals(super.getInteger(KEY_SUBSCRIBE))
         );
     }
 
     public Date getSubscribeTime()
+        throws IllegalArgumentException
     {
+        if (!this.getSubscribe())
+            throw(new IllegalArgumentException("User not subscribing."));
+
         return(
             new Date(
-                Long.valueOf(
-                    super.getProperty(KEY_SUBSCRIBE_TIME)
-                )*1000L
+                super.getLong(KEY_SUBSCRIBE_TIME)*1000L
             )
         );
     }
 
     public Integer getGroupid()
     {
+        if (!this.getSubscribe())
+            throw(new IllegalArgumentException("User not subscribing."));
+
         return(
-            Integer.valueOf(
-                super.getProperty(KEY_SUBSCRIBE_TIME)
-            )
+            super.getInteger(KEY_SUBSCRIBE_TIME)
         );
     }
 
+    @Override
+    public String getNickname()
+    {
+        if (!this.getSubscribe())
+            throw(new IllegalArgumentException("User not subscribing."));
+
+        return(
+            super.getNickname()
+        );
+    }
+
+    @Override
+    public String getHeadimgurl()
+    {
+        if (!this.getSubscribe())
+            throw(new IllegalArgumentException("User not subscribing."));
+
+        return(
+            super.getHeadimgurl()
+        );
+    }
+
+    @Override
+    public BufferedImage getHeadimg()
+        throws IOException
+    {
+        if (!this.getSubscribe())
+            throw(new IllegalArgumentException("User not subscribing."));
+
+        return(
+            super.getHeadimg()
+        );
+    }
 }

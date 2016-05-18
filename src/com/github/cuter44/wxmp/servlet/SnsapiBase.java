@@ -61,6 +61,7 @@ public class SnsapiBase extends HttpServlet
      * 默认实现从配置文件 /wxpay.properties 读取
      */
     public String getAppid(HttpServletRequest req)
+        throws Exception
     {
         return(this.appid);
     }
@@ -70,6 +71,7 @@ public class SnsapiBase extends HttpServlet
      * 默认实现从配置文件 /wxpay.properties 读取
      */
     public String getSecret(String appid)
+        throws Exception
     {
         return(this.secret);
     }
@@ -79,6 +81,7 @@ public class SnsapiBase extends HttpServlet
      * 默认实现是 NOOP
      */
     public void trigger(SnsOAuthAccessTokenResponse resp, HttpServletRequest req)
+        throws Exception
     {
         // NOOP
 
@@ -90,7 +93,7 @@ public class SnsapiBase extends HttpServlet
      * 默认实现如文档所述
      */
     public void response(SnsOAuthAccessTokenResponse snsapiBaseResp, HttpServletRequest req, HttpServletResponse resp)
-        throws IOException
+        throws Exception
     {
         JSONObject json = snsapiBaseResp.getJson();
 
@@ -130,7 +133,7 @@ public class SnsapiBase extends HttpServlet
      * Default behavior is <code>ex.printStackTrace()</code>
      */
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException
+        throws IOException, ServletException
     {
         System.err.println("ERROR: SnsapiBase failed.");
         ex.printStackTrace();
