@@ -204,6 +204,28 @@ public class RefundQueryResponse extends WxpayResponseBase {
         return(v);
     }
 
+    /** @return in CNY yuan
+     */
+    public Double getRefundFeeYuan(int n)
+    {
+        Integer fen = this.getRefundFee(n);
+
+        return(
+            fen!=null ? Double.valueOf(fen)/100.0 : null
+        );
+    }
+
+    public Double[] getRefundFeeYuan()
+    {
+        int count = this.getRefundCount();
+        Double[] v = new Double[count];
+
+        for (int i=0; i<count; i++)
+            v[i] = this.getRefundFeeYuan(i);
+
+        return(v);
+    }
+
   // COUPON
     public final Integer getCouponRefundFee(int n)
     {

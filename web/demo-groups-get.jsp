@@ -46,8 +46,6 @@
 
         GroupsGet wxreq1 = (GroupsGet)factory.instantiateWithToken(GroupsGet.class);
 
-        wxreq1.setAccessToken(factory.getTokenKeeper().getAccessToken());
-
         GroupsGetResponse wxresp1 = wxreq1.build().execute();
         for (GroupsGetResponse.Group group:wxresp1)
         {

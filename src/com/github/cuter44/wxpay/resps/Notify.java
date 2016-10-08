@@ -28,6 +28,7 @@ public class Notify extends WxpayResponseBase
     public static final String KEY_CASH_FEE             = "cash_fee";
     public static final String KEY_COUPON_FEE           = "coupon_fee";
     public static final String KEY_COUPON_COUNT         = "coupon_count";
+    public static final String KEY_TIME_END             = "time_end";
 
     public static List<String> KEYS_PARAM_NAME_TEMPLATE= Arrays.asList(
         "appid",
@@ -151,6 +152,13 @@ public class Notify extends WxpayResponseBase
     {
         return(
             super.getProperty(KEY_TRANSACTION_ID)
+        );
+    }
+
+  // TIME
+    public Date getTimeEnd(){
+        return(
+            super.getDateProperty(KEY_TIME_END)
         );
     }
 

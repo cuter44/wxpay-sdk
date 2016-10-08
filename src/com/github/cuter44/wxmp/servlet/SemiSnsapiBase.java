@@ -15,7 +15,7 @@ import com.github.cuter44.wxmp.reqs.*;
 import com.github.cuter44.wxmp.resps.*;
 import com.github.cuter44.wxmp.util.*;
 
-/** 网页授权(snsapi_base)的基础实现, 为网页前端取得当前用户的 openid.
+/** 网页授权(snsapi_base)的基础实现, 为网页前端取得当前用户的 code, 交由第三方换取 openid.
  *
  * 关于该 servlet 的工作流程请参见 <a href="http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html">网页授权获取用户基本信息↗</a>
  *
@@ -25,25 +25,24 @@ import com.github.cuter44.wxmp.util.*;
  *
  * <pre style="font-size:12px">
 
-    GET /snsapi-base.api
-    取得 openid
+    GET /semi-snsapi-base.api
+    取得 code
 
     <strong>参数</strong>
-    <i>code    :string , 从 open.weixin.qq.com 跳转时带入, 无需客户端处理.</i>
-    redir   :url    , 可选, 允许带参数, 在 QueryString 中附加 openid=:openid 重定向. <b>请勿用作用户身份验证.</b>
+    redir   :url    , 可选, 允许带参数, 在 QueryString 中附加 code=:code 重定向. <b>请勿用作用户身份验证.</b>
 
     <strong>响应</strong>
     <i>当未附带 <code>redir</code> 参数时:</i>
     application/json
-    openid  :string , 当前用户的openid.
+    code  :string , code.
 
     <i>当附带 <code>redir</code> 参数时:</i>
     302 Found
-    Location: :${redir}?openid=${openid}
+    Location: :${redir}?code=${code}
 
  * </pre>
  */
-public class SnsapiBase extends HttpServlet
+public class SemiSnsapiBase extends HttpServlet
 {
     public static final String KEY_APPID     = "appid";
     public static final String KEY_SECRET    = "SECRET";
@@ -51,12 +50,10 @@ public class SnsapiBase extends HttpServlet
     protected static final String CODE      = "code";
     protected static final String REDIR     = "redir";
 
-    protected static final String OPENID    = "openid";
-
     protected String appid;
     protected String secret;
 
-    /** 提供 appid 参数
+    /** 提供 appid 参数.
      * servlet 从此方法取得必需参数 appid, 覆盖此方法可以自定义 appid 的来源.
      * 默认实现从配置文件 /wxpay.properties 读取
      */
@@ -66,67 +63,32 @@ public class SnsapiBase extends HttpServlet
         return(this.appid);
     }
 
-    /** 提供 secret 参数
-     * servlet 从此方法取得必需参数 secret, 覆盖此方法可以自定义 secret 的来源.
-     * 默认实现从配置文件 /wxpay.properties 读取
-     */
-    public String getSecret(String appid)
-        throws Exception
-    {
-        return(this.secret);
-    }
-
-    /** 在取得 openid 后, 发送响应前的回调.
-     * 覆盖此方法可以触发想要的动作
-     * 默认实现是 NOOP
-     */
-    public void trigger(SnsOAuthAccessTokenResponse resp, HttpServletRequest req)
-        throws Exception
-    {
-        // NOOP
-
-        return;
-    }
-
-    /** 构造响应
+    /** 处理 code.
      * 覆盖此方法可以自行构造响应
      * 默认实现如文档所述
      */
-    public void response(SnsOAuthAccessTokenResponse snsapiBaseResp, HttpServletRequest req, HttpServletResponse resp)
+    public void code(String code, HttpServletRequest req, HttpServletResponse resp)
         throws Exception
     {
-        JSONObject json = snsapiBaseResp.getJson();
-
-        String openid = json.getString(OPENID);
-        if (openid == null)
-        {
-            resp.setStatus(500);
-            resp.setContentType("application/json");
-            resp.getWriter().print(json.toString());
-
-            return;
-        }
-
-        // else
         String redir = req.getParameter(REDIR);
         if (redir == null)
         {
             resp.setContentType("application/json; charset=utf-8");
-            resp.getWriter().print("{\"openid\":\""+openid+"\"}");
+            resp.getWriter().print("{\"code\":\""+code+"\"}");
 
             return;
         }
 
         // else
         String rebuild = URLParser.fromURL(redir)
-            .setParameter(OPENID, openid)
+            .setParameter(CODE, code)
             .toURL();
         resp.sendRedirect(rebuild);
 
         return;
     }
 
-    /** Trigger on error encountered
+    /** Trigger on error encountered.
      * <br />
      * This method can be overrided to plant your own error handling implemention.
      * <br />
@@ -135,8 +97,7 @@ public class SnsapiBase extends HttpServlet
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
     {
-        System.err.println("ERROR: SnsapiBase failed.");
-        ex.printStackTrace();
+        this.log("ERROR: SemiSnsapiBase failed.", ex);
     }
 
     /** 读取配置文件
@@ -180,14 +141,7 @@ public class SnsapiBase extends HttpServlet
             }
 
             // else
-            String appid = this.getAppid(req);
-            String secret = this.getSecret(appid);
-            SnsOAuthAccessTokenResponse snsapiBaseResp = new SnsOAuthAccessToken(appid, secret, code)
-                .execute();
-
-            this.trigger(snsapiBaseResp, req);
-
-            this.response(snsapiBaseResp, req, resp);
+            this.code(code, req, resp);
         }
         catch (Exception ex)
         {

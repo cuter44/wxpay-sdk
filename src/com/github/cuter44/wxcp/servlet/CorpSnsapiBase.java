@@ -4,6 +4,7 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.Properties;
+import java.net.URLEncoder;
 
 //import org.apache.http.client.*;
 import org.apache.http.client.fluent.*;
@@ -226,9 +227,11 @@ public class CorpSnsapiBase extends HttpServlet
 
             if (code == null)
             {
-                String thisUrl = req.getRequestURL()
-                    .append(req.getQueryString()!=null?"?"+req.getQueryString():"")
-                    .toString();
+                String thisUrl = URLBuilder.encodeURIComponent(
+                    req.getRequestURL()
+                        .append(req.getQueryString()!=null?"?"+req.getQueryString():"")
+                        .toString()
+                );
 
                 String url = new Oauth2Authorize(this.getAppid(req), thisUrl)
                     .build()

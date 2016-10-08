@@ -159,7 +159,7 @@ public class WxpayFactory
     /** Instantiate and fill default conf.
      * @param clazz Subclass of WxpayRequestBase, must implement constructor `clazz(Properties)`.
      */
-    public WxpayRequestBase instantiate(Class<? extends WxpayRequestBase> clazz)
+    public <T extends WxpayRequestBase> T instantiate(Class<T> clazz)
     {
         try
         {
@@ -174,7 +174,7 @@ public class WxpayFactory
         }
     }
 
-    public WxpayRequestBase instantiate(Class<? extends WxpayRequestBase> clazz, Properties conf)
+    public <T extends WxpayRequestBase> T instantiate(Class<T> clazz, Properties conf)
     {
         try
         {

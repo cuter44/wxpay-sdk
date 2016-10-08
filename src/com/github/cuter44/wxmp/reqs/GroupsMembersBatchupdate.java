@@ -41,7 +41,7 @@ public class GroupsMembersBatchupdate extends WxmpRequestBase
     public static final JSONObject BODY_SCHEMA = JSON.parseObject(
         "{"+
           "'properties':{"+
-            "'to_groupid':{'type':'string'}"+
+            "'to_groupid':{'type':'integer'}"+
         "} }"
     );
 

@@ -9,6 +9,7 @@ public enum RefundStatus
     /** code=0, NOTSURE—未确定，需要商户原退款单号重新发起
      */
     NOTSURE(0),
+
     /** code=1, PROCESSING—退款处理中
      */
     PROCESSING(1),

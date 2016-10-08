@@ -5,16 +5,19 @@ import com.github.cuter44.wxpay.constants.WxpayErrorCode;
 public class WxpayException extends RuntimeException
 {
   // FIELDS
-    private WxpayErrorCode errorCode;
+    public final WxpayErrorCode errorCode;
 
   // CONSTRUCT
     public WxpayException()
     {
+        this.errorCode = null;
+
         return;
     }
 
     public WxpayException(Throwable cause)
     {
+        this.errorCode = null;
         super.initCause(cause);
 
         return;

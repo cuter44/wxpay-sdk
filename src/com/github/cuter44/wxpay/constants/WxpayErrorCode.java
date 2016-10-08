@@ -18,6 +18,7 @@ public enum WxpayErrorCode
     BANKERROR               (-10, "银行系统异常 "),
     REFUND_FEE_INVALID      (-11, "退款金额大于支付金额 "),
     ORDERNOTEXIST           (-12, "订单不存在"),
+    REFUNDNOTEXIST          (-13, "退款项不存在"),
     ERROR                   (-127, "UNKNOWN");
 
   // FIELDS
@@ -48,9 +49,16 @@ public enum WxpayErrorCode
      */
     public static WxpayErrorCode forName(String name)
     {
-        return(
-            WxpayErrorCode.valueOf(name)
-        );
+        try
+        {
+            return(
+                WxpayErrorCode.valueOf(name)
+            );
+        }
+        catch (IllegalArgumentException ex)
+        {
+            return(WxpayErrorCode.ERROR);
+        }
     }
 
   // CONSTRUCT
