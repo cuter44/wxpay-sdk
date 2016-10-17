@@ -66,27 +66,16 @@ public class Refund extends WxpayRequestBase {
      * <code>refund_fee</code> is read from <code>${order.total_fee}</code> if not provided in <code>prop</code>.
      * <br />
      * Besides those, all other params provided by <code>order</code> are ignored.
+     * <br />
+     * @deprecated can be mistakenly used, use the factory method <code>instantiate()</code> then <code>refund.setOrder(order)</code> instead.
      */
+    @Deprecated
     public Refund(Properties prop, OrderQueryResponse order)
     {
         this(prop);
 
         //Properties p2 = order.getProperties();
-
-        if (super.getProperty(KEY_OUT_TRADE_NO) == null)
-            super.setProperty(KEY_OUT_TRADE_NO, order.getProperty(KEY_OUT_TRADE_NO));
-
-        if (super.getProperty(KEY_OUT_REFUND_NO) == null)
-            super.setProperty(KEY_OUT_REFUND_NO, order.getProperty(KEY_OUT_TRADE_NO)+"-refund");
-
-        if (super.getProperty(KEY_TRANSACTION_ID) == null)
-            super.setProperty(KEY_TRANSACTION_ID, order.getProperty(KEY_TRANSACTION_ID));
-
-        if (super.getProperty(KEY_TOTAL_FEE) == null)
-            super.setProperty(KEY_TOTAL_FEE, order.getProperty(KEY_TOTAL_FEE));
-
-        if (super.getProperty(KEY_REFUND_FEE) == null)
-            super.setProperty(KEY_REFUND_FEE, order.getProperty(KEY_TOTAL_FEE));
+        this.setOrder(order);
 
         return;
     }
@@ -129,6 +118,30 @@ public class Refund extends WxpayRequestBase {
     }
 
   // PROPERTY
+    /** Setting all necessary info from a OrderQueryResponse.
+     * This method takes in needed info from the response,
+     * ONLY IN CASE the synonym properety is null in <code>this.conf</code>, respectively.
+     */
+    public Refund setOrder(OrderQueryResponse order)
+    {
+        if (super.getProperty(KEY_OUT_TRADE_NO) == null)
+            super.setProperty(KEY_OUT_TRADE_NO, order.getProperty(KEY_OUT_TRADE_NO));
+
+        if (super.getProperty(KEY_OUT_REFUND_NO) == null)
+            super.setProperty(KEY_OUT_REFUND_NO, order.getProperty(KEY_OUT_TRADE_NO)+"-refund");
+
+        if (super.getProperty(KEY_TRANSACTION_ID) == null)
+            super.setProperty(KEY_TRANSACTION_ID, order.getProperty(KEY_TRANSACTION_ID));
+
+        if (super.getProperty(KEY_TOTAL_FEE) == null)
+            super.setProperty(KEY_TOTAL_FEE, order.getProperty(KEY_TOTAL_FEE));
+
+        if (super.getProperty(KEY_REFUND_FEE) == null)
+            super.setProperty(KEY_REFUND_FEE, order.getProperty(KEY_TOTAL_FEE));
+
+        return(this);
+    }
+
     /** 商户系统内部的订单号,32个字符内、可包含字母
      */
     public Refund setOutTradeNo(String outTradeNo)
