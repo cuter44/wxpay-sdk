@@ -49,7 +49,8 @@
         System.out.println(prop1);
 
 
-        Refund wxreq2 = new Refund(factory.getConf(), wxresp1);
+        /* DEPRECATED unsafe constructor, use instantiate() instead */
+        Refund wxreq2 = new Refund(new Properties(factory.getConf()), wxresp1);
 
         RefundResponse wxresp2 = wxreq2.build().sign().execute();
         Properties prop2 = wxresp2.getProperties();
