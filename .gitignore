@@ -1,4 +1,1 @@
-/javadoc
-/web/WEB-INF
-
-*.p12
+target/

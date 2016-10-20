@@ -1,43 +1,63 @@
 # wxpay-sdk configure file
-# using by wxpay|wxmp module
+# used by wxpay|wxmp module
 
-# Config this to load certificate for https://api.weixin.qq.com or other alike.
-# Usually it is the GeoTrustGlobalCA.crt, provided along with the source code or release.
-# Wxpay-sdk does not load JDK's default, so unsetting this value may cause error.
-# As the same reason, unless you know what you do, leave this default.
-# Both colon(:) and semicolon(;) are seperators.
+# File(s) to load certificate for https://api.weixin.qq.com or other alike.
+# Usually named `GeoTrustGlobalCA.crt`, provided along with the source
+# or binary, or you can download from GeoTrust's official site.
+#
+# Wxpay-sdk is programed not to load system trust storage to improve safety
+# and performance. If this config is unset, you will properly encountered a
+# SSL exception.
+# So do not change this unless you fully understand what you are doing.
+# Both colon(:) and semicolon(;) can be seperators.
 LOAD_TRUSTS=/GeoTrustGlobalCA.crt
 
-# Config this to load certificate as your client certificate, which is only required for wxpay/refund and ...(forgot).
-# Usually it is the apilicent_cert.p12, acquired from your https://pay.weixin.qq.com/ console.
-# If you are not going to use those two APIs, nor you don't have such a file, quote the line to skip.
-# If you are using this for multi-accounts, you MUST quote the line then programatically config your cert. Read wiki or javadoc for detailed guide.
+# File to load your client certificate, which is ONLY required by
+# wxpay/refund and ...(forgot).
+#
+# Usually it is named `apilicent_cert.p12`, which is one of credentials that
+# Tencent issued to you, on the time you applying the Wechat Pay service.
+# If you are not going to use those two APIs, nor you don't have such a file,
+# please quote this line to skip.
+# If you are purposing a multi-accounts environment, you MUST quote this line
+# then programatically config the identification per-request. For detailed
+# guidelines please refer to wiki.
 LOAD_IDENTIFICATION=/apiclient_cert.p12
 
 # Turn on/off response notify sign check(including notify and SPI invoke)
-# This can improve performance, but deteriorate safety.
+#
+# Shutting down signature verifing can improve performance, but reduce safety.
+# `false` by default.
 SKIP_SIGN_VERIFY=false
 
-# Turn on/off exception while wx server seponse a fail. This functionality is not supported yet.
-# true - throw corresponding exception on abnormal
+# Turn on/off exception while wx server seponse a fail.
+#
+# true - throw corresponding exception on abnormal.
 # false - return response whatever, invoker is responisible to check fails.
+# This functionality is not yet implemented, so it is always `true`.
 EXCEPTION_ON_FAIL=true
 
-# These 4 parameters are described in page#1 in offical doc.
-# Remain their keys and fill with your own one.
-# You can also pass these parameters using the SAME keys programtically.
+# Your wx media-public/pay account credentials.
+#
+# Which you acquires from your https://mp.weixin.qq.com console.
+# Leave blank or quote on the one you don't have.
 appid=wx67f201a851066c5c
 SECRET=9efe892ad890a5aa61e3xxxxxxxxxxxx
 mch_id=10027922
 KEY=gdkxzxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-# Notify SPI callback by wxpay after user pay
-# This is needed while playing demos or the notify gateway.
-# In production environment, this value is usually set individually on composing requests.
-notify_url=http://www.example.com/wxpay/notify.api
+# Notify SPI callback by wxpay after user pay.
+#
+# Set to the URL which mapped to `com.github.cuter44.wxpay.servlet.Notify`.
+# ONLY needed while running in demo mode.
+# In practice, this is set per-request.
+notify_url=http://www.example.com/wxpay/notify.spi
 
-# You can also fill other annoying parameter here, with keys as same as wx document mentioned.
-# Parameters passed by config file WILL BE OVERRIDED by those passed inline.
+# Besides, any other property synonym with any request parameter that
+# being passed to wx server, can be set here.
+# Preset value here can all be overrided programtically, using
+# `req.setParameter()` or other setter likewise.
 
-# After all, don't forget to change filename to wxpay.properties AND put it in your classpath, defualt as '/wxpay.properties'.
+# After all, don't forget to change filename to `wxpay.properties` and
+# put it in your classpath root, so your application can access it.
 
