@@ -43,3 +43,7 @@ with love and humorousness.
 See [LICENSE.md](LICENSE.md).  
 
 This project is NOT officially affiliated with Weixin(Wechat) or Tencent.
+
+## Maven
+
+Using Github self-hosted repo, refer to https://github.com/cuter44/wxpay-sdk/issues/17 for details.
