@@ -62,7 +62,7 @@ public class WxpayResponseBase
     /**
      * retrieve callback params or response content as Properties
      */
-    public Properties getProperties()
+    public final Properties getProperties()
     {
         return(this.respProp);
     }

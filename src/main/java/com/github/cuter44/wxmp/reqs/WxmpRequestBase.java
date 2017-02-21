@@ -94,7 +94,7 @@ public abstract class WxmpRequestBase
     /**
      * chain supported
      */
-    public WxmpRequestBase setProperty(String key, String value)
+    public final WxmpRequestBase setProperty(String key, String value)
     {
         this.conf.setProperty(key, value);
         return(this);
@@ -104,7 +104,7 @@ public abstract class WxmpRequestBase
      * batch setProperty
      * @param aConf a Map contains key-value pairs, where key must be String, and values must implement toString() at least.
      */
-    public WxmpRequestBase setProperties(Map aConf)
+    public final WxmpRequestBase setProperties(Map aConf)
     {
         this.conf.putAll(aConf);
         return(this);

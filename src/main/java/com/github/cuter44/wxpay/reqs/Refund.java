@@ -46,8 +46,8 @@ public class Refund extends WxpayRequestBase {
     public Refund(Properties prop){
         super(prop);
 
-        if (super.getProperty(KEY_OP_USER_ID) == null)
-            super.setProperty(KEY_OP_USER_ID, this.getProperty(KEY_MCH_ID));
+        if (super.getProperty(KEY_OP_USER_ID) == null && super.getProperty(KEY_MCH_ID)!=null)
+            super.setProperty(KEY_OP_USER_ID, super.getProperty(KEY_MCH_ID));
 
         return;
     }

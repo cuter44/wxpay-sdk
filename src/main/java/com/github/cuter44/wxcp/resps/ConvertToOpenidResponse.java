@@ -36,7 +36,7 @@ public class ConvertToOpenidResponse extends WxcpResponseBase
     public String getAppid()
     {
         return(
-            this.getProperty(KEY_APPID)
+            super.getProperty(KEY_APPID)
         );
     }
 }

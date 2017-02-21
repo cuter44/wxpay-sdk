@@ -37,17 +37,17 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
     {
         super(prop);
 
-        if (super.getProperty(KEY_GBWCPR_APP_ID) == null)
+        if (super.getProperty(KEY_GBWCPR_APP_ID) == null && super.getProperty(KEY_APPID) != null)
             this.setAppId(
                 super.getProperty(KEY_APPID)
             );
 
-        if (super.getProperty(KEY_GBWCPR_NONCE_STR) == null)
+        if (super.getProperty(KEY_GBWCPR_NONCE_STR) == null && super.getProperty(KEY_NONCE_STR) != null)
             this.setNonceStr(
                 super.getProperty(KEY_NONCE_STR)
             );
 
-        if (super.getProperty(KEY_PACKAGE) == null)
+        if (super.getProperty(KEY_PACKAGE) == null && super.getProperty(KEY_PREPAY_ID) != null)
             this.setPackage(
                 super.getProperty(KEY_PREPAY_ID)
             );

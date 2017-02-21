@@ -37,12 +37,12 @@ public class WxmsgBase
     }
 
   // PROP
-    public Properties getProperties()
+    public final Properties getProperties()
     {
         return(this.prop);
     }
 
-    public String getProperty(String key)
+    public final String getProperty(String key)
     {
         return(
             this.prop.getProperty(key)

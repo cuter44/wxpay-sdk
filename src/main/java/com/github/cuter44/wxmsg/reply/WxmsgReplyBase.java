@@ -51,7 +51,7 @@ public abstract class WxmsgReplyBase
         );
     }
 
-    public Properties getProperties()
+    public final Properties getProperties()
     {
         return(this.prop);
     }

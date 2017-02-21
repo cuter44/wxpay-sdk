@@ -70,7 +70,7 @@
         var thisUrl = location.href;
         location.href="snsapi-base.api?redir="+encodeURIComponent(thisUrl);
 
-        ev || ev.preventDefault();
+        ev && ev.preventDefault();
       }
 
       document.getElementById("openid").value = getParamValue("openid") || "";  

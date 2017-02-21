@@ -13,7 +13,8 @@ import com.github.cuter44.wxpay.WxpayProtocolException;
 
 /**
  */
-public class SendRedpack extends WxpayRequestBase {
+public class SendRedpack extends WxpayRequestBase
+{
 
     public static final String URL_API_BASE = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 
@@ -52,8 +53,8 @@ public class SendRedpack extends WxpayRequestBase {
     {
         super(prop);
 
-        if (super.getProperty(KEY_WXAPPID) == null)
-            super.setProperty(KEY_WXAPPID, this.getProperty(KEY_APPID));
+        if (super.getProperty(KEY_WXAPPID) == null && super.getProperty(KEY_APPID) != null)
+            super.setProperty(KEY_WXAPPID, super.getProperty(KEY_APPID));
 
         return;
     }
@@ -134,11 +135,11 @@ public class SendRedpack extends WxpayRequestBase {
      * Requires mch_id set before.
      * On mchBillNo.digits>10, it is mod 1e10L; on <10, prepended with 0s.
      */
-    public SendRedpack setMchBillno$10(long mchBillNo)
+    public SendRedpack setMchBillno10(long mchBillNo)
     {
         String s = String.format(
             "%1$s%2$tY%2$tm%2$td%3$010d",
-            this.getMchId(),
+            super.getProperty(KEY_MCH_ID),
             System.currentTimeMillis(),
             mchBillNo % 10000000000L
         );

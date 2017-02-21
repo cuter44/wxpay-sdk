@@ -311,12 +311,5 @@ public abstract class WxpayRequestBase
 
         return(this);
     }
-
-    public String getMchId()
-    {
-        return(
-            this.conf.getProperty(KEY_MCH_ID)
-        );
-    }
 }
 

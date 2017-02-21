@@ -57,7 +57,7 @@ public class UserInfoBatchget extends WxmpRequestBase
     @Override
     public UserInfoBatchget build()
     {
-        String lang = this.getProperty(KEY_LANG);
+        String lang = super.getProperty(KEY_LANG);
         lang = lang!=null ? lang : VALUE_LANG_ZH_CN;
 
         JSONArray userList = new JSONArray(this.openidList.size());
