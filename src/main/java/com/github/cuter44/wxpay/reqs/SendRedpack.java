@@ -16,7 +16,7 @@ import com.github.cuter44.wxpay.WxpayProtocolException;
 public class SendRedpack extends WxpayRequestBase
 {
 
-    public static final String URL_API_BASE = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+    public static final String URL_API_BASE = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
 
     public static final String KEY_WXAPPID      = "wxappid";
     public static final String KEY_TOTAL_AMOUNT = "total_amount";
