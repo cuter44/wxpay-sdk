@@ -9,44 +9,39 @@ import com.alibaba.fastjson.*;
 
 import com.github.cuter44.wxmp.resps.*;
 
-/** 删除分组
+/** 获取公众号已创建的标签
  * <br />
- * <a href="http://mp.weixin.qq.com/wiki/0/56d992c605a97245eb7e617854b169fc.html#.E5.88.A0.E9.99.A4.E5.88.86.E7.BB.84">ref ↗</a>
+ * <a href="https://mp.weixin.qq.com/wiki?action=doc&id=mp1421140837">ref ↗</a>
  * <br />
- * <pre style="font-size:12px">
-    参数说明
-    access_token    调用接口凭证
-    group           分组
-    id              分组的id
- * </pre>
  */
-public class GroupsDelete extends WxmpRequestBase
+public class UserTagGet extends WxmpRequestBase
 {
   // KEYS
     protected static final List<String> KEYS_PARAM = Arrays.asList(
         "access_token"
     );
 
-    public static final String KEY_ACCESS_TOKEN  = "access_token";
-    public static final String KEY_ID            = "id";
+    public static final String KEY_ACCESS_TOKEN = "access_token";
+    public static final String KEY_TAGID        = "tagid";
+    public static final String KEY_NEXT_OPENID  = "next_openid";
 
-    public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/groups/delete";
+    public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/user/tag/get";
 
     protected JSONObject jsonBody;
 
     public static final JSONObject BODY_SCHEMA = JSON.parseObject(
         "{"+
           "'properties':{"+
-            "'group':{"+
+            "'tag':{"+
               "'type':'object',"+
               "'schema':{"+
                 "'properties':{"+
-                  "'id':{'type':'integer'}"+
+                  "'tagid':{'type':'integer'},"+
+                  "'next_openid':{'type':'string'}"+
         "} } } } }"
     );
-
   // CONSTRUCT
-    public GroupsDelete(Properties prop)
+    public UserTagGet(Properties prop)
     {
         super(prop);
 
@@ -55,7 +50,7 @@ public class GroupsDelete extends WxmpRequestBase
 
   // BUILD
     @Override
-    public GroupsDelete build()
+    public UserTagGet build()
     {
         this.jsonBody = super.buildJSONBody(BODY_SCHEMA, this.conf);
 
@@ -73,7 +68,7 @@ public class GroupsDelete extends WxmpRequestBase
 
   // EXECUTE
     @Override
-    public GroupsDeleteResponse execute()
+    public UserTagGetResponse execute()
         throws IOException
     {
         String url = URL_API_BASE+"?"+super.toQueryString(KEYS_PARAM);
@@ -81,22 +76,38 @@ public class GroupsDelete extends WxmpRequestBase
 
         String respJson = super.executePostJSON(url, body);
 
-        return(new GroupsDeleteResponse(respJson));
+        return(new UserTagGetResponse(respJson));
     }
 
   // MISC
-    public GroupsDelete setAccessToken(String accessToken)
+    public UserTagGet setAccessToken(String accessToken)
     {
         super.setProperty(KEY_ACCESS_TOKEN, accessToken);
 
         return(this);
     }
 
-    public GroupsDelete setId(int id)
+    public UserTagGet setTagid(String tagid)
     {
-        super.setProperty(KEY_ID, Integer.toString(id));
+        super.setProperty(KEY_TAGID, tagid);
 
         return(this);
     }
+
+    public UserTagGet setTagid(int tagid)
+    {
+        this.setTagid(Integer.toString(tagid));
+
+        return(this);
+    }
+
+    public UserTagGet setNextOpenid(String nextOpenid)
+    {
+        super.setProperty(KEY_NEXT_OPENID, nextOpenid);
+
+        return(this);
+    }
+
+
 
 }

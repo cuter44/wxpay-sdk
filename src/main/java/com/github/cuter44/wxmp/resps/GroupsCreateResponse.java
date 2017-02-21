@@ -12,8 +12,9 @@ import com.alibaba.fastjson.*;
 public class GroupsCreateResponse extends WxmpResponseBase
 {
   // CONSTANTS
-    public static final String KEY_ID   = "id";
-    public static final String KEY_NAME = "name";
+    public static final String KEY_GROUP    = "group";
+    public static final String KEY_ID       = "id";
+    public static final String KEY_NAME     = "name";
 
   // CONSTRUCT
     public GroupsCreateResponse(String jsonString)
@@ -27,16 +28,14 @@ public class GroupsCreateResponse extends WxmpResponseBase
     public int getId()
     {
         return(
-            Integer.valueOf(
-                super.getProperty(KEY_ID)
-            )
+            this.json.getJSONObject(KEY_GROUP).getIntValue(KEY_ID)
         );
     }
 
     public String getName()
     {
         return(
-            super.getProperty(KEY_NAME)
+            this.json.getJSONObject(KEY_GROUP).getString(KEY_NAME)
         );
     }
 }

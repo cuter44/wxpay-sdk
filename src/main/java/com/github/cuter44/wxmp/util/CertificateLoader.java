@@ -18,11 +18,13 @@ import java.util.MissingResourceException;
 public class CertificateLoader
 {
   // CONSTANTS
+    public static final String KEY_SSL_ALGORITHM = "SSL_ALGORITHM";
     public static final String KEY_LOAD_TRUSTS = "LOAD_TRUSTS";
     public static final String KEY_LOAD_IDENTIFICATION = "LOAD_IDENTIFICATION";
     public static final String KEY_MCH_ID = "mch_id";
+
   // CONSTRUCT
-    public static final String ALGORITHM = "TLSv1";
+    public String ALGORITHM = "TLSv1";
 
     /** Trusts
      * To store server certificates
@@ -40,7 +42,7 @@ public class CertificateLoader
         return;
     }
 
-    public CertificateLoader(KeyStore trusts, KeyStore identification)
+    protected CertificateLoader(KeyStore trusts, KeyStore identification)
     {
         this();
 
@@ -89,6 +91,18 @@ public class CertificateLoader
             throw(new RuntimeException(ex));
         }
     }
+
+    /** Instant method to convert existing trusts and identification to SSLContext.
+     */
+    public static SSLContext toSSLContext(KeyStore trusts, KeyStore identification)
+    {
+        return(
+            new CertificateLoader(trusts, identification)
+                .asSSLContext()
+        );
+
+    }
+
 
   // IMPORT
     /** Load trusts from .crt file.
@@ -168,6 +182,10 @@ public class CertificateLoader
 
     public CertificateLoader config(Properties conf)
     {
+        String algorithm = conf.getProperty(KEY_SSL_ALGORITHM);
+        if (algorithm != null)
+            this.ALGORITHM = algorithm;
+
         String confLoadTrusts = conf.getProperty(KEY_LOAD_TRUSTS);
         if (confLoadTrusts != null)
             this.loadTrusts(
@@ -185,41 +203,51 @@ public class CertificateLoader
     }
 
 
-  // TEST
-    public static void main(String[] args)
+
+    @Override
+    public String toString()
     {
         try
         {
-            InputStream stream = CertificateLoader.class
-                .getResourceAsStream("/wxpay.properties");
+            StringBuilder sb = new StringBuilder();
+            sb.append(this.getClass().getSimpleName())
+                .append("{");
 
-            Properties conf = new Properties();
-            conf.load(stream);
-
-            CertificateLoader cl = new CertificateLoader().config(conf);
-
-            Enumeration<String> et = cl.identification.aliases();
-            while (et.hasMoreElements())
+            sb.append("Trusts:{");
+            if (this.trusts != null)
             {
-                System.out.println(cl.identification.getCertificate(et.nextElement()));
+                Enumeration<String> e = this.trusts.aliases();
+                while (e.hasMoreElements())
+                    sb.append(
+                        this.trusts.getCertificate(e.nextElement()).toString()
+                    );
             }
+            sb.append("}");
 
-            Enumeration<String> ei = cl.trusts.aliases();
-            while (ei.hasMoreElements())
+            sb.append(",");
+
+            sb.append("Identification:{");
+            if (this.identification != null)
             {
-                System.out.println(cl.trusts.getCertificate(ei.nextElement()));
+                Enumeration<String> e = this.identification.aliases();
+                while (e.hasMoreElements())
+                    sb.append(
+                        this.identification.getCertificate(e.nextElement()).toString()
+                    );
             }
+            sb.append("}");
+
+            sb.append("}");
+
+            return(
+                sb.toString()
+            );
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            return(
+                ex.toString()
+            );
         }
-
-        return;
-
     }
-
-
-
-
 }

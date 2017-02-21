@@ -122,7 +122,7 @@ public class JSSDKConfig extends HttpServlet
         json.put(NONCE_STR  , nonceStr  );
         json.put(SIGNATURE  , signature );
 
-        resp.setContentType("application/json; utf-8");
+        resp.setContentType("application/json; charset=utf-8");
         resp.getWriter().write(json.toJSONString());
 
         return;

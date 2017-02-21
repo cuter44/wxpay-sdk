@@ -29,12 +29,12 @@ import com.github.cuter44.wxpay.resps.WxpayResponseBase;
  */
 public abstract class WxpayRequestBase
 {
-    public static final String KEY_APPID         = "appid";
-    public static final String KEY_SIGN          = "sign";
-    public static final String KEY_KEY           = "KEY";
-    public static final String KEY_SECRET        = "SECRET";
-    public static final String KEY_NOTIFY_URL    = "notify_url";
-    public static final String KEY_NONCE_STR     = "nonce_str";
+    public static final String KEY_APPID        = "appid";
+    public static final String KEY_SIGN         = "sign";
+    public static final String KEY_KEY          = "KEY";
+    public static final String KEY_MCH_ID       = "mch_id";
+    public static final String KEY_SECRET       = "SECRET";
+    public static final String KEY_NONCE_STR    = "nonce_str";
 
     protected static CryptoBase crypto = CryptoBase.getInstance();
 
@@ -108,7 +108,7 @@ public abstract class WxpayRequestBase
     /**
      * chain supported
      */
-    public WxpayRequestBase setProperty(String key, String value)
+    public final WxpayRequestBase setProperty(String key, String value)
     {
         this.conf.setProperty(key, value);
         return(this);
@@ -124,7 +124,7 @@ public abstract class WxpayRequestBase
      * batch setProperty
      * @param aConf a Map contains key-value pairs, where key must be String, and values must implement toString() at least.
      */
-    public WxpayRequestBase setProperties(Map aConf)
+    public final WxpayRequestBase setProperties(Map aConf)
     {
         this.conf.putAll(aConf);
         return(this);
@@ -303,6 +303,20 @@ public abstract class WxpayRequestBase
         this.setProperty(KEY_NONCE_STR, nonceStr);
 
         return(this);
+    }
+
+    public WxpayRequestBase setMchId(String mchId)
+    {
+        this.setProperty(KEY_MCH_ID, mchId);
+
+        return(this);
+    }
+
+    public String getMchId()
+    {
+        return(
+            this.conf.getProperty(KEY_MCH_ID)
+        );
     }
 }
 

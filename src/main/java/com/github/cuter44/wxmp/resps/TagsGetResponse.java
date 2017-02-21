@@ -8,39 +8,39 @@ import com.alibaba.fastjson.*;
 
 import com.github.cuter44.wxmp.WxmpException;
 
-/** 查询所有分组
+/** 获取公众号已创建的标签
  * <pre style="font-size:12px">
     返回说明
-    <del>groups  公众平台分组信息列表</del>
+    <del>tags  公众平台分组信息列表</del>
     id      分组id，由微信分配
     name    分组名字，UTF8编码
     count   分组内用户数量
  * </pre>
  */
-public class GroupsGetResponse extends WxmpResponseBase
-    implements Iterable<GroupsGetResponse.Group>
+public class TagsGetResponse extends WxmpResponseBase
+    implements Iterable<TagsGetResponse.Tag>
 {
   // CONSTANTS
     public static final String KEY_ID       = "id";
     public static final String KEY_NAME     = "name";
     public static final String KEY_COUNT    = "count";
-    public static final String KEY_GROUPS   = "groups";
+    public static final String KEY_TAGS     = "tags";
 
 
   // CONSTRUCT
-    protected JSONArray groups;
+    protected JSONArray tags;
 
-    public GroupsGetResponse(String jsonString)
+    public TagsGetResponse(String jsonString)
     {
         super(jsonString);
 
-        this.groups = json.getJSONArray(KEY_GROUPS);
+        this.tags = json.getJSONArray(KEY_TAGS);
 
         return;
     }
 
   // ACCESSOR
-    /** @deprecated GroupsGetResponse does not support this op.
+    /** @deprecated TagsGetResponse does not support this op.
      */
     @Override
     public JSONObject getJson()
@@ -49,28 +49,28 @@ public class GroupsGetResponse extends WxmpResponseBase
         throw(new UnsupportedOperationException());
     }
 
-    public static class Group
+    public static class Tag
     {
         public int id;
         public String name;
         public long count;
 
-        protected Group(JSONObject json)
+        protected Tag(JSONObject json)
         {
-            this.id     = json.getInteger   (GroupsGetResponse.KEY_ID   );
-            this.name   = json.getString    (GroupsGetResponse.KEY_NAME );
-            this.count  = json.getLong      (GroupsGetResponse.KEY_COUNT);
+            this.id     = json.getInteger   (TagsGetResponse.KEY_ID     );
+            this.name   = json.getString    (TagsGetResponse.KEY_NAME   );
+            this.count  = json.getLong      (TagsGetResponse.KEY_COUNT  );
         }
     }
 
-    public class GroupsIterator
-        implements Iterator<Group>
+    public class TagsIterator
+        implements Iterator<Tag>
     {
         Iterator<Object> i;
 
-        protected GroupsIterator()
+        protected TagsIterator()
         {
-            this.i = GroupsGetResponse.this.groups.iterator();
+            this.i = TagsGetResponse.this.tags.iterator();
 
             return;
         }
@@ -82,12 +82,12 @@ public class GroupsGetResponse extends WxmpResponseBase
             );
         }
 
-        public Group next()
+        public Tag next()
             throws NoSuchElementException
         {
             JSONObject j = (JSONObject)this.i.next();
             return(
-                new Group(j)
+                new Tag(j)
             );
         }
 
@@ -97,11 +97,10 @@ public class GroupsGetResponse extends WxmpResponseBase
         }
     }
 
-    @Override
-    public GroupsIterator iterator()
+    public TagsIterator iterator()
     {
         return(
-            new GroupsIterator()
+            new TagsIterator()
         );
     }
 }

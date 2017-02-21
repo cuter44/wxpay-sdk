@@ -1,6 +1,15 @@
 # wxpay-sdk configure file
 # used by wxpay|wxmp module
 
+# SSL SAFETY FONFIGURATION
+
+# SSL algorithm to use by SSLContext.
+#
+# Available values are SSLv3, TLSv1, TLSv1.1, TLSv1.2
+# Default to TLSv1 to be compatible with hc provider. wx API server can bear
+# with up to TLSv1.2.
+#SSL_ALGORITHM=TLSv1
+
 # File(s) to load certificate for https://api.weixin.qq.com or other alike.
 # Usually named `GeoTrustGlobalCA.crt`, provided along with the source
 # or binary, or you can download from GeoTrust's official site.
@@ -24,6 +33,8 @@ LOAD_TRUSTS=/GeoTrustGlobalCA.crt
 # guidelines please refer to wiki.
 LOAD_IDENTIFICATION=/apiclient_cert.p12
 
+# TRANSACTION CONFIGURATION
+
 # Turn on/off response notify sign check(including notify and SPI invoke)
 #
 # Shutting down signature verifing can improve performance, but reduce safety.
@@ -37,6 +48,8 @@ SKIP_SIGN_VERIFY=false
 # This functionality is not yet implemented, so it is always `true`.
 EXCEPTION_ON_FAIL=true
 
+# WX CREDENTIALS
+
 # Your wx media-public/pay account credentials.
 #
 # Which you acquires from your https://mp.weixin.qq.com console.
@@ -45,6 +58,8 @@ appid=wx67f201a851066c5c
 SECRET=9efe892ad890a5aa61e3xxxxxxxxxxxx
 mch_id=10027922
 KEY=gdkxzxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# MISCELLANEOUS
 
 # Notify SPI callback by wxpay after user pay.
 #
