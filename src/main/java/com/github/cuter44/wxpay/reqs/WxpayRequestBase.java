@@ -98,7 +98,7 @@ public abstract class WxpayRequestBase
   // CONFIG
     protected Properties conf;
 
-    public String getProperty(String key)
+    public final String getProperty(String key)
     {
         return(
             this.conf.getProperty(key)
@@ -310,6 +310,13 @@ public abstract class WxpayRequestBase
         this.setProperty(KEY_MCH_ID, mchId);
 
         return(this);
+    }
+
+    public String getMchId()
+    {
+        return(
+            this.getProperty(KEY_MCH_ID)
+        );
     }
 }
 

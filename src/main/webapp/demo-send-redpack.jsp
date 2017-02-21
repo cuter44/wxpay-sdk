@@ -50,7 +50,7 @@
           .setTotalAmount   (Double.valueOf(request.getParameter("total_amount")) )
           .setTotalNum      (Integer.valueOf(request.getParameter("total_num"))   )
           .setReOpenid      (request.getParameter("re_openid")                    )
-          .setMchBillno10   (System.currentTimeMillis()                           )
+          .setMchBillno$10  (System.currentTimeMillis()                           )
           .setClientIp      (request.getLocalAddr()                               ) 
           // ↑ Be aware if you have multiple interfaces and config the outgoing differ from the income.
           .build()

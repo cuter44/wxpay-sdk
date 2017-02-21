@@ -135,11 +135,11 @@ public class SendRedpack extends WxpayRequestBase
      * Requires mch_id set before.
      * On mchBillNo.digits>10, it is mod 1e10L; on <10, prepended with 0s.
      */
-    public SendRedpack setMchBillno10(long mchBillNo)
+    public SendRedpack setMchBillno$10(long mchBillNo)
     {
         String s = String.format(
             "%1$s%2$tY%2$tm%2$td%3$010d",
-            super.getProperty(KEY_MCH_ID),
+            super.getMchId(),
             System.currentTimeMillis(),
             mchBillNo % 10000000000L
         );

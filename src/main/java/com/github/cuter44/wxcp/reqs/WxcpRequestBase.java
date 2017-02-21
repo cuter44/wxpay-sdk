@@ -87,7 +87,7 @@ public abstract class WxcpRequestBase
   // CONFIG
     protected Properties conf;
 
-    public String getProperty(String key)
+    public final String getProperty(String key)
     {
         return(
             this.conf.getProperty(key)
