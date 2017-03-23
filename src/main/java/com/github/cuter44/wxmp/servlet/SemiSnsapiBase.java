@@ -50,16 +50,48 @@ public class SemiSnsapiBase extends HttpServlet
     protected static final String REDIR     = "redir";
 
     protected String appid;
+
+    /** @deprecated SemiSnsapiBase no longer use this field.
+     */
+    @Deprecated
     protected String secret;
 
+    /** Servlet.init();
+     * Default implement to initialize WxmpFactorySingl to ensure upstream
+     * TokenProvider standby.
+     * If you are building a multi-account env, you SHOULD override it.
+     * If you are not preparing a wxpay.properties, you MUST override it.
+     */
+    @Override
+    public void init()
+    {
+        this.initSingl();
+
+        return;
+    }
+
+    public void initSingl()
+    {
+        WxmpFactorySingl.getInstance();
+
+        return;
+    }
+
     /** 提供 appid 参数.
-     * servlet 从此方法取得必需参数 appid, 覆盖此方法可以自定义 appid 的来源.
-     * 默认实现从配置文件 /wxpay.properties 读取
+     * Servlet 从此方法取得必需参数 appid, 或在缺省时从 WxmpFactorySingl 取得,
+     * 覆盖此方法可以自定义缺省参数时 appid 的来源.
      */
     public String getAppid(HttpServletRequest req)
         throws Exception
     {
-        return(this.appid);
+        String appid = req.getParameter(KEY_APPID);
+        if (appid != null)
+            return(appid);
+
+        // else
+        return(
+            WxmpFactorySingl.getInstance().getTokenProvider().getAppid()
+        );
     }
 
     /** 处理 code.
@@ -87,29 +119,11 @@ public class SemiSnsapiBase extends HttpServlet
         return;
     }
 
-    /** Trigger on error encountered.
-     * <br />
-     * This method can be overrided to plant your own error handling implemention.
-     * <br />
-     * Default behavior is <code>ex.printStackTrace()</code>
-     */
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
     {
-        this.log("ERROR: SemiSnsapiBase failed.", ex);
-    }
-
-    /** 读取配置文件
-     * 覆盖此方法可以删除对配置文件的访问, 此情况下 getAppid(), getSecret() 均需要自行实现.
-     */
-    @Override
-    public void init()
-    {
-        Properties conf = WxmpFactory.getDefaultInstance().getConf();
-        this.appid = conf.getProperty(KEY_APPID);
-        this.secret = conf.getProperty(KEY_SECRET);
-
-        return;
+        this.getServletContext().log("Wxmp:SemiSnsapiBase:FAIL:", ex);
+        resp.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
     }
 
     @Override

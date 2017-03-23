@@ -13,6 +13,7 @@ import com.github.cuter44.nyafx.text.*;
 import com.github.cuter44.wxmp.*;
 import com.github.cuter44.wxmp.reqs.*;
 import com.github.cuter44.wxmp.resps.*;
+import com.github.cuter44.wxmp.util.*;
 
 /** 网页授权(snsapi_userinfo)的基础实现, 为网页前端取得当前用户的 openid 及其他信息.
  *
@@ -55,27 +56,63 @@ public class SnsapiUserinfo extends HttpServlet
 
     protected static final String OPENID    = "openid";
 
+    /** @deprecated SnsapiUserinfo no longer use this field.
+     */
+    @Deprecated
     protected String appid;
+    /** @deprecated SnsapiUserinfo no longer use this field.
+     */
+    @Deprecated
     protected String secret;
 
+    /** Servlet.init();
+     * Default implement to initialize WxmpFactorySingl to ensure upstream
+     * TokenProvider standby.
+     * If you are building a multi-account env, you SHOULD override it.
+     * If you are not preparing a wxpay.properties, you MUST override it.
+     */
+    public void init()
+    {
+        this.initSingl();
+
+        return;
+    }
+
+    public void initSingl()
+    {
+        WxmpFactorySingl.getInstance();
+
+        return;
+    }
+
+
     /** 提供 appid 参数
-     * servlet 从此方法取得必需参数 appid, 覆盖此方法可以自定义 appid 的来源.
-     * 默认实现从配置文件 /wxmp.properties 读取
+     * Servlet 从此方法取得必需参数 appid, 或在缺省时从 WxmpFactorySingl 取得,
+     * 覆盖此方法可以自定义缺省参数时 appid 的来源.
      */
     public String getAppid(HttpServletRequest req)
         throws Exception
     {
-        return(this.appid);
+        String appid = req.getParameter(KEY_APPID);
+        if (appid != null)
+            return(appid);
+
+        // else
+        return(
+            WxmpFactorySingl.getInstance().getTokenProvider().getAppid()
+        );
     }
 
     /** 提供 secret 参数
      * servlet 从此方法取得必需参数 secret, 覆盖此方法可以自定义 secret 的来源.
-     * 默认实现从配置文件 /wxmp.properties 读取
+     * 默认实现从 ATMag.getDefaultInstance().get(appid) 取得.
      */
     public String getSecret(String appid)
         throws Exception
     {
-        return(this.secret);
+        return(
+            ATMag.getDefaultInstance().get(appid).getSecret()
+        );
     }
 
     /** 在取得 openid 后, 发送响应前的回调.
@@ -128,30 +165,11 @@ public class SnsapiUserinfo extends HttpServlet
         return;
     }
 
-    /** Trigger on error encountered
-     * <br />
-     * This method can be overrided to plant your own error handling implemention.
-     * <br />
-     * Default behavior is <code>ex.printStackTrace()</code>
-     */
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
     {
-        System.err.println("ERROR: SnsapiUserinfo failed.");
-        ex.printStackTrace();
-    }
-
-    /** 读取配置文件
-     * 覆盖此方法可以删除对配置文件的访问, 此情况下 getAppid(), getSecret() 均需要自行实现.
-     */
-    @Override
-    public void init()
-    {
-        Properties conf = WxmpFactory.getDefaultInstance().getConf();
-        this.appid = conf.getProperty(KEY_APPID);
-        this.secret = conf.getProperty(KEY_SECRET);
-
-        return;
+        this.getServletContext().log("Wxmp:SnsapiBase:FAIL:", ex);
+        resp.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
     }
 
     @Override

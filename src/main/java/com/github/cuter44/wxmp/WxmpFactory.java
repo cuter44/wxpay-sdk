@@ -10,10 +10,13 @@ import com.github.cuter44.wxmp.util.CertificateLoader;
 import com.github.cuter44.wxmp.reqs.*;
 import com.github.cuter44.wxmp.util.*;
 
-/** 微信MP工厂
+/** 微信MP工厂.
  * <br />
  * 这个工厂对象维护配置文件并根据配置文件派生几乎所有的请求.
+ * @deprecated 该工厂类已被 WxmpFactorySingl 替代, 单账号实现请使用 WxmpFactorySingl,
+ * 多账号实现请参见 WxmpFactoryBase 自行开发.
  */
+@Deprecated
 public class WxmpFactory
 {
   // CONSTANT

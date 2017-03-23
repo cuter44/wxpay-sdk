@@ -53,74 +53,116 @@ public class JSSDKConfig extends HttpServlet
     protected static final String URL           = "url";
     protected static final String JS_API_LIST   = "jsApiList";
 
+    /** @deprecated JSSDKConfig no longer use this field.
+     */
+    @Deprecated
     protected String appid;
+    /** @deprecated JSSDKConfig no longer use this field.
+     */
+    @Deprecated
     protected String secret;
+    /** @deprecated JSSDKConfig no longer use this field.
+     */
+    @Deprecated
     protected TokenKeeper tokenKeeper;
     protected CryptoBase crypto = CryptoBase.getInstance();
 
-    /** 读取配置文件
-     * 覆盖此方法可以删除对配置文件的访问, 此情况下 getAppid(), getJSSDKTicket() 均需要自行实现.
+    /** Servlet.init();
+     * Default implement to initialize WxmpFactorySingl to ensure upstream
+     * TokenProvider standby.
+     * If you are building a multi-account env, you SHOULD override it.
+     * If you are not preparing a wxpay.properties, you MUST override it.
      */
     @Override
     public void init()
     {
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
-        this.tokenKeeper = factory.getTokenKeeper();
-
-        Properties conf = factory.getConf();
-        this.appid = conf.getProperty(KEY_APPID);
-        this.secret = conf.getProperty(KEY_SECRET);
+        this.initSingl();
 
         return;
     }
 
-    /** 提供 appid 参数
-     * servlet 从此方法取得必需参数 appid, 覆盖此方法可以自定义 appid 的来源.
-     * 默认实现从配置文件 /wxpay.properties 读取
+    public void initSingl()
+    {
+        WxmpFactorySingl.getInstance();
+
+        return;
+    }
+
+    /** 提供 appid 参数.
+     * Servlet 从此方法取得必需参数 appid, 或在缺省时从 WxmpFactorySingl 取得,
+     * 覆盖此方法可以自定义缺省参数时 appid 的来源.
      */
     public String getAppid(HttpServletRequest req)
         throws Exception
     {
-        return(this.appid);
-    }
+        String appid = req.getParameter(KEY_APPID);
+        if (appid != null)
+            return(appid);
 
-    /** 提供 ticket 参数
-     * servlet 从此方法取得必需参数 ticket, 覆盖此方法可以自定义 ticket 的来源.
-     * 默认实现从 WxFactory.getDefaultInstance() 获取 TokenKeeper
-     * @see com.github.cuter44.wxpay.TokenKeeper
-     */
-    public String getTicket(String appid)
-        throws Exception
-    {
+        // else
         return(
-            this.tokenKeeper.getJSSDKTicket()
+            WxmpFactorySingl.getInstance().getTokenProvider().getAppid()
         );
     }
 
-    /** 校验 URL
+    @Deprecated
+    public final String getTicket(String appid)
+        throws Exception
+    {
+        throw(new UnsupportedOperationException("getTicket() is obsoleted, migrated into getTokenProvider()."));
+    }
+
+    /** 提供 TokenProvider
+     * servlet 从此方法取得 TokenProvider, 覆盖此方法可以自定义 TokenProvider 的来源.
+     * 默认实现从 <code>ATMap.getDefaultInstance().get(appid)</code> 取得.
+     * @see com.github.cuter44.wxpay.TokenKeeper
+     */
+    public TokenProvider getTokenProvider(String appid)
+        throws Exception
+    {
+        return(
+            WxmpFactorySingl.getInstance().getTokenProvider()
+        );
+    }
+
+    @Deprecated
+    public final void ifAcceptURL(String url)
+        throws Exception
+    {
+        throw(new UnsupportedOperationException("ifAcceptURL() is obsoleted, migrated into checkAccess()."));
+    }
+
+    /** 检查 URL.
      * servlet 调用此方法以检定是否为传入的 url 参数生成签名, 覆盖此方法可以自行实现 url 鉴定策略以阻挡外部请求.
      * 默认实现直接返回. 如果要阻止操作, 抛出任意异常.
      * @see com.github.cuter44.wxpay.TokenKeeper
      */
-    public void ifAcceptURL(String url)
+    public void checkAccess(String url)
         throws Exception
     {
         return;
+    }
+
+    @Deprecated
+    public final void response(String appId, Long timestamp, String nonceStr, String signature, HttpServletResponse resp)
+        throws Exception
+    {
+        throw(new UnsupportedOperationException("response() is obsoleted, migrated into response()(different parameters)."));
     }
 
     /** 构造响应
      * 覆盖此方法可以自行构造响应
      * 默认实现如文档所述
      */
-    public void response(String appId, Long timestamp, String nonceStr, String signature, HttpServletResponse resp)
+    public void response(HttpServletResponse resp, TokenProvider t, Long timestamp, String nonceStr, String signature)
         throws Exception
     {
         JSONObject json = new JSONObject();
 
-        json.put(APP_ID     , appId     );
-        json.put(TIMESTAMP  , timestamp );
-        json.put(NONCE_STR  , nonceStr  );
-        json.put(SIGNATURE  , signature );
+        json.put(APP_ID     , t.getAppid()  );
+        json.put(TIMESTAMP  , timestamp     );
+        json.put(NONCE_STR  , nonceStr      );
+        json.put(SIGNATURE  , signature     );
 
         resp.setContentType("application/json; charset=utf-8");
         resp.getWriter().write(json.toJSONString());
@@ -131,8 +173,8 @@ public class JSSDKConfig extends HttpServlet
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
     {
-        System.err.println("ERROR: SnsapiBase failed.");
-        ex.printStackTrace();
+        this.getServletContext().log("Wxmp:JSSDKConfig:FAIL:", ex);
+        resp.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
     }
 
     @Override
@@ -143,26 +185,22 @@ public class JSSDKConfig extends HttpServlet
 
         try
         {
-            String  appId       = getString(req, APP_ID);
-                    appId       = appId!=null?appId:this.getAppid(req);
+            String  appId       = this.getAppid(req);
+            String  tm          = req.getParameter(TIMESTAMP);
+            Long    timestamp   = tm!=null ? Long.valueOf(tm) : System.currentTimeMillis();
+            String  nonceStr    = req.getParameter(NONCE_STR);
+                    nonceStr    = nonceStr!=null ? nonceStr : this.crypto.bytesToHex(this.crypto.randomBytes(8));
+            String  url         = needString(req, URL);
 
-            Long    timestamp   = getLong(req, TIMESTAMP);
-                    timestamp   = timestamp!=null?timestamp:System.currentTimeMillis();
-
-            String  nonceStr    = getString(req, NONCE_STR);
-                    nonceStr    = nonceStr!=null?nonceStr:this.crypto.bytesToHex(this.crypto.randomBytes(8));
-
-            String url = needString(req, URL);
-
-            this.ifAcceptURL(url);
-
+            this.checkAccess(url);
+            TokenProvider t = this.getTokenProvider(appid);
             String ticket = this.getTicket(appId);
 
             URLBuilder ub = new URLBuilder()
-                .appendParam("jsapi_ticket", ticket)
-                .appendParam("noncestr", nonceStr)
-                .appendParam("timestamp", timestamp.toString())
-                .appendParam("url", url);
+                .appendParam("jsapi_ticket" , ticket                )
+                .appendParam("noncestr"     , nonceStr              )
+                .appendParam("timestamp"    , timestamp.toString()  )
+                .appendParam("url"          , url                   );
 
             String signature = this.crypto.bytesToHex(
                 this.crypto.SHA1Digest(
@@ -170,7 +208,7 @@ public class JSSDKConfig extends HttpServlet
                 )
             );
 
-            this.response(appId, timestamp, nonceStr, signature, resp);
+            this.response(resp, t, timestamp, nonceStr, signature);
         }
         catch(Exception ex)
         {

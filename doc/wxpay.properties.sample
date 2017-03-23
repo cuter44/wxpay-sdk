@@ -59,6 +59,14 @@ SECRET=9efe892ad890a5aa61e3xxxxxxxxxxxx
 mch_id=10027922
 KEY=gdkxzxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+# Access token provider class
+# 
+# This config enables you to select a way retrieving access_token,
+# direct request to wx server or using built-in distributing mechanism,
+# or even self-implemented.
+# defaults to com.github.cuter44.wxmp.util.ATCore
+#AT_PROVIDER=com.github.cuter44.wxmp.util.ATCore
+
 # MISCELLANEOUS
 
 # Notify SPI callback by wxpay after user pay.
