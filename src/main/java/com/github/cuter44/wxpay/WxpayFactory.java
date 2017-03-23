@@ -11,7 +11,10 @@ import com.github.cuter44.wxmp.util.*;
 /** 微信支付工厂
  * <br />
  * 这个工厂对象维护配置文件并根据配置文件派生几乎所有的请求.
+ * @deprecated 该工厂类已被 WxpayFactorySingl 替代, 单账号实现请使用 WxpayFactorySingl,
+ * 多账号实现请参见 WxpayFactoryBase 自行开发.
  */
+@Deprecated
 public class WxpayFactory
 {
   // CONSTANT
