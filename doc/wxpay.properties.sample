@@ -67,6 +67,11 @@ KEY=gdkxzxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # defaults to com.github.cuter44.wxmp.util.ATCore
 #AT_PROVIDER=com.github.cuter44.wxmp.util.ATCore
 
+# Upstream URL used by such as ATSatellite to know where to retrieve tokens.
+# Needed only if ATSatellite (or alike) is selected as the maintainer.
+# Other implemention may or may not honor this 
+AT_UPSTREAM=http://127.0.0.1:8080/wxpay-sdk/token.api
+
 # MISCELLANEOUS
 
 # Notify SPI callback by wxpay after user pay.

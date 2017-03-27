@@ -26,6 +26,7 @@
     <url-pattern>/notify.api</url-pattern>
   </servlet-mapping>
 
+
   <servlet>
     <servlet-name>JSAPISigner</servlet-name>
     <servlet-class>com.github.cuter44.wxpay.servlet.JSAPISigner</servlet-class>
@@ -36,6 +37,15 @@
   </servlet-mapping>
 
   <!-- wxmp -->
+  <servlet>
+    <servlet-name>ATDistribute</servlet-name>
+    <servlet-class>com.github.cuter44.wxmp.servlet.ATDistribute</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ATDistribute</servlet-name>
+    <url-pattern>/token.api</url-pattern>
+  </servlet-mapping>
+
   <servlet>
     <servlet-name>SnsapiBase</servlet-name>
     <servlet-class>com.github.cuter44.wxmp.servlet.SnsapiBase</servlet-class>
