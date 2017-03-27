@@ -30,6 +30,7 @@ import com.github.cuter44.wxmp.util.JSONMaterializer;
  */
 public abstract class WxmpRequestBase
 {
+    public static final String KEY_SKIP_STATUS_CODE_CHECK = "SKIP_STATUS_CODE_CHECK";
   // SSL
     /** Default http client to use to send request to weixin server.
      * Provide class-scope http client, which is used when <code>httpClient</code> is null, major for single-account use.
@@ -91,8 +92,8 @@ public abstract class WxmpRequestBase
         );
     }
 
-    /**
-     * chain supported
+    /** Set property/parameter to request.
+     * Chaining invoke supported.
      */
     public final WxmpRequestBase setProperty(String key, String value)
     {
@@ -100,13 +101,15 @@ public abstract class WxmpRequestBase
         return(this);
     }
 
-    /**
-     * batch setProperty
+    /** Merge key-value into internal config map.
+     *
      * @param aConf a Map contains key-value pairs, where key must be String, and values must implement toString() at least.
      */
     public final WxmpRequestBase setProperties(Map aConf)
     {
-        this.conf.putAll(aConf);
+        for (Object k:aConf.keySet())
+            this.conf.put(k, aConf.get(k).toString());
+
         return(this);
     }
 
@@ -154,11 +157,16 @@ public abstract class WxmpRequestBase
 
         CloseableHttpResponse resp = this.getHttpClient().execute(req);
 
-        String content = getResponseBody(resp);
-
-        resp.close();
-
-        return(content);
+        try
+        {
+            if (!Boolean.valueOf(this.getProperty(KEY_SKIP_STATUS_CODE_CHECK)))
+                checkStatusCode(resp);
+            return(getResponseBody(resp));
+        }
+        finally
+        {
+            resp.close();
+        }
     }
 
     public String executePostJSON(String fullURL, String bodyJSON)
@@ -184,11 +192,16 @@ public abstract class WxmpRequestBase
 
         CloseableHttpResponse resp = this.getHttpClient().execute(req);
 
-        String content = getResponseBody(resp);
-
-        resp.close();
-
-        return(content);
+        try
+        {
+            if (!Boolean.valueOf(this.getProperty(KEY_SKIP_STATUS_CODE_CHECK)))
+                checkStatusCode(resp);
+            return(getResponseBody(resp));
+        }
+        finally
+        {
+            resp.close();
+        }
     }
 
     public String executePostJSON(String fullURL, JSONObject bodyJSON)
@@ -208,6 +221,7 @@ public abstract class WxmpRequestBase
         );
     }
 
+  // MISC
     protected static String getResponseBody(HttpResponse resp)
         throws IOException
     {
@@ -222,6 +236,24 @@ public abstract class WxmpRequestBase
         return(content);
     }
 
-  // MISC
+    protected static CloseableHttpResponse checkStatusCode(CloseableHttpResponse resp)
+        throws IllegalStateException
+    {
+        StatusLine s = resp.getStatusLine();
+        int sc = s.getStatusCode();
+
+        switch (sc)
+        {
+            case 100:
+            case 200:
+            case 201:
+            case 202:
+            case 204:
+                return(resp);
+            default:
+                throw(new IllegalArgumentException("Wxmp:WxmpRequestBase:Abnormal HTTP response:"+resp.toString()));
+        }
+    }
+
 }
 

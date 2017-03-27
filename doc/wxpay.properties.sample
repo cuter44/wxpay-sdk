@@ -41,6 +41,9 @@ LOAD_IDENTIFICATION=/apiclient_cert.p12
 # `false` by default.
 SKIP_SIGN_VERIFY=false
 
+# Turn on/off response status code check(including notify and SPI invoke)
+SKIP_STATUS_CODE_CHECK=false
+
 # Turn on/off exception while wx server seponse a fail.
 #
 # true - throw corresponding exception on abnormal.
