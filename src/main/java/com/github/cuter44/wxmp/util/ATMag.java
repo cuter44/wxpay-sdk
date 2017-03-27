@@ -98,7 +98,7 @@ public class ATMag
 
         // else
         this.keep(
-            this.instantiate(p)
+            t = this.instantiate(p)
         );
 
         return(t);
