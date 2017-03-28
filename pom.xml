@@ -7,7 +7,7 @@
     <groupId>com.github.cuter44</groupId>
     <artifactId>wxpay-sdk</artifactId>
     <packaging>jar</packaging>
-    <version>0.9.2-s17032301</version>
+    <version>0.10.0-s17032801</version>
     <name>Wxpay SDK</name>
     <description>Server-side SDK of Weixin/WeChat, the Java binding.</description>
     <url>https://github.com/cuter44/wxpay-sdk</url>
