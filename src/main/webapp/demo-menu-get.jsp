@@ -28,7 +28,7 @@
 
       if (action != null)
       {
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         MenuGet wxreq1 = (MenuGet)factory.instantiateWithToken(MenuGet.class);
 

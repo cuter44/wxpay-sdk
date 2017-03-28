@@ -8,7 +8,7 @@ A third-party encapsulation of Weixin(Wechat) Media Publicity / Service / Enterp
 
 Usage is like:
 
-    WxpayFactory factory = WxpayFactory.getDefaultInstance();
+    WxpayFactorySingl factory = WxpayFactorySingl.getInstance();
 
     UnifiedOrder order = ((UnifiedOrder)factory.instantiate(UnifiedOrder.class))
       .setBody          ("买买买!"                                            )

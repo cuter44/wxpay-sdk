@@ -36,7 +36,7 @@
       {
         List<String> openidList = Arrays.asList(openids.split(","));
 
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         UserInfoBatchget wxreq1 = (UserInfoBatchget)factory.instantiateWithToken(UserInfoBatchget.class);
 

@@ -38,7 +38,7 @@
       String outTradeNo = request.getParameter("outTradeNo");
       if (outTradeNo != null)
       {
-        WxpayFactory factory = WxpayFactory.getDefaultInstance();
+        WxpayFactorySingl factory = WxpayFactorySingl.getInstance();
 
 
         OrderQuery wxreq1 = new OrderQuery(factory.getConf());

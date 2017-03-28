@@ -32,7 +32,7 @@
       if ("sign".equals(action))
       {
         request.setCharacterEncoding("utf-8");
-        WxpayFactory factory = WxpayFactory.getDefaultInstance();
+        WxpayFactorySingl factory = WxpayFactorySingl.getInstance();
 
         UnifiedOrder order = ((UnifiedOrder)factory.instantiate(UnifiedOrder.class))
           .setBody          (request.getParameter("body")                         )

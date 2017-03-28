@@ -44,7 +44,7 @@
 
             if ("query".equals(action))
             {
-              WxmpFactory factory = WxmpFactory.getDefaultInstance();
+              WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
               MenuGet wxreq1 = (MenuGet)factory.instantiateWithToken(MenuGet.class);
 
@@ -70,7 +70,7 @@
 
             if ("set".equals(action))
             {
-              WxmpFactory factory = WxmpFactory.getDefaultInstance();
+              WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
               MenuCreate wxreq1 = (MenuCreate)factory.instantiateWithToken(MenuCreate.class);
 

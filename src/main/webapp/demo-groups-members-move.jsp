@@ -36,7 +36,7 @@
       {
         int id = Integer.valueOf(request.getParameter("groupid"));
 
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         GroupsMembersBatchupdate wxreq1 = (GroupsMembersBatchupdate)factory.instantiateWithToken(GroupsMembersBatchupdate.class);
 

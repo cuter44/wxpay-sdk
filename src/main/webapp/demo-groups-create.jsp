@@ -34,7 +34,7 @@
       String name = request.getParameter("name");
       if (name != null)
       {
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         GroupsCreate wxreq1 = (GroupsCreate)factory.instantiate(GroupsCreate.class);
 

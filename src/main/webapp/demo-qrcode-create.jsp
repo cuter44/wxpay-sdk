@@ -95,7 +95,7 @@
         String  sceneStr = request.getParameter("sceneStr");
                 sceneStr = (sceneStr!=null) ? sceneStr : "";
 
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         QrcodeCreate wxreq1 = (QrcodeCreate)factory.instantiate(QrcodeCreate.class);
 

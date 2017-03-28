@@ -40,7 +40,7 @@
       String content = request.getParameter("content");
       if ((touser != null) && (content != null))
       {
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         MessageCustomSendText wxreq1 = new MessageCustomSendText(factory.getConf());
         wxreq1.setAccessToken(factory.getTokenKeeper().getAccessToken());

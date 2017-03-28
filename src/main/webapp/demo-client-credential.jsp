@@ -45,7 +45,7 @@
     <% 
       if (Boolean.TRUE.equals(Boolean.valueOf(request.getParameter("confirm"))))
       {
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         TokenClientCredential req = (TokenClientCredential)factory.instantiate(TokenClientCredential.class);
 

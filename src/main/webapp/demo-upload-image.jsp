@@ -146,7 +146,7 @@ hSTfG6gjrkk1VltJXfO1ufY0kenyA5ZGI68g0Af/2Q==</textarea>
         byte[] binContent = Base64.decode(strContent);
         ByteArrayInputStream streamContent = new ByteArrayInputStream(binContent);
 
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         MediaUploadImage wxreq1 = (MediaUploadImage)factory.instantiate(MediaUploadImage.class);
         wxreq1.setAccessToken(factory.getTokenKeeper().getAccessToken());

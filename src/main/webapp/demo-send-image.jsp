@@ -38,7 +38,7 @@
       String mediaId = request.getParameter("media_id");
       if ((touser != null) && (mediaId != null))
       {
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         MessageCustomSendImage wxreq1 = (MessageCustomSendImage)factory.instantiate(MessageCustomSendImage.class);
         wxreq1.setAccessToken(factory.getTokenKeeper().getAccessToken());

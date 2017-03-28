@@ -28,7 +28,7 @@
       {
         int id = Integer.valueOf(request.getParameter("id"));
 
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         GroupsDelete wxreq1 = (GroupsDelete)factory.instantiateWithToken(GroupsDelete.class);
 
@@ -42,7 +42,7 @@
 
       if (action != null)
       {
-        WxmpFactory factory = WxmpFactory.getDefaultInstance();
+        WxmpFactorySingl factory = WxmpFactorySingl.getInstance();
 
         GroupsGet wxreq1 = (GroupsGet)factory.instantiateWithToken(GroupsGet.class);
 

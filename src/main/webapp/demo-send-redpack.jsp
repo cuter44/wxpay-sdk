@@ -40,7 +40,7 @@
       if ("submit".equals(action))
       {
         request.setCharacterEncoding("utf-8");
-        WxpayFactory factory = WxpayFactory.getDefaultInstance();
+        WxpayFactorySingl factory = WxpayFactorySingl.getInstance();
 
         SendRedpack wxreq = ((SendRedpack)factory.instantiate(SendRedpack.class))
           .setSendName      (request.getParameter("send_name")                    )
