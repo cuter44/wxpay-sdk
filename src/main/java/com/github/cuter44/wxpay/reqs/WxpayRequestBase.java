@@ -29,6 +29,7 @@ import com.github.cuter44.wxpay.resps.WxpayResponseBase;
  */
 public abstract class WxpayRequestBase
 {
+    public static final String KEY_SKIP_STATUS_CODE_CHECK = "SKIP_STATUS_CODE_CHECK";
     public static final String KEY_APPID        = "appid";
     public static final String KEY_SIGN         = "sign";
     public static final String KEY_KEY          = "KEY";
@@ -105,9 +106,9 @@ public abstract class WxpayRequestBase
         );
     }
 
-    /**
-     * chain supported
-     */
+     /** Set property/parameter to request.
+      * Chaining invoke supported.
+      */
     public final WxpayRequestBase setProperty(String key, String value)
     {
         this.conf.setProperty(key, value);
@@ -120,13 +121,16 @@ public abstract class WxpayRequestBase
         //return(this);
     //}
 
-    /**
-     * batch setProperty
+    /** Merge key-value into internal config map.
+     *
      * @param aConf a Map contains key-value pairs, where key must be String, and values must implement toString() at least.
      */
     public final WxpayRequestBase setProperties(Map aConf)
     {
         this.conf.putAll(aConf);
+        for (Object k:aConf.keySet())
+            this.conf.put(k, aConf.get(k).toString());
+
         return(this);
     }
 
@@ -285,9 +289,38 @@ public abstract class WxpayRequestBase
 
         CloseableHttpResponse resp = hc.execute(req);
 
-        return(
-            resp.getEntity().getContent()
-        );
+        try
+        {
+            if (!Boolean.valueOf(this.getProperty(KEY_SKIP_STATUS_CODE_CHECK)))
+                checkStatusCode(resp);
+
+            return(
+                resp.getEntity().getContent()
+            );
+        }
+        finally
+        {
+            resp.close();
+        }
+    }
+
+    protected static CloseableHttpResponse checkStatusCode(CloseableHttpResponse resp)
+        throws IllegalStateException
+    {
+        StatusLine s = resp.getStatusLine();
+        int sc = s.getStatusCode();
+
+        switch (sc)
+        {
+            case 100:
+            case 200:
+            case 201:
+            case 202:
+            case 204:
+                return(resp);
+            default:
+                throw(new IllegalArgumentException("Wxmp:WxmpRequestBase:Abnormal HTTP response:"+resp.toString()));
+        }
     }
 
   // MISC

@@ -73,6 +73,12 @@
     <dt>access_token expire
     <dd><%=new Date(tp.getATExpire())%>
 
+    <dt>JSSDK ticket
+    <dd><%=tp.getJSSDKTicket()%>
+
+    <dt>JSSDK ticket expire
+    <dd><%=new Date(tp.getJTExpire())%>
+
   </dl>
 
  </body>
