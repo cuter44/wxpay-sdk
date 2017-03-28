@@ -26,8 +26,10 @@ public class ATSatellite
     public static final String KEY_APPID        = "appid";
     public static final String KEY_SECRET       = "SECRET";
     public static final String KEY_AT_UPSTREAM  = "AT_UPSTREAM";
+    public static final String KEY_JT_UPSTREAM  = "JT_UPSTREAM";
   // CONSTRUCT
-    protected String upstreamURL;
+    protected String atUpstreamURL;
+    protected String jtUpstreamURL;
     protected String appid;
     protected String secret;
 
@@ -42,9 +44,9 @@ public class ATSatellite
         return;
     }
 
-    protected ATSatellite(String appid, String secret, String upstreamURL)
+    protected ATSatellite(String appid, String secret, String atUpstreamURL, String jtUpstreamURL)
     {
-        this.config(appid, secret, upstreamURL);
+        this.config(appid, secret, atUpstreamURL, jtUpstreamURL);
 
         return;
     }
@@ -55,18 +57,20 @@ public class ATSatellite
         this.config(
             p.getProperty(KEY_APPID),
             p.getProperty(KEY_SECRET),
-            p.getProperty(KEY_AT_UPSTREAM)
+            p.getProperty(KEY_AT_UPSTREAM),
+            p.getProperty(KEY_JT_UPSTREAM)
         );
 
         return(this);
     }
 
-    public ATSatellite config(String appid, String secret, String upstreamURL)
+    public ATSatellite config(String appid, String secret, String atUpstreamURL, String jtUpstreamURL)
     {
 
         this.appid          = appid;
         this.secret         = secret;
-        this.upstreamURL    = upstreamURL;
+        this.atUpstreamURL  = atUpstreamURL;
+        this.jtUpstreamURL  = jtUpstreamURL;
         this.atExpiration   = 0L;
         this.jtExpiration   = 0L;
 
@@ -91,7 +95,7 @@ public class ATSatellite
     {
         try
         {
-            TokenClientRelayResponse resp = new TokenClientRelay(this.appid, this.upstreamURL)
+            TokenClientRelayResponse resp = new TokenClientRelay(this.appid, this.atUpstreamURL)
                 .execute();
 
             this.accessToken = resp.getAccessToken();
@@ -144,11 +148,11 @@ public class ATSatellite
     {
         try
         {
-            JSSDKGetticketResponse resp = new JSSDKGetticket(this.getAccessToken())
+            JSSDKTicketRelayResponse resp = new JSSDKTicketRelay(this.appid, this.jtUpstreamURL)
                 .execute();
 
             this.jssdkTicket = resp.getTicket();
-            this.jtExpiration = resp.getTmCreate() + (resp.getExpiresIn()*1000L);
+            this.jtExpiration = resp.getExpires();
 
             return;
         }

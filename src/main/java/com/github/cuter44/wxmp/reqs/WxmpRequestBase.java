@@ -237,7 +237,7 @@ public abstract class WxmpRequestBase
     }
 
     protected static CloseableHttpResponse checkStatusCode(CloseableHttpResponse resp)
-        throws IllegalStateException
+        throws IOException
     {
         StatusLine s = resp.getStatusLine();
         int sc = s.getStatusCode();
@@ -251,7 +251,12 @@ public abstract class WxmpRequestBase
             case 204:
                 return(resp);
             default:
-                throw(new IllegalArgumentException("Wxmp:WxmpRequestBase:Abnormal HTTP response:"+resp.toString()));
+                throw(new IOException(
+                    "Wxmp:WxmpRequestBase:Abnormal HTTP response:\n"
+                    +resp.toString()
+                    +"\n"
+                    +getResponseBody(resp)
+                ));
         }
     }
 

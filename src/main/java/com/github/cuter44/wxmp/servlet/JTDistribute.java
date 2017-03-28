@@ -21,7 +21,7 @@ import com.github.cuter44.wxmp.util.*;
  *
  * <pre style="font-size:12px">
 
-    GET /token.api
+    GET /ticket.api
 
     <strong>参数</strong>
     appid           :string             , 可选, 取得指定的 appid 对应的 access_token
@@ -29,16 +29,18 @@ import com.github.cuter44.wxmp.util.*;
 
     <strong>响应</strong>
     application/json; charset=utf-8
-    access_token    :string             , 获取到的凭证
+    errcode         :int                , always 0
+    errmsg          :string             , always "ok"
+    ticket          :string             , 获取到的凭证
     expires_in      :int/period-sec     , 凭证有效时间，单位：秒
     expires         :long/timestamp-ms  , 凭证终止时间
 
  * </pre>
  */
-public class ATDistribute extends HttpServlet
+public class JTDistribute extends HttpServlet
 {
     public static final String KEY_APPID        = "appid";
-    public static final String ACCESS_TOKEN     = "access_token";
+    public static final String TICKET           = "ticket";
     public static final String EXPIRES_IN       = "expires_in";
     public static final String EXPIRES          = "expires";
 
@@ -92,8 +94,9 @@ public class ATDistribute extends HttpServlet
     }
 
     /** 校验请求
-     * Servlet 调用此方法以检定是否为允许该请求, 覆盖此方法可以自行配置策略.
-     * 默认实现仅允许 127.0.0.0/8(IPv4 only) 或 远端地址等于本地地址.
+     * Servlet 调用此方法以检定是否允许该请求, 覆盖此方法可以自行配置策略.
+     * 默认实现仅允许 127.0.0.0/8(IPv4 only) 或 远端地址等于本地地址. 该实现在
+     * 使用反向代理的场合相当于 ACCEPT ALL.
      * 如果要阻止操作, 抛出任意异常.
      * @see com.github.cuter44.wxpay.TokenKeeper
      */
@@ -110,7 +113,7 @@ public class ATDistribute extends HttpServlet
             return;
 
         // else
-        throw(new SecurityException("Wxmp:ATDistribute:Request rejected:"+c));
+        throw(new SecurityException("Wxmp:JTDistribute:Request rejected:"+c));
     }
 
     /** 构造响应
@@ -122,10 +125,12 @@ public class ATDistribute extends HttpServlet
     {
         JSONObject json = new JSONObject();
 
-        String a = t.getAccessToken();
-        long x = t.getATExpire();
+        String a = t.getJSSDKTicket();
+        long x = t.getJTExpire();
 
-        json.put(ACCESS_TOKEN   , a                                     );
+        json.put("errcode"      , 0                                     );
+        json.put("errmsg"       , "ok"                                  );
+        json.put(TICKET         , a                                     );
         json.put(EXPIRES        , x                                     );
         json.put(EXPIRES_IN     , (x - System.currentTimeMillis())/1000L);
 
@@ -138,7 +143,7 @@ public class ATDistribute extends HttpServlet
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException
     {
-        this.getServletContext().log("Wxmp:ATDistribute:FAIL:", ex);
+        this.getServletContext().log("Wxmp:JTDistribute:FAIL:", ex);
         resp.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
     }
 

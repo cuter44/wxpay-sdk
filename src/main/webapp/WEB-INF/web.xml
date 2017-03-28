@@ -47,6 +47,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>JTDistribute</servlet-name>
+    <servlet-class>com.github.cuter44.wxmp.servlet.JTDistribute</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JTDistribute</servlet-name>
+    <url-pattern>/ticket.api</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>SnsapiBase</servlet-name>
     <servlet-class>com.github.cuter44.wxmp.servlet.SnsapiBase</servlet-class>
   </servlet>
