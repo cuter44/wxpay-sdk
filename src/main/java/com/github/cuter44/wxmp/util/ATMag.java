@@ -36,6 +36,7 @@ public class ATMag
   // CREATE
     /** Instantiate a TokenProvider, w/o register to or recall from keep.
      */
+    @SuppressWarnings("unchecked")
     public TokenProvider instantiate(Properties p)
         throws InstantiationException, IllegalAccessException
     {

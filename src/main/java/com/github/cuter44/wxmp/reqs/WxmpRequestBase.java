@@ -105,6 +105,7 @@ public abstract class WxmpRequestBase
      *
      * @param aConf a Map contains key-value pairs, where key must be String, and values must implement toString() at least.
      */
+    @SuppressWarnings("unchecked")
     public final WxmpRequestBase setProperties(Map aConf)
     {
         for (Object k:aConf.keySet())

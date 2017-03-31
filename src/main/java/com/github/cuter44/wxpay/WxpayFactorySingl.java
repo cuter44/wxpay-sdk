@@ -6,7 +6,7 @@ import java.io.IOException;
 import com.github.cuter44.wxpay.reqs.WxpayRequestBase;
 
 
-/** Auto configurated, singleton WxmpFactory.
+/** Auto configurated, singleton WxpayFactory.
  * Read <code>/wxpay.properties</code> from runtime. Suitiable for single
  * wx-account used.
  */

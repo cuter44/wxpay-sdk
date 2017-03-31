@@ -386,7 +386,7 @@ public class WxpayResponseBase
         );
     }
 
-
+    @SuppressWarnings("unchecked")
     protected static List<String> materializeParamNames(String template, int level, Integer count0, List ... counts)
     {
         if (count0 == null || count0 == 0)

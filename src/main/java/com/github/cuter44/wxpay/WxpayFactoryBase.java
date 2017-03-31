@@ -27,7 +27,10 @@ import com.github.cuter44.wxmp.util.*;
 public class WxpayFactoryBase
 {
   // CONSTANT
+    @Deprecated
     protected static final String KEY_ACCESS_TOKEN = "access_token";
+    protected static final String KEY_APPID = "appid";
+    protected static final String KEY_SECRET = "SECRET";
 
   // CONTRUCT
     /** Noop constructor for next hierarchy
@@ -79,6 +82,33 @@ public class WxpayFactoryBase
 
             throw(mrex);
         }
+    }
+
+    /** Short circuit of <code>this.getConf().getProperty()</code>.
+     */
+    public String getProperty(String key)
+    {
+        return(
+            this.conf.getProperty(key)
+        );
+    }
+
+    /** Short circuit of <code>this.getConf().getProperty("appid")</code>.
+     */
+    public String getAppid()
+    {
+        return(
+            this.conf.getProperty(KEY_APPID)
+        );
+    }
+
+    /** Short circuit of <code>this.getConf().getProperty("SECRET")</code>.
+     */
+    public String getSecret()
+    {
+        return(
+            this.conf.getProperty(KEY_SECRET)
+        );
     }
 
   // HTTP CLIENT

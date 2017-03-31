@@ -75,9 +75,12 @@ public abstract class WxmsgReplyBase
      * batch setProperty
      * @param aConf a Map contains key-value pairs, where key must be String, and values must implement toString() at least.
      */
+    @SuppressWarnings("unchecked")
     public WxmsgReplyBase setProperties(Map aConf)
     {
-        this.prop.putAll(aConf);
+        for (Object k:aConf.keySet())
+            this.prop.put(k, aConf.get(k).toString());
+
         return(this);
     }
 

@@ -127,7 +127,6 @@ public abstract class WxpayRequestBase
      */
     public final WxpayRequestBase setProperties(Map aConf)
     {
-        this.conf.putAll(aConf);
         for (Object k:aConf.keySet())
             this.conf.put(k, aConf.get(k).toString());
 
