@@ -120,7 +120,22 @@ public class Refund extends WxpayRequestBase {
   // PROPERTY
     /** Setting all necessary info from a OrderQueryResponse.
      * This method takes in needed info from the response,
-     * ONLY IN CASE the synonym properety is null in <code>this.conf</code>, respectively.
+     * ONLY IN CASE the synonym properety is unset in <code>this.conf</code>, respectively.
+     * Invloved values are listed below.
+     * <br />
+     * <code>out_trade_no</code> is read from <code>${order.out_trade_no}</code> if not provided.
+     * <br />
+     * <code>out_refund_no</code> is set to <code>${order.out_trade_no}-refund</code> if not provided.
+     * Be cautious not to violate unique/length restrictions.
+     * <br />
+     * <code>transaction_id</code> is read from <code>${order.transaction_id}</code> if not provided.
+     * <br />
+     * <code>total_fee</code> is read from <code>${order.total_fee}</code> if not provided.
+     * <br />
+     * <code>refund_fee</code> is read from <code>${order.total_fee}</code> if not provided.
+     * <br />
+     * Besides those, all other params provided by <code>order</code> are ignored.
+     * <br />
      */
     public Refund setOrder(OrderQueryResponse order)
     {

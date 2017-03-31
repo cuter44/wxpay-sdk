@@ -26,6 +26,9 @@
       <tr><td></td><td><button type="submit" name="action" value="sign">创建订单</button><button id="do-pay-button" type="button" onclick="javascript:buybuybuy(event);" disabled>支付</button></td></tr>
     </table>
     </form>
+    <p />
+    <textarea id="gbwcpr-cont" readonly style="width:640px; height:360px"></textarea>
+    <p />
 
     <%
       String action = request.getParameter("action");
@@ -46,21 +49,27 @@
 
         UnifiedOrderResponse orderResp = order.execute();
 
-        GetBrandWCPayRequest gbwxpr = ((GetBrandWCPayRequest)factory.instantiate(
-            GetBrandWCPayRequest.class,
-            orderResp.getProperties()
-          ))
+        out.println(orderResp.getProperties());
+        System.out.println(orderResp.getProperties());
+
+        // This method is no longer used.
+        //GetBrandWCPayRequest gbwcpr = ((GetBrandWCPayRequest)factory.instantiate(
+            //GetBrandWCPayRequest.class,
+            //orderResp.getProperties()
+          //))
+        GetBrandWCPayRequest gbwcpr = factory.instantiate(GetBrandWCPayRequest.class)
+          .setOrder(orderResp)
           .build()
           .sign();
 
-        String jsonGbwxpr = gbwxpr.toJSON();
+        String jsonGbwxpr = gbwcpr.toJSON();
 
         response.sendRedirect(
           "demo-pay.jsp"
           +"?"+
           "openid="+request.getParameter("openid")
           +"&"+
-          "gbwxpr="+URLEncoder.encode(jsonGbwxpr, "utf-8")
+          "gbwcpr="+URLEncoder.encode(jsonGbwxpr, "utf-8")
         );
 
         return;
@@ -88,17 +97,18 @@
       }
 
       document.getElementById("openid").value = getParamValue("openid") || "";  
-      document.getElementById("do-pay-button").disabled = (getParamValue("gbwxpr")==null);
+      document.getElementById("gbwcpr-cont").value = getParamValue("gbwcpr") ? decodeURIComponent(getParamValue("gbwcpr")) : "";
+      document.getElementById("do-pay-button").disabled = (getParamValue("gbwcpr")==null);
 
       function buybuybuy(ev)
       {
-        if (!getParamValue("gbwxpr"))
+        if (!getParamValue("gbwcpr"))
         {
           return;
           // to submit form
         }
 
-        var gbwcpr = JSON.parse(decodeURIComponent(getParamValue("gbwxpr")));
+        var gbwcpr = JSON.parse(decodeURIComponent(getParamValue("gbwcpr")));
         WeixinJSBridge.invoke(
           'getBrandWCPayRequest',
           gbwcpr,

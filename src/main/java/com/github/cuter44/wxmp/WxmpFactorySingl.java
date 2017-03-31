@@ -28,6 +28,8 @@ public class WxmpFactorySingl extends WxmpFactoryBase
         //     init-on-demand.
         //   , but it is not a standard, better stick to this to be compatiable
         //     with other implemention.
+
+        return;
     }
 
   // SINGLETON

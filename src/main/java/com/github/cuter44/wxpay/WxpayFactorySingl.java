@@ -20,6 +20,8 @@ public class WxpayFactorySingl extends WxpayFactoryBase
     {
         this.configFromFile(RESOURCE_WXPAY_PROPERTIES);
         this.setupHttpClientGlobal();
+
+        return;
     }
 
   // SINGLETON

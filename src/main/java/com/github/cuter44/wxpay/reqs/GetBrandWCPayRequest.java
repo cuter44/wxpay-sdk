@@ -11,7 +11,6 @@ import com.alibaba.fastjson.*;
 import com.github.cuter44.wxpay.*;
 import com.github.cuter44.wxpay.constants.*;
 import com.github.cuter44.wxpay.resps.*;
-//import com.github.cuter44.wxpay.helper.*;
 
 public class GetBrandWCPayRequest extends WxpayRequestBase
 {
@@ -37,20 +36,7 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
     {
         super(prop);
 
-        if (super.getProperty(KEY_GBWCPR_APP_ID) == null && super.getProperty(KEY_APPID) != null)
-            this.setAppId(
-                super.getProperty(KEY_APPID)
-            );
-
-        if (super.getProperty(KEY_GBWCPR_NONCE_STR) == null && super.getProperty(KEY_NONCE_STR) != null)
-            this.setNonceStr(
-                super.getProperty(KEY_NONCE_STR)
-            );
-
-        if (super.getProperty(KEY_PACKAGE) == null && super.getProperty(KEY_PREPAY_ID) != null)
-            this.setPackage(
-                super.getProperty(KEY_PREPAY_ID)
-            );
+        this.setOrder(prop);
 
         this.setTimeStamp(new Date());
         this.setSignType("MD5");
@@ -81,9 +67,11 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
     }
 
   // TO_URL
-    /** NOTE This method return javascript source, NOT URL
+    /** NOTE This method return javascript source, NOT URL.
+     * @deprecated better use <code>toJSON()</code> instead.
      */
     @Override
+    @Deprecated
     public String toURL()
         throws UnsupportedOperationException
     {
@@ -115,6 +103,27 @@ public class GetBrandWCPayRequest extends WxpayRequestBase
     }
 
   // PROPERTY
+    public GetBrandWCPayRequest setOrder(UnifiedOrderResponse resp)
+    {
+        this.setOrder(resp.getProperties());
+
+        return(this);
+    }
+
+    public GetBrandWCPayRequest setOrder(Properties prop)
+    {
+        if (super.getProperty(KEY_GBWCPR_APP_ID) == null && prop.getProperty(KEY_APPID) != null)
+            this.setAppId(prop.getProperty(KEY_APPID));
+
+        if (super.getProperty(KEY_GBWCPR_NONCE_STR) == null && prop.getProperty(KEY_NONCE_STR) != null)
+            this.setNonceStr(prop.getProperty(KEY_NONCE_STR));
+
+        if (super.getProperty(KEY_PACKAGE) == null && prop.getProperty(KEY_PREPAY_ID) != null)
+            this.setPackage(prop.getProperty(KEY_PREPAY_ID));
+
+        return(this);
+    }
+
     /** 商户注册具有支付权限的公众号成功后即可获得
      */
     public GetBrandWCPayRequest setAppId(String appid)
