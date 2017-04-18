@@ -29,9 +29,6 @@ import com.github.cuter44.wxcp.util.*;
     取得 code
 
     <strong>参数</strong>
-    redir   :url    , 可选, 允许带参数, 在 QueryString 中附加 openid=:openid 重定向. <b>请勿用作用户身份验证.</b>
-
-    <strong>响应</strong>
     redir   :url    , 可选, 允许带参数, 在 QueryString 中附加 code=:code 重定向. <b>请勿用作用户身份验证.</b>
 
     <strong>响应</strong>
@@ -54,17 +51,63 @@ public class SemiCorpSnsapiBase extends HttpServlet
     protected static final String CODE  = "code";
     protected static final String REDIR = "redir";
 
+    /** @deprecated CorpSemiSnsapiBase no longer use this field.
+     */
+    @Deprecated
     protected String appid;
+    /** @deprecated CorpSemiSnsapiBase no longer use this field.
+     */
+    @Deprecated
     protected String secret;
 
-    /** 提供 appid 参数
-     * servlet 从此方法取得必需参数 appid, 覆盖此方法可以自定义 appid 的来源.
-     * 默认实现从配置文件 <code>/wxcp.properties</code> 取得
+    /** Servlet.init();
+     * Default implement to initialize WxmpFactorySingl to ensure upstream
+     * TokenProvider standby.
+     * If you are building a multi-account env, you SHOULD override it.
+     * If you are not preparing a wxpay.properties, you MUST override it.
      */
-    public String getAppid(HttpServletRequest req)
+    @Override
+    public void init()
+    {
+        this.initSingl();
+
+        return;
+    }
+
+    public void initSingl()
+    {
+        WxcpFactorySingl.getInstance();
+
+        return;
+    }
+
+    /** 提供 appid 参数.
+     * Servlet 从此方法取得必需参数 appid, 覆盖此方法可以自定义 appid 的来源.
+     * 默认实现从配置文件 <code>/wxcp.properties</code> 取得
+     * @deprecated obsoleted, use getCorpid() instead.
+     */
+    @Deprecated
+    public final String getAppid(HttpServletRequest req)
         throws Exception
     {
-        return(this.appid);
+        throw(new UnsupportedOperationException("getAppid() is obsoleted, migrated into getCorpid()."));
+    }
+
+    /** 提供 corpid 参数.
+     * Servlet 从此方法取得必需参数 appid, 或在缺省时从 WxmpFactorySingl 取得,
+     * 覆盖此方法可以自定义 appid 的来源.
+     */
+    public String getCorpid(HttpServletRequest req)
+        throws Exception
+    {
+        String corpid = req.getParameter(KEY_CORPID);
+        if (corpid != null)
+            return(corpid);
+
+        // else
+        return(
+            WxcpFactorySingl.getInstance().getCorpid()
+        );
     }
 
     /** 处理 code.
@@ -92,30 +135,11 @@ public class SemiCorpSnsapiBase extends HttpServlet
         return;
     }
 
-
-    /** Trigger on error encountered.
-     * <br />
-     * This method can be overrided to plant your own error handling implemention.
-     * <br />
-     * Default behavior is <code>ex.printStackTrace()</code>
-     */
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException, IOException
+        throws IOException, ServletException
     {
-        this.log("ERROR: SemiCorpSnsapiBase failed.", ex);
-    }
-
-    /** 读取配置文件
-     * 覆盖此方法可以删除对配置文件的访问, 此情况下 getAppid(), getAccessToken() 均需要自行实现.
-     */
-    @Override
-    public void init()
-    {
-        Properties conf = WxcpFactory.getDefaultInstance().getConf();
-        this.appid = conf.getProperty(KEY_CORPID);
-        this.secret = conf.getProperty(KEY_CORPSECRET);
-
-        return;
+        this.getServletContext().log("Wxcp:SemiSnsapiBase:FAIL:", ex);
+        resp.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
     }
 
     @Override

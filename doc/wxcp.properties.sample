@@ -25,6 +25,20 @@ EXCEPTION_ON_FAIL=true
 corpid=wx67f201a851066c5c
 corpsecret=9efe892ad890a5aa61e3xxxxxxxxxxxx
 
+# Access token provider class
+# 
+# This config enables you to select a way retrieving access_token,
+# direct request to wx server or using built-in distributing mechanism,
+# or even self-implemented.
+# defaults to com.github.cuter44.wxcp.util.ATCoreCp
+#AT_PROVIDER_CP=com.github.cuter44.wxcp.util.ATCoreCp
+
+# Upstream URL used by such as ATSatellite to know where to retrieve tokens.
+# Needed only if ATSatellite (or alike) is selected as the maintainer.
+# Other implemention may or may not honor this 
+AT_UPSTREAM_CP=http://127.0.0.1:8080/wxpay-sdk/corp-token.api
+JT_UPSTREAM_CP=http://127.0.0.1:8080/wxpay-sdk/corp-ticket.api
+
 # Besides, any other property synonym with any request parameter that
 # being passed to wx server, can be set here.
 # Preset value here can all be overrided programtically, using

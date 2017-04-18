@@ -2,7 +2,7 @@ package com.github.cuter44.wxcp.resps;
 
 import com.alibaba.fastjson.*;
 
-/** 获取access token
+/** 获取 access token
  * <br />
  * <pre style="font-size:12px">
     返回说明

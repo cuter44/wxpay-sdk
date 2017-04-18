@@ -1,20 +1,20 @@
-package com.github.cuter44.wxmp.resps;
+package com.github.cuter44.wxcp.resps;
 
 import com.alibaba.fastjson.*;
 
-/** 获取 access token
+/** 获取 jssdk ticket
  * <br />
  * <pre style="font-size:12px">
     返回说明
-    access_token    获取到的凭证
+    ticket          upstream ticket
     expires_in      凭证有效时间，单位：秒
     expires         凭证失效时间，long/timestamp-ms
  * </pre>
  */
-public class TokenClientRelayResponse extends WxmpResponseBase
+public class GetJsapiTicketRelayResponse extends WxcpResponseBase
 {
   // CONSTANTS
-    public static final String KEY_ACCESS_TOKEN = "access_token";
+    public static final String KEY_TICKET       = "ticket";
     public static final String KEY_EXPIRES_IN   = "expires_in";
     public static final String KEY_EXPIRES      = "expires";
 
@@ -23,7 +23,7 @@ public class TokenClientRelayResponse extends WxmpResponseBase
      */
     public final long tmCreate;
 
-    public TokenClientRelayResponse(String jsonString)
+    public GetJsapiTicketRelayResponse(String jsonString)
     {
         super(jsonString);
 
@@ -33,10 +33,10 @@ public class TokenClientRelayResponse extends WxmpResponseBase
     }
 
   // ACCESSOR
-    public String getAccessToken()
+    public String getTicket()
     {
         return(
-            super.getProperty(KEY_ACCESS_TOKEN)
+            super.getProperty(KEY_TICKET)
         );
     }
 

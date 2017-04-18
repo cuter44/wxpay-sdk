@@ -10,7 +10,7 @@ import com.github.cuter44.wxmsg.constants.EventType;
 public class MsgParser
 {
     public static final String KEY_MSG_TYPE = "MsgType";
-    public static final String KEY_EVENT_TYPE = "EventType";
+    public static final String KEY_EVENT_TYPE = "Event";
 
     protected static Map<MsgType, Class<? extends WxmsgBase>> msgClassMapping;
 
@@ -146,7 +146,7 @@ public class MsgParser
             switch (msgType)
             {
                 case event:
-                    EventType eventType = reflectEventType(prop.getProperty(KEY_MSG_TYPE));
+                    EventType eventType = reflectEventType(prop.getProperty(KEY_EVENT_TYPE));
                     c = getMsgClass(eventType);
                     break;
                 default:

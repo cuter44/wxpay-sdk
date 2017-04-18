@@ -30,8 +30,13 @@ import com.github.cuter44.wxmp.util.JSONMaterializer;
  */
 public abstract class WxcpRequestBase
 {
-    public static final String KEY_APPID         = "appid";
-    public static final String KEY_SECRET        = "SECRET";
+    @Deprecated
+    public static final String KEY_APPID        = "appid";
+    @Deprecated
+    public static final String KEY_SECRET       = "SECRET";
+
+    public static final String KEY_CORPID       = "corpid";
+    public static final String KEY_CORPSECRET   = "corpsecret";
 
   // SSL
     /** Default http client to use to send request to weixin server.
@@ -103,13 +108,16 @@ public abstract class WxcpRequestBase
         return(this);
     }
 
-    /**
-     * batch setProperty
+    /** Merge key-value into internal config map.
+     *
      * @param aConf a Map contains key-value pairs, where key must be String, and values must implement toString() at least.
      */
+    @SuppressWarnings("unchecked")
     public final WxcpRequestBase setProperties(Map aConf)
     {
-        this.conf.putAll(aConf);
+        for (Object k:aConf.keySet())
+            this.conf.put(k, aConf.get(k).toString());
+
         return(this);
     }
 

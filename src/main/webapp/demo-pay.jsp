@@ -102,12 +102,6 @@
 
       function buybuybuy(ev)
       {
-        if (!getParamValue("gbwcpr"))
-        {
-          return;
-          // to submit form
-        }
-
         var gbwcpr = JSON.parse(decodeURIComponent(getParamValue("gbwcpr")));
         WeixinJSBridge.invoke(
           'getBrandWCPayRequest',

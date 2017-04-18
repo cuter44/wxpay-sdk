@@ -63,7 +63,7 @@
         </div>
         <div id="sect-right" style="float:left; min-width:3%; width:32%; height:100%; margin-left:4px;">
           <input type="submit" name="action" value="set" />
-          <button onclick="fillDefault(event)">Fill Demo ↓</button>
+          <button onclick="fillDemo(event)">Fill Demo ↓</button>
           <code>
           <%
             String menuSet = request.getParameter("menuSet");
@@ -126,67 +126,7 @@
 
       function fillDemo(ev)
       {
-        document.getElementById("menu-set").textContent = "{\n\
-    \"button\": [\n\
-        {\n\
-            \"name\":\"default\",\n\
-            \"sub_button\": [\n\
-                {\n\
-                    \"type\":\"click\",\n\
-                    \"name\":\"click\",\n\
-                    \"key\":\"demo_click\"\n\
-                },\n\
-                {\n\
-                    \"type\":\"view\",\n\
-                    \"name\":\"view\",\n\
-                    \"url\":\"https://github.com/cuter44/wxpay-sdk\"\n\
-                },\n\
-                {\n\
-                    \"name\": \"location_select\", \n\
-                    \"type\": \"location_select\", \n\
-                    \"key\": \"demo_location_select\"\n\
-                }\n\
-            ]\n\
-        },\n\
-        {\n\
-            \"name\": \"scancode\", \n\
-            \"sub_button\": [\n\
-                {\n\
-                    \"type\": \"scancode_waitmsg\", \n\
-                    \"name\": \"scancode_waitmsg\", \n\
-                    \"key\": \"demo_scancode_waitmsg\", \n\
-                }, \n\
-                {\n\
-                    \"type\": \"scancode_push\", \n\
-                    \"name\": \"scancode_push\", \n\
-                    \"key\": \"demo_scancode_push\", \n\
-                }\n\
-            ]\n\
-        }, \n\
-        {\n\
-            \"name\": \"image\", \n\
-            \"sub_button\": [\n\
-                {\n\
-                    \"type\": \"pic_sysphoto\", \n\
-                    \"name\": \"pic_sysphoto\", \n\
-                    \"key\": \"demo_pic_sysphoto\", \n\
-                }, \n\
-                {\n\
-                    \"type\": \"pic_photo_or_album\", \n\
-                    \"name\": \"pic_photo_or_album\", \n\
-                    \"key\": \"demo_pic_photo_or_album\", \n\
-                },\n\
-                    \n\
-                {\n\
-                    \"type\": \"pic_weixin\", \n\
-                    \"name\": \"pic_weixin\", \n\
-                    \"key\": \"key_pic_weixin\", \n\
-                }\n\
-            ]\n\
-        }\n\
-    ]\n\
-}";
-
+        document.getElementById("menu-set").textContent = "{\n    \"button\": [\n        {\n            \"name\":\"default\",\n            \"sub_button\": [\n                {\n                    \"type\":\"click\",\n                    \"name\":\"click\",\n                    \"key\":\"demo_click\"\n                },\n                {\n                    \"type\":\"view\",\n                    \"name\":\"view\",\n                    \"url\":\"https://github.com/cuter44/wxpay-sdk\"\n                },\n                {\n                    \"name\": \"location_select\", \n                    \"type\": \"location_select\", \n                    \"key\": \"demo_location_select\"\n                }\n            ]\n        },\n        {\n            \"name\": \"scancode\", \n            \"sub_button\": [\n                {\n                    \"type\": \"scancode_waitmsg\", \n                    \"name\": \"scancode_waitmsg\", \n                    \"key\": \"demo_scancode_waitmsg\", \n                }, \n                {\n                    \"type\": \"scancode_push\", \n                    \"name\": \"scancode_push\", \n                    \"key\": \"demo_scancode_push\", \n                }\n            ]\n        }, \n        {\n            \"name\": \"image\", \n            \"sub_button\": [\n                {\n                    \"type\": \"pic_sysphoto\", \n                    \"name\": \"pic_sysphoto\", \n                    \"key\": \"demo_pic_sysphoto\", \n                }, \n                {\n                    \"type\": \"pic_photo_or_album\", \n                    \"name\": \"pic_photo_or_album\", \n                    \"key\": \"demo_pic_photo_or_album\", \n                },\n                    \n                {\n                    \"type\": \"pic_weixin\", \n                    \"name\": \"pic_weixin\", \n                    \"key\": \"key_pic_weixin\", \n                }\n            ]\n        }\n    ]\n}";
         (!modeWidth) && toggleWidth();
 
         ev && ev.preventDefault();

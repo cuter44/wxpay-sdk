@@ -88,7 +88,7 @@ public class SnsapiUserinfo extends HttpServlet
 
     /** 提供 appid 参数
      * Servlet 从此方法取得必需参数 appid, 或在缺省时从 WxmpFactorySingl 取得,
-     * 覆盖此方法可以自定义缺省参数时 appid 的来源.
+     * 覆盖此方法可以自定义 appid 的来源.
      */
     public String getAppid(HttpServletRequest req)
         throws Exception
@@ -99,7 +99,7 @@ public class SnsapiUserinfo extends HttpServlet
 
         // else
         return(
-            WxmpFactorySingl.getInstance().getTokenProvider().getAppid()
+            WxmpFactorySingl.getInstance().getAppid()
         );
     }
 

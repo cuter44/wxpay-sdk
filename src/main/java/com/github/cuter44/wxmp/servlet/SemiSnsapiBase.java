@@ -49,6 +49,9 @@ public class SemiSnsapiBase extends HttpServlet
     protected static final String CODE      = "code";
     protected static final String REDIR     = "redir";
 
+    /** @deprecated SemiSnsapiBase no longer use this field.
+     */
+    @Deprecated
     protected String appid;
 
     /** @deprecated SemiSnsapiBase no longer use this field.
@@ -79,7 +82,7 @@ public class SemiSnsapiBase extends HttpServlet
 
     /** 提供 appid 参数.
      * Servlet 从此方法取得必需参数 appid, 或在缺省时从 WxmpFactorySingl 取得,
-     * 覆盖此方法可以自定义缺省参数时 appid 的来源.
+     * 覆盖此方法可以自定义 appid 的来源.
      */
     public String getAppid(HttpServletRequest req)
         throws Exception
@@ -90,7 +93,7 @@ public class SemiSnsapiBase extends HttpServlet
 
         // else
         return(
-            WxmpFactorySingl.getInstance().getTokenProvider().getAppid()
+            WxmpFactorySingl.getInstance().getAppid()
         );
     }
 

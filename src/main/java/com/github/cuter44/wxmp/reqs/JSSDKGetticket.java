@@ -18,15 +18,26 @@ public class JSSDKGetticket extends WxmpRequestBase
     );
 
     public static final String KEY_ACCESS_TOKEN = "access_token";
+    public static final String KEY_TYPE         = "type";
+    public static final String TYPE_JSAPI       = "jsapi";
 
     public static final String URL_API_BASE = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
 
   // CONSTRUCT
+    public JSSDKGetticket(Properties conf)
+    {
+        super(conf);
+
+        if (this.getProperty(KEY_TYPE) == null)
+            this.setProperty(KEY_TYPE, TYPE_JSAPI);
+
+        return;
+    }
+
     public JSSDKGetticket(String accessToken)
     {
-        super(new Properties());
+        this(new Properties());
 
-        this.setProperty("type", "jsapi");
         this.setAccessToken(accessToken);
 
         return;

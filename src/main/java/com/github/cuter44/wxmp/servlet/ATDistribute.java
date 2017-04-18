@@ -75,7 +75,7 @@ public class ATDistribute extends HttpServlet
 
         // else
         return(
-            WxmpFactorySingl.getInstance().getTokenProvider().getAppid()
+            WxmpFactorySingl.getInstance().getAppid()
         );
     }
 

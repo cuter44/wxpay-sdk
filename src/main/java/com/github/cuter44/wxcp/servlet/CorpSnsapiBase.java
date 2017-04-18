@@ -67,46 +67,116 @@ public class CorpSnsapiBase extends HttpServlet
     protected static final String OPEN_ID   = "OpenId";
     protected static final String DEVICE_ID = "DeviceId";
 
+    /** @deprecated SnsapiBase no longer use this field.
+     */
+    @Deprecated
     protected String appid;
+    /** @deprecated SnsapiBase no longer use this field.
+     */
+    @Deprecated
     protected String secret;
 
-    /** 提供 appid 参数
-     * servlet 从此方法取得必需参数 appid, 覆盖此方法可以自定义 appid 的来源.
-     * 默认实现从配置文件 <code>/wxcp.properties</code> 取得
+    /** Servlet.init().
+     * Default implement to initialize WxmpFactorySingl to ensure upstream
+     * TokenProvider standby.
+     * If you are building a multi-account env, you SHOULD override it.
+     * If you are not preparing a wxpay.properties, you MUST override it.
      */
-    public String getAppid(HttpServletRequest req)
-        throws Exception
+    public void init()
     {
-        return(this.appid);
+        this.initSingl();
+
+        return;
     }
 
-    /** 提供 secret 参数
-     * servlet 从此方法取得必需参数 secret, 覆盖此方法可以自定义 secret 的来源.
+    public void initSingl()
+    {
+        WxcpFactorySingl.getInstance();
+
+        return;
+    }
+
+    /** 提供 appid 参数.
+     * Servlet 从此方法取得必需参数 appid, 覆盖此方法可以自定义 appid 的来源.
      * 默认实现从配置文件 <code>/wxcp.properties</code> 取得
+     * @deprecated obsoleted, use getCorpid() instead.
+     */
+    @Deprecated
+    public final String getAppid(HttpServletRequest req)
+        throws Exception
+    {
+        throw(new UnsupportedOperationException("getAppid() is obsoleted, migrated into getCorpid()."));
+    }
+
+    /** 提供 secret 参数.
+     * Servlet 从此方法取得必需参数 secret, 覆盖此方法可以自定义 secret 的来源.
+     * 默认实现从配置文件 <code>/wxcp.properties</code> 取得
+     * @deprecated obsoleted, CorpSnsapiBase now directly invoking <code>getAssessToken(corpid)</code> instead.
      */
     public String getSecret(String appid)
         throws Exception
     {
-        return(this.secret);
+        throw(new UnsupportedOperationException("getSecret() is obsoleted, migrated into getCorpsecret()."));
     }
 
-    /** 提供 access_token 参数
-     * servlet 从此方法取得必需参数 access_token, 覆盖此方法可以自定义 access_token 的来源.
+    /** 提供 corpid 参数.
+     * Servlet 从此方法取得必需参数 corpid, 或在缺省时从 WxcpFactorySingl 取得,
+     * 覆盖此方法可以自定义 corpid 的来源.
+     */
+    public String getCorpid(HttpServletRequest req)
+        throws Exception
+    {
+        String corpid = req.getParameter(KEY_CORPID);
+        if (corpid != null)
+            return(corpid);
+
+        // else
+        return(
+            WxcpFactorySingl.getInstance().getCorpid()
+        );
+    }
+
+    /** 提供 access_token 参数.
+     * Servlet 从此方法取得必需参数 access_token, 覆盖此方法可以自定义 access_token 的来源.
      * 默认实现从 <code>WxcpTokenKeeper.getInstance(appid, secret).getAccessToken()</code> 取得
      * 默认实现的 <code>doGet()</code> 从 <code>this.getAppid()</code> 取得 appid,
      * 从 <code>this.getSecret()</code> 取得 secret.
+     * @deprecated obsoleted, CorpSnsapiBase now directly invoking <code>getAssessToken(corpid)</code> instead.
      */
-    public String getAccessToken(String appid, String secret)
+    @Deprecated
+    public final String getAccessToken(String appid, String secret)
         throws Exception
     {
+        throw(new UnsupportedOperationException("getAccessToken(appid, secret) is obsoleted, migrated into getAccessToken(corpid)."));
+    }
+
+    /** 提供 access_token 参数.
+     * Servlet 从此方法取得必需参数 access_token, 覆盖此方法可以自定义 access_token 的来源.
+     * 默认实现从 <code>this.getTokenProvider(corpid).getAccessToken()</code> 取得.
+     */
+    public String getAccessToken(String corpid)
+    {
         return(
-            WxcpTokenKeeper.getInstance(appid, secret).getAccessToken()
+            this.getTokenProvider(corpid).getAccessToken()
+        );
+    }
+
+    /** 提供 TokenProvider.
+     * Servlet 从此方法取得 TokenProvider, 继而取得 access_token.
+     * 默认实现从 <code>ATMagCp.getDefaultInstance().get(corpid)</code> 取得.
+     * 覆盖此方法可以自定义 TokenProviderCp 的来源.
+     * 或覆盖 <code>getAccessToken(corpid)</code> 以不使用 TokenProviderCp 作为 access_token 的来源.
+     */
+    public TokenProviderCp getTokenProvider(String corpid)
+    {
+        return(
+            ATMagCp.getDefaultInstance().get(corpid)
         );
     }
 
     /** 在取得企业成员 UserId 后, 发送响应前的回调.
-     * 覆盖此方法可以实现自己的逻辑
-     * 默认实现是 NOOP
+     * 覆盖此方法可以实现自己的逻辑.
+     * 默认实现是 NOOP.
      */
     public void triggerCorpMember(GetuserinfoResponse resp, HttpServletRequest req)
         throws Exception
@@ -117,8 +187,8 @@ public class CorpSnsapiBase extends HttpServlet
     }
 
     /** 在取得非企业成员 OpenId 后, 发送响应前的回调.
-     * 覆盖此方法可以实现自己的逻辑
-     * 默认实现是 NOOP
+     * 覆盖此方法可以实现自己的逻辑.
+     * 默认实现是 NOOP.
      */
     public void triggerNonCorpMember(GetuserinfoResponse resp, HttpServletRequest req)
         throws Exception
@@ -128,9 +198,9 @@ public class CorpSnsapiBase extends HttpServlet
         return;
     }
 
-    /** 在取得企业成员 UserId 后, 构造响应
-     * 覆盖此方法可以自行构造响应
-     * 默认实现如文档所述
+    /** 在取得企业成员 UserId 后, 构造响应.
+     * 覆盖此方法可以自行构造响应.
+     * 默认实现如文档所述.
      */
     public void responseCorpMember(GetuserinfoResponse getuserinfoResponse, HttpServletRequest req, HttpServletResponse resp)
         throws Exception
@@ -158,9 +228,9 @@ public class CorpSnsapiBase extends HttpServlet
         return;
     }
 
-    /** 在取得非企业成员 OpenId 后, 构造响应
-     * 覆盖此方法可以自行构造响应
-     * 默认实现如文档所述
+    /** 在取得非企业成员 OpenId 后, 构造响应.
+     * 覆盖此方法可以自行构造响应.
+     * 默认实现如文档所述.
      */
     public void responseNonCorpMember(GetuserinfoResponse getuserinfoResponse, HttpServletRequest req, HttpServletResponse resp)
         throws Exception
@@ -188,30 +258,11 @@ public class CorpSnsapiBase extends HttpServlet
         return;
     }
 
-    /** Trigger on error encountered
-     * <br />
-     * This method can be overrided to plant your own error handling implemention.
-     * <br />
-     * Default behavior is <code>ex.printStackTrace()</code>
-     */
     public void onError(Exception ex, HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException, IOException
+        throws IOException, ServletException
     {
-        System.err.println("ERROR: CorpSnsapiBase failed.");
-        ex.printStackTrace();
-    }
-
-    /** 读取配置文件
-     * 覆盖此方法可以删除对配置文件的访问, 此情况下 getAppid(), getAccessToken() 均需要自行实现.
-     */
-    @Override
-    public void init()
-    {
-        Properties conf = WxcpFactory.getDefaultInstance().getConf();
-        this.appid = conf.getProperty(KEY_CORPID);
-        this.secret = conf.getProperty(KEY_CORPSECRET);
-
-        return;
+        this.getServletContext().log("Wxmp:SnsapiBase:FAIL:", ex);
+        resp.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
     }
 
     @Override
@@ -242,8 +293,8 @@ public class CorpSnsapiBase extends HttpServlet
             }
 
             // else
-            String appid = this.getAppid(req);
-            String accessToken = this.getAccessToken(appid, this.getSecret(appid));
+            String corpid = this.getCorpid(req);
+            String accessToken = this.getAccessToken(corpid);
             GetuserinfoResponse getuserinfoResp = new Getuserinfo(accessToken, code)
                 .execute();
 

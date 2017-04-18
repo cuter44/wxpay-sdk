@@ -1,4 +1,4 @@
-package com.github.cuter44.wxmp.resps;
+package com.github.cuter44.wxcp.resps;
 
 import com.alibaba.fastjson.*;
 
@@ -11,7 +11,7 @@ import com.alibaba.fastjson.*;
     expires         凭证失效时间，long/timestamp-ms
  * </pre>
  */
-public class TokenClientRelayResponse extends WxmpResponseBase
+public class GettokenRelayResponse extends WxcpResponseBase
 {
   // CONSTANTS
     public static final String KEY_ACCESS_TOKEN = "access_token";
@@ -23,7 +23,7 @@ public class TokenClientRelayResponse extends WxmpResponseBase
      */
     public final long tmCreate;
 
-    public TokenClientRelayResponse(String jsonString)
+    public GettokenRelayResponse(String jsonString)
     {
         super(jsonString);
 

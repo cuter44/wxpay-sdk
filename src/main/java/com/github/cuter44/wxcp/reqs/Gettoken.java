@@ -39,10 +39,11 @@ public class Gettoken extends WxcpRequestBase
 
     public Gettoken(String corpid, String corpsecret)
     {
-        super(new Properties());
+        this(new Properties());
 
-        super.setProperty(KEY_CORPID    , corpid        )
-            .setProperty(KEY_CORPSECRET , corpsecret    );
+        this
+            .setCorpid      (corpid     )
+            .setCorpsecret  (corpsecret );
 
         return;
     }

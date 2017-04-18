@@ -122,6 +122,24 @@
     <url-pattern>/corp-snsapi-base.api</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>ATDistributeCp</servlet-name>
+    <servlet-class>com.github.cuter44.wxcp.servlet.ATDistributeCp</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ATDistributeCp</servlet-name>
+    <url-pattern>/corp-token.api</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>JTDistributeCp</servlet-name>
+    <servlet-class>com.github.cuter44.wxcp.servlet.JTDistributeCp</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JTDistributeCp</servlet-name>
+    <url-pattern>/corp-ticket.api</url-pattern>
+  </servlet-mapping>
+
   <!-- common -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

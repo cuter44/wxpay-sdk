@@ -12,7 +12,10 @@ import com.github.cuter44.wxcp.util.*;
 /** 微信CP工厂
  * <br />
  * ...没错这个就是从MP复制过来的.
+ * @deprecated 该工厂类已被 WxcpFactorySingl 替代, 单账号实现请使用 WxcpFactorySingl,
+ * 多账号实现请参见 WxcpFactoryBase 自行开发.
  */
+@Deprecated
 public class WxcpFactory
 {
   // CONSTANT

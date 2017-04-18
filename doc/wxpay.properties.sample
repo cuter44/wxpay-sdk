@@ -57,6 +57,11 @@ EXCEPTION_ON_FAIL=true
 #
 # Which you acquires from your https://mp.weixin.qq.com console.
 # Leave blank or quote on the one you don't have.
+#
+# Due to a historical mistake SECRET is uppercase. It is now unable to turn back
+# resulting in backward-compatiblity. Just treat it as-is.
+# mch_id and KEY is available on you applied payment service to Wechat.
+# Whether removing them or not will not affect you.
 appid=wx67f201a851066c5c
 SECRET=9efe892ad890a5aa61e3xxxxxxxxxxxx
 mch_id=10027922

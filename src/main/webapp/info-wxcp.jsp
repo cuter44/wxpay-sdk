@@ -2,16 +2,16 @@
   import="
     java.util.Properties,
     java.util.Date,
-    com.github.cuter44.wxmp.*,
-    com.github.cuter44.wxmp.util.*,
-    com.github.cuter44.wxmp.reqs.*,
-    com.github.cuter44.wxmp.resps.*
+    com.github.cuter44.wxcp.*,
+    com.github.cuter44.wxcp.util.*,
+    com.github.cuter44.wxcp.reqs.*,
+    com.github.cuter44.wxcp.resps.*
   "
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
  <head>
-  <title>Wxpay SDK info</title>
+  <title>WXCP Singl Probe</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <style>
     .alert {
@@ -36,19 +36,18 @@
   </style>
  </head>
  <body>
-  <h1>Wxpay SDK info singl</h1>
+  <h1>WXCP Singl Probe</h1>
   <p />
   <span style="alert">WARNING: This page shows confidential info of your config. DO NOT publish this page on production environment</span>
 
-  <h2>WXMP</h2>
   <h3>Global config</h3>
   <dl class="table">
     <%
-      WxmpFactorySingl wxmp = WxmpFactorySingl.getInstance();
-      Properties wxmpConf = wxmp.getConf();
+      WxcpFactorySingl wxcp = WxcpFactorySingl.getInstance();
+      Properties wxcpConf = wxcp.getConf();
 
-      for (String k:wxmpConf.stringPropertyNames())
-        out.println("<dt>"+k+"<dd>"+wxmpConf.getProperty(k));
+      for (String k:wxcpConf.stringPropertyNames())
+        out.println("<dt>"+k+"<dd>"+wxcpConf.getProperty(k));
     %>
   </dl>
   
@@ -56,16 +55,16 @@
   <h3>Tokens</h3>
   <dl class="table">
     <%
-      TokenProvider tp = wxmp.getTokenProvider();
+      TokenProviderCp tp = wxcp.getTokenProvider();
     %>
-    <dt>TokenProvider class
+    <dt>TokenProviderCp class
     <dd><%=tp.getClass()%>
 
-    <dt>appid
-    <dd><%=tp.getAppid()%>
+    <dt>corpid
+    <dd><%=tp.getCorpid()%>
 
-    <dt>SECRET
-    <dd><%=tp.getSecret()%>
+    <dt>corpsecret
+    <dd><%=tp.getCorpsecret()%>
 
     <dt>access_token
     <dd><%=tp.getAccessToken()%>
@@ -73,10 +72,10 @@
     <dt>access_token expire
     <dd><%=new Date(tp.getATExpire())%>
 
-    <dt>JSSDK ticket
-    <dd><%=tp.getJSSDKTicket()%>
+    <dt>jsapi ticket
+    <dd><%=tp.getJsapiTicket()%>
 
-    <dt>JSSDK ticket expire
+    <dt>jsapi ticket expire
     <dd><%=new Date(tp.getJTExpire())%>
 
   </dl>

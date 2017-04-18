@@ -21,8 +21,6 @@ public class JSSDKTicketRelay extends WxmpRequestBase
     public static final String KEY_APPID         = "appid";
     public static final String KEY_JT_UPSTREAM   = "JT_UPSTREAM";
 
-    public String upstreamURL;
-
   // CONSTRUCT
     public JSSDKTicketRelay(Properties prop)
     {

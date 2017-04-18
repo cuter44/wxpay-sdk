@@ -14,7 +14,7 @@ public class GetJsapiTicket extends WxcpRequestBase
 {
   // KEYS
     protected static final List<String> KEYS_PARAM = Arrays.asList(
-        "access_token", "type"
+        "access_token"
     );
 
     public static final String KEY_ACCESS_TOKEN = "access_token";
@@ -22,14 +22,24 @@ public class GetJsapiTicket extends WxcpRequestBase
     public static final String URL_API_BASE = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket";
 
   // CONF
+    /** @deprecated no longer used, this is always null.
+     */
+    @Deprecated
     protected String accessToken;
 
   // CONSTRUCT
+    public GetJsapiTicket(Properties conf)
+    {
+        super(conf);
+
+        return;
+    }
+
     public GetJsapiTicket(String accessToken)
     {
-        super(new Properties());
+        this(new Properties());
 
-        this.accessToken = accessToken;
+        this.setAccessToken(accessToken);
 
         return;
     }

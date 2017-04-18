@@ -2,11 +2,11 @@ package com.github.cuter44.wxmp.resps;
 
 import com.alibaba.fastjson.*;
 
-/** 获取access token
+/** 获取 jssdk ticket
  * <br />
  * <pre style="font-size:12px">
     返回说明
-    access_token    获取到的凭证
+    ticket          upstream ticket
     expires_in      凭证有效时间，单位：秒
     expires         凭证失效时间，long/timestamp-ms
  * </pre>
