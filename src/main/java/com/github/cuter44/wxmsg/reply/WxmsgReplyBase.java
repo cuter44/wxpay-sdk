@@ -86,6 +86,7 @@ public abstract class WxmsgReplyBase
 
   // BUILD
     /** Subclass should implements this method, which will be called before toXML()
+     * @return this
      */
     public abstract WxmsgReplyBase build();
 

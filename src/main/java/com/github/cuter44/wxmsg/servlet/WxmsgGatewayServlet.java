@@ -180,7 +180,7 @@ public class WxmsgGatewayServlet extends HttpServlet
 
             if (this.handle(msg))
             {
-                WxmsgReplyBase reply = msg.getReply();
+                WxmsgReplyBase reply = msg.getReply().build();
                 resp.setContentType(reply.contentType());
                 out.println(
                     reply.toContent()
