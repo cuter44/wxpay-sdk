@@ -283,7 +283,7 @@ public class CorpSnsapiBase extends HttpServlet
                         .toString()
                 );
 
-                String url = new Oauth2Authorize(this.getAppid(req), thisUrl)
+                String url = new Oauth2Authorize(this.getCorpid(req), thisUrl)
                     .build()
                     .toURL();
 
