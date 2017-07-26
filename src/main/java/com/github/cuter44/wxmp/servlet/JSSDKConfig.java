@@ -105,6 +105,8 @@ public class JSSDKConfig extends HttpServlet
         );
     }
 
+    /** @Deprecated From 0.12 on get ticket from token provider, override getTokenProvider() instead.
+     */
     @Deprecated
     public final String getTicket(String appid)
         throws Exception
@@ -114,17 +116,20 @@ public class JSSDKConfig extends HttpServlet
 
     /** 提供 TokenProvider
      * servlet 从此方法取得 TokenProvider, 覆盖此方法可以自定义 TokenProvider 的来源.
-     * 默认实现从 <code>ATMap.getDefaultInstance().get(appid)</code> 取得.
+     * 默认实现从 <code>ATMag.getDefaultInstance().get(appid)</code> 取得.
+     * Invoked every single req.
      * @see com.github.cuter44.wxpay.TokenKeeper
      */
     public TokenProvider getTokenProvider(String appid)
         throws Exception
     {
         return(
-            WxmpFactorySingl.getInstance().getTokenProvider()
+            ATMag.getDefaultInstance().get(appid)
         );
     }
 
+    /** @Deprecated From 0.12 on use checkAccess() instead.
+     */
     @Deprecated
     public final void ifAcceptURL(String url)
         throws Exception
@@ -194,7 +199,7 @@ public class JSSDKConfig extends HttpServlet
 
             this.checkAccess(url);
             TokenProvider t = this.getTokenProvider(appid);
-            String ticket = this.getTicket(appId);
+            String ticket = t.getJSSDKTicket();
 
             URLBuilder ub = new URLBuilder()
                 .appendParam("jsapi_ticket" , ticket                )

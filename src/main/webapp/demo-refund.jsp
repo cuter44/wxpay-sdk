@@ -41,7 +41,7 @@
         WxpayFactorySingl factory = WxpayFactorySingl.getInstance();
 
 
-        OrderQuery wxreq1 = new OrderQuery(factory.getConf());
+        OrderQuery wxreq1 = factory.instantiate(OrderQuery.class);
         wxreq1.setOutTradeNo(outTradeNo);
 
         OrderQueryResponse wxresp1 = wxreq1.build().sign().execute();
