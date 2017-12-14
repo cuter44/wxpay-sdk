@@ -6,7 +6,6 @@ import java.util.Properties;
 import java.util.Iterator;
 import java.util.Arrays;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -86,7 +85,7 @@ public class WxpayResponseBase
         {
             String v = this.getProperty(key);
             return(
-                (v!=null) ? new SimpleDateFormat("yyyyMMddHHmmss").parse(v) : null
+                (v!=null) ? CSTConvert.parse(v) : null
             );
         }
         catch (Exception ex)

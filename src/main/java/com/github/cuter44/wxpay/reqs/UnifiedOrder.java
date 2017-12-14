@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.IOException;
@@ -12,7 +11,6 @@ import java.io.IOException;
 import com.github.cuter44.wxpay.*;
 import com.github.cuter44.wxpay.constants.*;
 import com.github.cuter44.wxpay.resps.*;
-//import com.github.cuter44.wxpay.helper.*;
 
 public class UnifiedOrder extends WxpayRequestBase
 {
@@ -177,9 +175,9 @@ public class UnifiedOrder extends WxpayRequestBase
 
     public UnifiedOrder setTimeStart(Date timeStart)
     {
-        super.setProperty(
+        super.setDateProperty(
             KEY_TIME_START,
-            new SimpleDateFormat("yyyyMMddHHmmss").format(timeStart)
+            timeStart
         );
 
         return(this);
@@ -187,9 +185,9 @@ public class UnifiedOrder extends WxpayRequestBase
 
     public UnifiedOrder setTimeExpire(Date timeExpire)
     {
-        super.setProperty(
+        super.setDateProperty(
             KEY_TIME_EXPIRE,
-            new SimpleDateFormat("yyyyMMddHHmmss").format(timeExpire)
+            timeExpire
         );
 
         return(this);

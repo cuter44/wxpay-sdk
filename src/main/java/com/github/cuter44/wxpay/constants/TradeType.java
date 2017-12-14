@@ -4,5 +4,6 @@ public enum TradeType
 {
     JSAPI(),
     NATIVE(),
-    APP();
+    APP(),
+    MWEB();
 }

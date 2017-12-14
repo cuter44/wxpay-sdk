@@ -1,5 +1,6 @@
 package com.github.cuter44.wxpay.reqs;
 
+import java.util.Date;
 import java.util.Properties;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.apache.http.client.methods.*;
 import com.github.cuter44.wxpay.WxpayException;
 import com.github.cuter44.wxpay.WxpayProtocolException;
 import com.github.cuter44.wxpay.resps.WxpayResponseBase;
+import com.github.cuter44.wxpay.util.CSTConvert;
 
 /**
  * @author galin<cuter44@foxmail.com>
@@ -113,6 +115,33 @@ public abstract class WxpayRequestBase
     {
         this.conf.setProperty(key, value);
         return(this);
+    }
+
+    public WxpayRequestBase setDateProperty(String key, Date value)
+    {
+        this.setProperty(
+            key,
+            CSTConvert.format(value)
+        );
+
+        return(this);
+    }
+
+    public final Date getDateProperty(String key)
+    {
+        try
+        {
+            String v = this.getProperty(key);
+            return(
+                (v!=null) ? CSTConvert.parse(v) : null
+            );
+        }
+        catch (Exception ex)
+        {
+            // rarely occurs
+            ex.printStackTrace();
+            return(null);
+        }
     }
 
     //public WxpayRequestBase setCDATAProperty(String key, String value)
@@ -323,6 +352,7 @@ public abstract class WxpayRequestBase
     }
 
   // MISC
+
     public WxpayRequestBase setAppid(String appid)
     {
         this.setProperty(KEY_APPID, appid);
