@@ -27,11 +27,13 @@ import com.alibaba.fastjson.*;
     <del>url             否  图文消息被点击后跳转的链接</del>
     <del>picurl          否  图文消息的图片链接，支持JPG、PNG格式，较好的效果为大图640*320，小图80*80</del>
    </pre>
- * This is a general super class for sending message, use corresponding sub-class for specific message type
+ *
  */
 public class MessageCustomSendImage extends MessageCustomSend
 {
   // KEYS
+    public static final String VALUE_MSGTYPE_IMAGE = "image";
+
     public static final String KEY_MEDIA_ID = "media_id";
 
     public static final JSONObject BODY_SCHEMA = JSON.parseObject(
@@ -52,7 +54,7 @@ public class MessageCustomSendImage extends MessageCustomSend
     {
         super(prop);
 
-        super.setProperty(KEY_MSGTYPE, "image");
+        super.setProperty(KEY_MSGTYPE, VALUE_MSGTYPE_IMAGE);
 
         return;
     }
