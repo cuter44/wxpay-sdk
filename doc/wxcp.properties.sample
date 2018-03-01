@@ -10,7 +10,7 @@
 # SSL exception.
 # So do not change this unless you fully understand what you are doing.
 # Both colon(:) and semicolon(;) can be seperators.
-LOAD_TRUSTS=/GeoTrustGlobalCA.crt
+LOAD_TRUSTS=/DigiCertGlobalRootCA.crt
 
 # Turn on/off exception while wx server seponse a fail.
 #
