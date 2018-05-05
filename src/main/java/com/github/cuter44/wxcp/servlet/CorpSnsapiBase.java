@@ -80,7 +80,7 @@ public class CorpSnsapiBase extends HttpServlet
      * Default implement to initialize WxmpFactorySingl to ensure upstream
      * TokenProvider standby.
      * If you are building a multi-account env, you SHOULD override it.
-     * If you are not preparing a wxpay.properties, you MUST override it.
+     * If you are not preparing a wxcp.properties, you MUST override it.
      */
     public void init()
     {

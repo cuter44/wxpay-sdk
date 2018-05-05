@@ -19,7 +19,7 @@
 # SSL exception.
 # So do not change this unless you fully understand what you are doing.
 # Both colon(:) and semicolon(;) can be seperators.
-LOAD_TRUSTS=/GeoTrustGlobalCA.crt
+LOAD_TRUSTS=/GeoTrustGlobalCA.crt:/DigiCertGlobalRootCA.crt
 
 # File to load your client certificate, which is ONLY required by
 # wxpay/refund and ...(forgot).
